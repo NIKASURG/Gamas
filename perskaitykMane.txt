@@ -1,1 +1,3 @@
-kolkas cia nieko nėra
+funkcija pakeisti() pakeicia langus 
+stai miktukas 
+    <button onclick="pakeisti()"></button></div>
