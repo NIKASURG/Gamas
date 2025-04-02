@@ -61,7 +61,7 @@ function sukurkPriesa(kiek) {
         50,
         50,
         0.8,
-        100,
+        Math.random() * 100 + 50,
         "img/vaiduoklis.png"
       )
     );
@@ -117,6 +117,65 @@ function mainLoop(currentTime) {
   if (ratas > 600) {
     ratas = 0;
     priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp); priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);
+    priesai.sort((a, b) => a.y - b.y);
+    priesai.sort((a, b) => a.x - b.x);
+    priesai.sort((a, b) => a.hp - b.hp);  
+
   }
   ctx.clearRect(0, 0, ePlotis, eAukstis);
 
