@@ -90,6 +90,8 @@ function startRound(){
   // uskomentuok sia funkcija dirbant ne ant canvas jog neatsirastum is karto zaidime ir priesingai
   // ji yra aktyvi debugavimo metu
   pakeisti();
+  pakeisti();
+  
   
   //
 

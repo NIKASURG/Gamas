@@ -16,6 +16,7 @@ function enterFullScreen() {
   } else if (element.msRequestFullscreen) { // IE/Edge
     element.msRequestFullscreen();
   }
+  pakeisti();
 
   // Atinaujinti canvas dydį
   updateCanvasSize();
