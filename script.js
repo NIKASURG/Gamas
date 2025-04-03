@@ -1,4 +1,16 @@
 
+function lockOrientation() {
+  if (screen.orientation) {
+      screen.orientation.lock("landscape").catch((err) => {
+          console.log("Negalima užrakinti ekrano: ", err);
+      });
+  }
+}
+
+// Iškviečiame funkciją, kai puslapis pilnai užsikrauna
+document.addEventListener("DOMContentLoaded", () => {
+  lockOrientation();
+});
 
 
 const popierius = document.getElementById("popierius");
