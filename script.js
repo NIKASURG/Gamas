@@ -1,25 +1,11 @@
 
-function lockOrientationAndFullscreen() {
-  const element = document.documentElement;
-
-  // Jei ekranas horizontaliai, užrakink orientaciją ir įjunk pilną ekraną
-  if (screen.orientation) {
-      screen.orientation.lock('landscape').then(() => {
-          if (element.requestFullscreen) {
-              element.requestFullscreen();
-          } else if (element.webkitRequestFullscreen) {
-              element.webkitRequestFullscreen();
-          } else if (element.mozRequestFullScreen) {
-              element.mozRequestFullScreen();
-          }
-      }).catch((err) => alert("Nepavyko užrakinti orientacijos: ", err));
+window.addEventListener("resize", function() {
+  if (window.innerHeight > window.innerWidth) {
+    // Jei telefonas pasuktas vertikaliai, grąžina į horizontalią orientaciją
+    screen.orientation.lock('landscape');
   }
-}
-
-
-window.addEventListener("load", () => {
-  lockOrientationAndFullscreen();  // Užrakina ekrano orientaciją ir įjungia pilną ekraną
 });
+
 
 const popierius = document.getElementById("popierius");
 const main = document.getElementById("main");
