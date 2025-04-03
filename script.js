@@ -1,17 +1,19 @@
-
 const popierius = document.getElementById("popierius");
 const main = document.getElementById("main");
+
+
 const backGround = new Image();
 backGround.src = "img/bg.png";
 
 // console.log(backGround[0]);
 const ePlotis = window.innerWidth;
 const eAukstis = window.innerHeight;
+
 popierius.width = ePlotis;
 popierius.height = eAukstis;
+
 const ctx = popierius.getContext("2d");
 let raund = 1;
-
 let ySpawnZona = eAukstis / 4;
 let ratas = 0;
 
@@ -28,7 +30,10 @@ let kiekSukurtu = 0;
 const priesai = [];
 const karei = [];
 
-sukurkKari(50, eAukstis - 100);
+for (let i = 0; i < 8; i++) {
+  
+  sukurkKari(50, eAukstis - 50 *i);
+}
 
 
 sukurkPriesa(kiekPriesu());
@@ -38,7 +43,6 @@ function mainLoop(currentTime) {
   // ctx.drawImage(backGround, 0, 0, ePlotis, eAukstis);
   for (let i = 0; i < karei.length; i++) {
     const kare = karei[i];
-    console.log(kare.x, kare.y);
   }
   // <-- PRIIMAME DABARTINĮ LAIKĄ
   let deltaTime = (currentTime - lastTime) / 1000; // Laiko skirtumas sekundėmis
@@ -90,11 +94,13 @@ function mainLoop(currentTime) {
 
   for (let i = karei.length - 1; i >= 0; i--) {
     karys = karei[i];
-    if (karys.reloding > 0) {
-      karys.reloding -= deltaTime;
+    if (karys.reloding < karys.atackSpeed) {
+      karys.reloding += deltaTime*60;
+      // console.log(karys.reloding)
     } else {
-      karys.reloding = karys.atackSpeed;
+      karys.reloding = 0;
       suzeikPriesa(karys.dmg, karys.target);
+
     }
     ctx.drawImage(karys.img, karys.x, karys.y, karys.plotis, karys.aukstis);
   }

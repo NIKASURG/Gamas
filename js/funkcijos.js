@@ -2,7 +2,7 @@ let inGame = false;
 
 
 function kiekPriesu() {
-    return 10;
+    return 1000;
   }
 
 
@@ -23,8 +23,8 @@ function kiekPriesu() {
   }
 
 
-  function sukurkKari(x, y) {
-    karei.push(new Defender(x, y, 50, 50, 3, 8, "img/archer.jpeg"));
+  function sukurkKari(x= 50 , y= 50, plotis = 50, aukstis = 50, dmg = 20, atackSpeed = 1, img = "img/archer.jpeg") {
+    karei.push(new Defender(x, y, plotis, aukstis, dmg, atackSpeed, img));
   }
 
 
@@ -34,6 +34,7 @@ function kiekPriesu() {
     switch (taikinys) {
         case "first":
             priesai.sort((a, b) => a.x - b.x)[0].hp -= dmg;
+         
             break;
         case "last":
             priesai.sort((a, b) => b.x - a.x)[0].hp -= dmg;

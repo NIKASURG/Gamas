@@ -6,7 +6,7 @@
 // plotis ir aukstis defaultas yra 50, tai reiskia kad kareivis bus 50px x 50px
 
 class Defender {
-  constructor(x, y, plotis = 50, aukstis = 50, dmg = 1, atackSpeed = 1, img = "default_soldier.png") {
+  constructor(x, y, plotis = 50, aukstis = 50, dmg = 20, atackSpeed = 1, img = "default_soldier.png") {
       this.x = x;
       this.y = y;
       this.plotis = plotis;
