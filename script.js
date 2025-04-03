@@ -2,6 +2,7 @@
 const fullScreenButton = document.getElementById("fullScreen");
 
 // Funkcija, kuri įjungia pilną ekraną
+// Funkcija, kuri įjungia pilną ekraną
 function enterFullScreen() {
   const element = document.documentElement; // Pagrindinis elementas (HTML)
 
@@ -15,14 +16,23 @@ function enterFullScreen() {
   } else if (element.msRequestFullscreen) { // IE/Edge
     element.msRequestFullscreen();
   }
-  pakeisti();
+
+  // Atinaujinti canvas dydį
+  updateCanvasSize();
+}
+
+// Funkcija, kuri atnaujina canvas dydį pagal lango dydį
+function updateCanvasSize() {
   eAukstis = window.innerHeight;
-   ePlotis = eAukstis * 16 / 9;
-  console.log(ePlotis);
-  console.log(eAukstis);
+  ePlotis = eAukstis * 16 / 9;
   popierius.width = ePlotis;
   popierius.height = eAukstis;
+  console.log("Canvas size updated: " + ePlotis, eAukstis);
 }
+
+// Stebime lango dydžio pasikeitimus ir atnaujiname canvas dydį
+window.addEventListener("resize", updateCanvasSize);
+
 
 // Priskirkite funkciją mygtukui
 fullScreenButton.addEventListener("click", enterFullScreen);
