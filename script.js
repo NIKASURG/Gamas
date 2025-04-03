@@ -1,10 +1,24 @@
+// Paimkite mygtuką pagal ID
+const fullScreenButton = document.getElementById("fullScreen");
 
-window.addEventListener("resize", function() {
-  if (window.innerHeight > window.innerWidth) {
-    // Jei telefonas pasuktas vertikaliai, grąžina į horizontalią orientaciją
-    screen.orientation.lock('landscape');
+// Funkcija, kuri įjungia pilną ekraną
+function enterFullScreen() {
+  const element = document.documentElement; // Pagrindinis elementas (HTML)
+
+  // Patikriname, ar naršyklė palaiko Fullscreen API
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.webkitRequestFullscreen) { // Safari
+    element.webkitRequestFullscreen();
+  } else if (element.mozRequestFullScreen) { // Firefox
+    element.mozRequestFullScreen();
+  } else if (element.msRequestFullscreen) { // IE/Edge
+    element.msRequestFullscreen();
   }
-});
+}
+
+// Priskirkite funkciją mygtukui
+fullScreenButton.addEventListener("click", enterFullScreen);
 
 
 const popierius = document.getElementById("popierius");
