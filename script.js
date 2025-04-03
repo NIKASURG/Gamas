@@ -15,6 +15,8 @@ function enterFullScreen() {
   } else if (element.msRequestFullscreen) { // IE/Edge
     element.msRequestFullscreen();
   }
+  pakeisti();
+
 }
 
 // Priskirkite funkciją mygtukui
