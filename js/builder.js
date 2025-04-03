@@ -6,13 +6,13 @@
 // plotis ir aukstis defaultas yra 50, tai reiskia kad kareivis bus 50px x 50px
 
 class Defender {
-  constructor(x, y, plotis = 50, aukstis = 50, dmg = 20, atackSpeed = 1, img = "default_soldier.png") {
+  constructor(x, y, plotis = 50, aukstis = 50, dmg = 20, reloudTime = 1, img = "default_soldier.png") {
       this.x = x;
       this.y = y;
       this.plotis = plotis;
       this.aukstis = aukstis;
       this.dmg = dmg;
-      this.atackSpeed = atackSpeed;
+      this.reloudTime = reloudTime;
       this.reloding = 0;
       this.target = "first";
 
@@ -29,7 +29,7 @@ class Enemy {
       this.aukstis = aukstis;
       this.speed = speed;
       this.hp = hp;
-
+      this.fullHp = hp;
       this.img = new Image();
       this.img.src = img;
   }

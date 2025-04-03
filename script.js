@@ -1,6 +1,12 @@
 const popierius = document.getElementById("popierius");
 const main = document.getElementById("main");
 
+const nextRound = document.createElement("button");
+nextRound.innerText = "Next Round";
+document.body.appendChild(nextRound);
+
+
+nextRound.addEventListener("click", startRound);
 
 const backGround = new Image();
 backGround.src = "img/bg.png";
@@ -17,6 +23,8 @@ let raund = 1;
 let ySpawnZona = eAukstis / 4;
 let ratas = 0;
 
+
+inRound = false;
 ///////////////////////
 //GPT fps counter
 let lastTime = performance.now();
@@ -30,28 +38,27 @@ let kiekSukurtu = 0;
 const priesai = [];
 const karei = [];
 
-for (let i = 0; i < 8; i++) {
+for (let i = 1; i < 20; i++) {
   
-  sukurkKari(50, eAukstis - 50 *i);
+  sukurkKari(50, eAukstis - 50 * i ,50,50,3,10);
 }
 
 
-sukurkPriesa(kiekPriesu());
 
 function mainLoop(currentTime) {
   ctx.clearRect(0, 0, ePlotis, eAukstis);
-  // ctx.drawImage(backGround, 0, 0, ePlotis, eAukstis);
+  ctx.drawImage(backGround, 0, 0, ePlotis, eAukstis);
   for (let i = 0; i < karei.length; i++) {
     const kare = karei[i];
   }
   // <-- PRIIMAME DABARTINĮ LAIKĄ
   let deltaTime = (currentTime - lastTime) / 1000; // Laiko skirtumas sekundėmis
   lastTime = currentTime; // Atnaujiname laiką kitam ciklui
-
+  
   ////////////////////////////////////////////////////////////
   ///// FPS skaitliukas
   frameCount++;
-
+  
   if (currentTime - lastFpsUpdate >= 1000) {
     // Kas 1 sekundę atnaujina FPS
     fps = frameCount;
@@ -60,15 +67,18 @@ function mainLoop(currentTime) {
     console.log(`FPS: ${fps}`);
   }
   ////////////////////////////////////////////////////////////
-
+  
   ratas++;
   if (ratas > 600) {
     ratas = 0;
-   
+    
   }
+  if (inRound) {
 
   if (priesai.length === 0) {
     raund++;
+    inRound = false;
+    nextRound.style.display = "block";
     kiekPriesu();
     kiekSukurtu = 0;
   } else {
@@ -87,14 +97,23 @@ function mainLoop(currentTime) {
         priesas.plotis,
         priesas.aukstis
       );
+      ctx.fillStyle = "red";
+      ctx.fillRect(
+        priesas.x,
+        priesas.y - 10,
+        (priesas.hp / priesas.fullHp ) * priesas.plotis,
+        5
+      );
 
       priesas.x -= priesas.speed * deltaTime * 60;
     }
   }
+}else{
 
+}
   for (let i = karei.length - 1; i >= 0; i--) {
-    karys = karei[i];
-    if (karys.reloding < karys.atackSpeed) {
+    let karys = karei[i];
+    if (karys.reloding < karys.reloudTime) {
       karys.reloding += deltaTime*60;
       // console.log(karys.reloding)
     } else {
@@ -104,6 +123,7 @@ function mainLoop(currentTime) {
     }
     ctx.drawImage(karys.img, karys.x, karys.y, karys.plotis, karys.aukstis);
   }
+  console.log(priesai.length);
 
   requestAnimationFrame(mainLoop);
 }

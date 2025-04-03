@@ -2,15 +2,16 @@ let inGame = false;
 
 
 function kiekPriesu() {
-    return 1000;
+    return 10 * raund * 0.5 ;
   }
 
 
   function sukurkPriesa(kiek, koki) {
     for (let i = 0; i < kiek; i++) {
+
       priesai.push(
         new Enemy(
-          ePlotis + Math.random() * 1000,
+          ePlotis + Math.random() * 50,
           eAukstis - Math.random() * ySpawnZona - 100,
           50,
           50,
@@ -23,8 +24,8 @@ function kiekPriesu() {
   }
 
 
-  function sukurkKari(x= 50 , y= 50, plotis = 50, aukstis = 50, dmg = 20, atackSpeed = 1, img = "img/archer.jpeg") {
-    karei.push(new Defender(x, y, plotis, aukstis, dmg, atackSpeed, img));
+  function sukurkKari(x= 50 , y= 50, plotis = 50, aukstis = 50, dmg = 20, reloudTime = 1, img = "img/archer.jpeg") {
+    karei.push(new Defender(x, y, plotis, aukstis, dmg, reloudTime, img));
   }
 
 
@@ -63,7 +64,12 @@ function kiekPriesu() {
       popierius.style.display = "none";
     }
   }
+function startRound(){
+   sukurkPriesa(kiekPriesu());
 
+  nextRound.style.display = "none";
+  inRound = true;
+}
   // uskomentuok sia funkcija dirbant ne ant canvas jog neatsirastum is karto zaidime ir priesingai
   // ji yra aktyvi debugavimo metu
   pakeisti();
