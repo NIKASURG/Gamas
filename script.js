@@ -1,16 +1,21 @@
 
-function lockOrientation() {
+function lockOrientationAndFullscreen() {
+  const element = document.documentElement;
+
+  // Jei ekranas horizontaliai, užrakink orientaciją ir įjunk pilną ekraną
   if (screen.orientation) {
-      screen.orientation.lock("landscape").catch((err) => {
-          console.log("Negalima užrakinti ekrano: ", err);
-      });
+      screen.orientation.lock('landscape').then(() => {
+          if (element.requestFullscreen) {
+              element.requestFullscreen();
+          } else if (element.webkitRequestFullscreen) {
+              element.webkitRequestFullscreen();
+          } else if (element.mozRequestFullScreen) {
+              element.mozRequestFullScreen();
+          }
+      }).catch((err) => alert("Nepavyko užrakinti orientacijos: ", err));
   }
 }
 
-// Iškviečiame funkciją, kai puslapis pilnai užsikrauna
-document.addEventListener("DOMContentLoaded", () => {
-  lockOrientation();
-});
 
 
 const popierius = document.getElementById("popierius");
