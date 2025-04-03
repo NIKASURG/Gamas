@@ -1,7 +1,7 @@
 {
     "name": "Mano Žaidimas",
     "short_name": "Žaidimas",
-    "start_url": "/",
+    "start_url": "https://nikasurg.github.io/Gamas/index.html",
     "display": "standalone",
     "background_color": "#000000",
     "theme_color": "#000000",
