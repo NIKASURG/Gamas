@@ -14,7 +14,7 @@ class Defender {
       this.dmg = dmg;
       this.reloudTime = reloudTime;
       this.reloding = 0;
-      this.target = "first";
+      this.target = "random";
 
       this.img = new Image();
       this.img.src = img;
@@ -32,5 +32,24 @@ class Enemy {
       this.fullHp = hp;
       this.img = new Image();
       this.img.src = img;
+  }
+}
+
+class Sovinys {
+  constructor(x, y, targetX, targetY, plotis = 10, aukstis = 10, img = "img/arow.jpeg", judaAukstyn = true, guliLaiko = 30) {
+      this.x = x;
+      this.y = y;
+      this.targetX = targetX;
+      this.targetY = targetY;
+      this.plotis = plotis;
+      this.aukstis = aukstis;
+      this.img = new Image();
+      this.img.src = img;
+      this.judaAukstyn = judaAukstyn;
+      this.guliLaiko = guliLaiko;
+      
+      // Pradinis Y greitis, kad šovinys kiltų į viršų
+      this.pradinisYgreitis = -5; // Neigiamas, kad kiltų aukštyn
+      this.maxAukstis = window.innerHeight / 2; // pusė ekrano aukščio
   }
 }

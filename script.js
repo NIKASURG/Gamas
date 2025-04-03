@@ -12,9 +12,12 @@ const backGround = new Image();
 backGround.src = "img/bg.png";
 
 // console.log(backGround[0]);
-const ePlotis = window.innerWidth;
-const eAukstis = window.innerHeight;
-
+// const ePlotis = window.innerWidth;
+// const eAukstis = window.innerHeight;
+ePlotis =1920
+eAukstis= 993
+console.log(ePlotis);
+console.log(eAukstis);
 popierius.width = ePlotis;
 popierius.height = eAukstis;
 
@@ -37,7 +40,7 @@ let fps = 0;
 let kiekSukurtu = 0;
 const priesai = [];
 const karei = [];
-
+const sovinys = [];
 for (let i = 1; i < 20; i++) {
   
   sukurkKari(50, eAukstis - 50 * i ,50,50,3,10);
@@ -111,20 +114,10 @@ function mainLoop(currentTime) {
 }else{
 
 }
-  for (let i = karei.length - 1; i >= 0; i--) {
-    let karys = karei[i];
-    if (karys.reloding < karys.reloudTime) {
-      karys.reloding += deltaTime*60;
-      // console.log(karys.reloding)
-    } else {
-      karys.reloding = 0;
-      suzeikPriesa(karys.dmg, karys.target);
-
-    }
-    ctx.drawImage(karys.img, karys.x, karys.y, karys.plotis, karys.aukstis);
-  }
+karioLogika(ctx,deltaTime)
   console.log(priesai.length);
-
+  atnaujintiSovinius(ctx);
+  
   requestAnimationFrame(mainLoop);
 }
 
