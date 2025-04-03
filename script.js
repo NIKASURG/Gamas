@@ -16,7 +16,12 @@ function enterFullScreen() {
     element.msRequestFullscreen();
   }
   pakeisti();
-
+  eAukstis = window.innerHeight;
+   ePlotis = eAukstis * 16 / 9;
+  console.log(ePlotis);
+  console.log(eAukstis);
+  popierius.width = ePlotis;
+  popierius.height = eAukstis;
 }
 
 // Priskirkite funkciją mygtukui
@@ -38,8 +43,8 @@ backGround.src = "img/bg.png";
 
 // console.log(backGround[0]);
 // const ePlotis = window.innerWidth;
-const eAukstis = window.innerHeight;
-const ePlotis = eAukstis * 16 / 9;
+let eAukstis = window.innerHeight;
+let ePlotis = eAukstis * 16 / 9;
 console.log(ePlotis);
 console.log(eAukstis);
 popierius.width = ePlotis;
