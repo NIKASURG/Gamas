@@ -17,6 +17,9 @@ function lockOrientationAndFullscreen() {
 }
 
 
+window.addEventListener("load", () => {
+  lockOrientationAndFullscreen();  // Užrakina ekrano orientaciją ir įjungia pilną ekraną
+});
 
 const popierius = document.getElementById("popierius");
 const main = document.getElementById("main");
