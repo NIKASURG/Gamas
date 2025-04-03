@@ -16,9 +16,8 @@ backGround.src = "img/bg.png";
 
 // console.log(backGround[0]);
 // const ePlotis = window.innerWidth;
-// const eAukstis = window.innerHeight;
-ePlotis =1920
-eAukstis= 993
+const eAukstis = window.innerHeight;
+const ePlotis = eAukstis *1.933534743;
 console.log(ePlotis);
 console.log(eAukstis);
 popierius.width = ePlotis;
