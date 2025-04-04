@@ -7,22 +7,145 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
 
-    <title>Document</title>
+    <title>Castle Defender</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="manifest" href="/Gamas/manifest.json" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="turnDeviceNotification"></div>
+
     <div id="main">
-      <h1>sveikas pasauli</h1>
-      <button id="fullScreen">To the game</button>
+      <div class="scroll-container">
+        <h1 class="game-title">Castle Defender</h1>
+        <button id="playButton" class="menu-button">Play</button>
+        <button id="settingsButton" class="menu-button">Settings</button>
+        <button id="creditsButton" class="menu-button">Credits</button>
+      </div>
     </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" id="closeSettings">&times;</span>
+        <h2 class="game-title" style="font-size: 2rem">Settings</h2>
+        <div class="settings-panel">
+          <div class="settings-option">
+            <label for="musicVolume">Music Volume</label>
+            <input type="range" id="musicVolume" min="0" max="100" value="70" />
+          </div>
+          <div class="settings-option">
+            <label for="sfxVolume">SFX Volume</label>
+            <input type="range" id="sfxVolume" min="0" max="100" value="80" />
+          </div>
+          <div class="settings-option">
+            <label for="fullscreenToggle">Fullscreen</label>
+            <input type="checkbox" id="fullscreenToggle" />
+          </div>
+          <button id="saveSettings" class="menu-button">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Credits Modal -->
+    <div id="creditsModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" id="closeCredits">&times;</span>
+        <h2 class="game-title" style="font-size: 2rem">Credits</h2>
+        <div style="text-align: center; margin-top: 20px">
+          <p><strong>Game Design & Development</strong><br />Your Name</p>
+          <p><strong>Artwork</strong><br />Your Artist</p>
+          <p><strong>Music & Sound Effects</strong><br />Your Sound Designer</p>
+          <p>
+            <strong>Special Thanks</strong><br />To everyone who supported this
+            project
+          </p>
+          <p style="margin-top: 30px">© 2025 Castle Defender</p>
+        </div>
+      </div>
+    </div>
+
     <div id="container" class="container">
+      <button id="menuButton">Menu</button>
       <canvas id="popierius"> </canvas>
     </div>
+
+    <script src="js/builder.js"></script>
+    <script src="js/funkcijos.js"></script>
+    <script src="script.js"></script>
+    <script src="js/service-worker.js"></script>
+    <script>
+      document
+        .getElementById("settingsButton")
+        .addEventListener("click", function () {
+          document.getElementById("settingsModal").style.display = "flex";
+        });
+
+      document
+        .getElementById("creditsButton")
+        .addEventListener("click", function () {
+          document.getElementById("creditsModal").style.display = "flex";
+        });
+
+      document
+        .getElementById("closeSettings")
+        .addEventListener("click", function () {
+          document.getElementById("settingsModal").style.display = "none";
+        });
+
+      document
+        .getElementById("closeCredits")
+        .addEventListener("click", function () {
+          document.getElementById("creditsModal").style.display = "none";
+        });
+
+      document
+        .getElementById("playButton")
+        .addEventListener("click", function () {
+          document.getElementById("main").style.opacity = "0";
+
+          // Show the game container
+          const container = document.getElementById("container");
+          container.style.opacity = "1";
+          container.style.zIndex = "15";
+
+          const canvas = document.getElementById("popierius");
+          canvas.style.display = "block";
+
+          if (typeof updateCanvasSize === "function") {
+            updateCanvasSize();
+          }
+
+          setTimeout(function () {
+            document.getElementById("main").style.display = "none";
+          }, 500);
+        });
+
+      document
+        .getElementById("menuButton")
+        .addEventListener("click", function () {
+          // Show the main menu
+          document.getElementById("main").style.display = "flex";
+          document.getElementById("main").style.opacity = "1";
+
+          // Hide the game container
+          document.getElementById("container").style.opacity = "0";
+
+          // Hide the Next Round button specifically
+          const nextRoundButton = document.querySelector("body > button");
+          if (nextRoundButton) {
+            nextRoundButton.style.display = "none";
+          }
+
+          setTimeout(function () {
+            document.getElementById("container").style.zIndex = "5";
+          }, 500);
+        });
+    </script>
   </body>
-  <script src="js/builder.js"></script>
-  <script src="js/funkcijos.js"></script>
-  <script src="script.js"></script>
-  <script src="js/service-worker.js"></script>
 </html>

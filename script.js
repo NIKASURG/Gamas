@@ -1,13 +1,92 @@
-// Paimkite mygtuką pagal ID
-const fullScreenButton = document.getElementById("fullScreen");
+// Initialize variables at the top
+let eAukstis = window.innerHeight;
+let ePlotis = (eAukstis * 16) / 9;
+let rotateImage;
+let fullScreenButton;
+let popierius;
+let main;
+let container;
+let nextRound;
+let ctx;
+let raund = 1;
+let ySpawnZona;
+let ratas = 0;
+let inRound = false;
+let lastTime = performance.now();
+let lastFpsUpdate = lastTime;
+let frameCount = 0;
+let fps = 0;
+let kiekSukurtu = 0;
+const priesai = [];
+const karei = [];
+const sovinys = [];
+const backGround = new Image();
+backGround.src = "img/bg.png";
+
+// Wait for DOM to be fully loaded before accessing elements
+document.addEventListener("DOMContentLoaded", function () {
+  // Initialize elements
+  fullScreenButton = document.getElementById("fullScreen");
+  rotateImage = document.getElementById("turnDeviceNotification");
+  popierius = document.getElementById("popierius");
+  main = document.getElementById("main");
+  container = document.getElementById("container");
+
+  // Create next round button but keep it hidden initially
+  nextRound = document.createElement("button");
+  nextRound.innerText = "Next Round";
+  nextRound.style.display = "none"; // Hide button initially
+  document.body.appendChild(nextRound);
+
+  // Set up event listeners
+  if (fullScreenButton) {
+    fullScreenButton.addEventListener("click", enterFullScreen);
+  }
+
+  if (nextRound) {
+    nextRound.addEventListener("click", startRound);
+  }
+
+  // Add event listener to play button to show game
+  const playButton = document.getElementById("playButton");
+  if (playButton) {
+    playButton.addEventListener("click", function () {
+      // Start the first round when Play is clicked
+      inRound = true;
+    });
+  }
+
+  if (screen.orientation) {
+    screen.orientation.addEventListener("change", () => {
+      pasukRageli();
+    });
+  }
+
+  // Initialize canvas
+  if (popierius) {
+    ctx = popierius.getContext("2d");
+    updateCanvasSize();
+
+    // Initialize game variables
+    ySpawnZona = eAukstis / 4;
+
+    // Create initial characters
+    for (let i = 1; i < 3; i++) {
+      sukurkKari(50, eAukstis - 50 * i, 50, 50, 3, 10);
+    }
+
+    // Start the game loop
+    requestAnimationFrame(mainLoop);
+  }
+
+  // Call initial functions
+  pasukRageli();
+
+  // Add window resize listener
+  window.addEventListener("resize", updateCanvasSize);
+});
 
 // Funkcija, kuri įjungia pilną ekraną
-// Funkcija, kuri įjungia pilną ekraną'
-let rotateImage = document.getElementById("turnDeviceNotification");
-screen.orientation.addEventListener("change", () => {
-  pasukRageli();
-});
-pasukRageli();
 function enterFullScreen() {
   const element = document.documentElement; // Pagrindinis elementas (HTML)
 
@@ -24,7 +103,10 @@ function enterFullScreen() {
     // IE/Edge
     element.msRequestFullscreen();
   }
-  pakeisti();
+
+  if (typeof pakeisti === "function") {
+    pakeisti();
+  }
 
   // Atinaujinti canvas dydį
   updateCanvasSize();
@@ -32,6 +114,8 @@ function enterFullScreen() {
 
 // Funkcija, kuri atnaujina canvas dydį pagal lango dydį
 function updateCanvasSize() {
+  if (!popierius) return;
+
   eAukstis = window.innerHeight;
   ePlotis = (eAukstis * 16) / 9;
   if (eAukstis > window.innerWidth) {
@@ -43,69 +127,72 @@ function updateCanvasSize() {
   console.log("Canvas size updated: " + ePlotis, eAukstis);
 }
 
-// Stebime lango dydžio pasikeitimus ir atnaujiname canvas dydį
-window.addEventListener("resize", updateCanvasSize);
+// Placeholder for functions that might be defined elsewhere
+function pasukRageli() {
+  // Implementation will be added later or is defined elsewhere
+  console.log("Device orientation changed");
+}
 
-// Priskirkite funkciją mygtukui
-fullScreenButton.addEventListener("click", enterFullScreen);
+function startRound() {
+  // Implementation will be added later or is defined elsewhere
+  console.log("Starting new round");
+  inRound = true;
+  if (nextRound) {
+    nextRound.style.display = "none";
+  }
 
-const popierius = document.getElementById("popierius");
-const main = document.getElementById("main");
-const container = document.getElementById("container");
+  // Add some enemies for testing
+  if (priesai.length === 0) {
+    // Create a test enemy if none exist
+    createTestEnemy();
+  }
+}
 
-const nextRound = document.createElement("button");
-nextRound.innerText = "Next Round";
-document.body.appendChild(nextRound);
+// Function to create a test enemy
+function createTestEnemy() {
+  const testEnemy = {
+    x: ePlotis,
+    y: eAukstis / 2,
+    plotis: 50,
+    aukstis: 50,
+    hp: 100,
+    fullHp: 100,
+    speed: 2,
+    img: new Image(),
+  };
+  testEnemy.img.src = "img/bg.png"; // Use background as placeholder
+  priesai.push(testEnemy);
+}
 
-nextRound.addEventListener("click", startRound);
+function sukurkKari(x, y, width, height, speed, damage) {
+  // Implementation will be added later or is defined elsewhere
+  karei.push({ x, y, width, height, speed, damage });
+}
 
-const backGround = new Image();
-backGround.src = "img/bg.png";
+function kiekPriesu() {
+  // Implementation will be added later or is defined elsewhere
+  console.log("Calculating enemies");
+}
 
-// console.log(backGround[0]);
-// const ePlotis = window.innerWidth;
-let eAukstis = window.innerHeight;
-let ePlotis = (eAukstis * 16) / 9;
-console.log(ePlotis);
-console.log(eAukstis);
-popierius.width = ePlotis;
-popierius.height = eAukstis;
+function karioLogika(ctx, deltaTime) {
+  // Implementation will be added later or is defined elsewhere
+  for (let i = 0; i < karei.length; i++) {
+    const kare = karei[i];
+    // Logic for characters
+  }
+}
 
-const ctx = popierius.getContext("2d");
-let raund = 1;
-let ySpawnZona = eAukstis / 4;
-let ratas = 0;
-
-inRound = false;
-///////////////////////
-//GPT fps counter
-let lastTime = performance.now();
-let lastFpsUpdate = lastTime;
-let frameCount = 0;
-let fps = 0;
-
-///////////////
-
-let kiekSukurtu = 0;
-const priesai = [];
-const karei = [];
-const sovinys = [];
-for (let i = 1; i < 3; i++) {
-  sukurkKari(50, eAukstis - 50 * i, 50, 50, 3, 10);
+function atnaujintiSovinius(ctx) {
+  // Implementation will be added later or is defined elsewhere
+  // Logic for bullets
 }
 
 function mainLoop(currentTime) {
-  if (!document.mozFullScreen && !document.webkitIsFullScreen) {
-    //FullScreen is disabled
-  } else {
-    //FullScreen is enabled
-  }
+  if (!ctx || !popierius) return;
 
   ctx.clearRect(0, 0, ePlotis, eAukstis);
   ctx.drawImage(backGround, 0, 0, ePlotis, eAukstis);
-  for (let i = 0; i < karei.length; i++) {
-    const kare = karei[i];
-  }
+
   // <-- PRIIMAME DABARTINĮ LAIKĄ
   let deltaTime = (currentTime - lastTime) / 1000; // Laiko skirtumas sekundėmis
   lastTime = currentTime; // Atnaujiname laiką kitam ciklui
@@ -127,11 +214,15 @@ function mainLoop(currentTime) {
   if (ratas > 600) {
     ratas = 0;
   }
+
   if (inRound) {
     if (priesai.length === 0) {
       raund++;
       inRound = false;
-      nextRound.style.display = "block";
+      if (nextRound) {
+        nextRound.style.display = "block";
+        console.log("Next Round button should be visible now");
+      }
       kiekPriesu();
       kiekSukurtu = 0;
     } else {
@@ -161,13 +252,11 @@ function mainLoop(currentTime) {
         priesas.x -= priesas.speed * deltaTime * 60;
       }
     }
-  } else {
   }
+
   karioLogika(ctx, deltaTime);
   console.log(priesai.length);
   atnaujintiSovinius(ctx);
 
   requestAnimationFrame(mainLoop);
 }
-
-requestAnimationFrame(mainLoop);
