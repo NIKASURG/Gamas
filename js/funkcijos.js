@@ -66,7 +66,31 @@ function kiekPriesu() {
     sovinys.push(new Sovinys(startX, startY, priesas.x, priesas.y + priesas.aukstis / 2, 20, 20, img, false, 30, -5, speedX, speedY));
 }
 
+function pasukRageli(){
 
+  switch (window.orientation) {
+    case 0:
+      rotateImage.style.display = "block";
+      
+      break;
+      
+      case 180:
+        rotateImage.style.display = "block";
+        break;
+        
+        case 90:
+          // The device is in landscape now
+        rotateImage.style.display = "none";
+          
+          break;
+          
+          case -90:
+            // The device is in landscape now
+        rotateImage.style.display = "none";
+            
+            break;
+          }
+        }
 
 
   function pakeisti() {
