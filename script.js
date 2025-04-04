@@ -5,9 +5,9 @@ const fullScreenButton = document.getElementById("fullScreen");
 // Funkcija, kuri įjungia pilną ekraną'
 let rotateImage = document.getElementById("turnDeviceNotification");
 screen.orientation.addEventListener("change", () => {
-  pasukRageli()
-}); 
-pasukRageli()
+  pasukRageli();
+});
+pasukRageli();
 function enterFullScreen() {
   const element = document.documentElement; // Pagrindinis elementas (HTML)
 
@@ -53,7 +53,6 @@ const popierius = document.getElementById("popierius");
 const main = document.getElementById("main");
 const container = document.getElementById("container");
 
-
 const nextRound = document.createElement("button");
 nextRound.innerText = "Next Round";
 document.body.appendChild(nextRound);
@@ -91,17 +90,17 @@ let kiekSukurtu = 0;
 const priesai = [];
 const karei = [];
 const sovinys = [];
-for (let i = 1; i < 20; i++) {
+for (let i = 1; i < 3; i++) {
   sukurkKari(50, eAukstis - 50 * i, 50, 50, 3, 10);
 }
 
 function mainLoop(currentTime) {
-  if ((!document.mozFullScreen && !document.webkitIsFullScreen)) {
+  if (!document.mozFullScreen && !document.webkitIsFullScreen) {
     //FullScreen is disabled
- } else {
+  } else {
     //FullScreen is enabled
- }
- 
+  }
+
   ctx.clearRect(0, 0, ePlotis, eAukstis);
   ctx.drawImage(backGround, 0, 0, ePlotis, eAukstis);
   for (let i = 0; i < karei.length; i++) {
