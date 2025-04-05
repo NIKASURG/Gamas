@@ -9,7 +9,7 @@
 
     <title>Castle Defender</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="manifest" href="manifest.json" />
+    <!-- <link rel="manifest" href="manifest.json" /> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,7 +23,7 @@
     <div id="main">
       <div class="scroll-container">
         <h1 class="game-title">Castle Defender</h1>
-        <button id="playButton" class="menu-button">Play</button>
+        <button  id="playButton" class="menu-button" onclick="pakeisti()">Play</button>
         <button id="settingsButton" class="menu-button">Settings</button>
         <button id="creditsButton" class="menu-button">Credits</button>
       </div>
@@ -71,14 +71,13 @@
     </div>
 
     <div id="container" class="container">
-      <button id="menuButton">Menu</button>
+      <button  id="menuButton">Menu</button>
       <canvas id="popierius"> </canvas>
     </div>
 
     <script src="js/builder.js"></script>
     <script src="js/funkcijos.js"></script>
     <script src="script.js"></script>
-    <script src="js/service-worker.js"></script>
     <script>
       document
         .getElementById("settingsButton")
@@ -137,7 +136,7 @@
           document.getElementById("container").style.opacity = "0";
 
           // Hide the Next Round button specifically
-          const nextRoundButton = document.querySelector("body > button");
+          const nextRoundButton = document.getElementById("nextRound");
           if (nextRoundButton) {
             nextRoundButton.style.display = "none";
           }
