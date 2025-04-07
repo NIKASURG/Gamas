@@ -73,7 +73,7 @@
     </div>
 
     <div id="container" class="container">
-      <button id="menuButton">Menu</button>
+      <button id="menuButton" onclick="pakeisti()">Menu</button>
       <canvas id="popierius"> </canvas>
     </div>
 
@@ -138,10 +138,7 @@
           document.getElementById("container").style.opacity = "0";
 
           // Hide the Next Round button specifically
-          const nextRoundButton = document.getElementById("nextRound");
-          if (nextRoundButton) {
-            nextRoundButton.style.display = "none";
-          }
+
 
           setTimeout(function () {
             document.getElementById("container").style.zIndex = "5";

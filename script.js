@@ -13,6 +13,7 @@ const container = document.getElementById("container");
 const nextRound = document.createElement("button");
 nextRound.id = "nextRound";
 nextRound.innerText = "Next Round";
+nextRound.style.display = "none";
 document.body.appendChild(nextRound);
 nextRound.addEventListener("click", startRound);
 

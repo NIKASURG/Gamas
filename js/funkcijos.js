@@ -102,14 +102,20 @@ function pakeisti() {
   if (inGame) {
     popierius.style.display = "block";
     main.style.display = "none";
+    console.log(nextRound)
+    nextRound.style.display = "block";
+    
   } else {
     main.style.display = "block";
     popierius.style.display = "none";
+    nextRound.style.display = "none";
+
   }
   if (!(document.fullscreenElement != null)) {
     document.documentElement.requestFullscreen();
    
   }
+
 }
 
 function startRound() {
