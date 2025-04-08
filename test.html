@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strėlės Animacija</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="400"></canvas>
+    
+    <script>
+        // Pagrindinis HTML Canvas ir kontekstas
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Parametrai
+        const gravity = 0.1; // Gravitacijos stiprumas
+        let arrowX = 50; // Strėlės pradinė X pozicija
+        let arrowY = canvas.height - 50; // Strėlės pradinė Y pozicija
+        let arrowSpeedX = 5; // Strėlės horizontali greitis
+        let arrowSpeedY = -5; // Pradinis vertikalus greitis (kilimas)
+        let isFlying = true; // Ar strėlė dar skrenda
+
+        // Atvaizduojame strėlę
+        function drawArrow(x, y) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + 20, y - 10); // Strėlės viršūnė
+            ctx.lineTo(x + 20, y + 10); // Strėlės apačia
+            ctx.closePath();
+            ctx.fillStyle = 'black';
+            ctx.fill();
+        }
+
+        // Pagrindinė animacija
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Išvalo ekraną
+
+            if (isFlying) {
+                // Judame strėlę į priekį
+                arrowX += arrowSpeedX;
+                arrowY += arrowSpeedY;
+
+                // Taikome gravitaciją
+                arrowSpeedY += gravity;
+
+                // Patikriname, ar strėlė pasiekė žemę
+                if (arrowY > canvas.height - 10) {
+                    arrowY = canvas.height - 10; // Užfiksuojame strėlę ant žemės
+                    arrowSpeedY = 0; // Nustojame vertikalų judėjimą
+                    isFlying = false; // Strėlė nebėra ore
+                }
+            }
+
+            drawArrow(arrowX, arrowY); // Nubrėžiam strėlę
+
+            // Tęsiame animaciją
+            requestAnimationFrame(animate);
+        }
+
+        // Pradedame animaciją
+        animate();
+    </script>
+</body>
+</html>
