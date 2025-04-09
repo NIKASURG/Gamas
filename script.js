@@ -7,6 +7,9 @@ const popierius = document.getElementById("popierius");
 const main = document.getElementById("main");
 const container = document.getElementById("container");
 
+
+
+
 ///////////////////////////////
 // Mygtukų kūrimas ir event'ai
 ///////////////////////////////
@@ -16,6 +19,9 @@ nextRound.innerText = "Next Round";
 nextRound.style.display = "none";
 document.body.appendChild(nextRound);
 nextRound.addEventListener("click", startRound);
+
+
+
 
 screen.orientation.addEventListener("change", () => {
   pasukRageli();
@@ -54,6 +60,22 @@ let eAukstis = window.innerHeight;
 let ePlotis = (eAukstis * 16) / 9;
 console.log(ePlotis, eAukstis);
 
+
+function updateGrid(){
+
+  grild = [{
+    x: ePlotis / 8,
+    y: eAukstis / 4 * 3
+  },
+  
+  {
+    x: ePlotis / 6,
+    y: ePlotis/ 4 * 3
+  }
+]
+}
+updateGrid()
+console.log(grild[0]);
 popierius.width = ePlotis;
 popierius.height = eAukstis;
 
@@ -74,6 +96,8 @@ const sovinys = [];
 
 let firstLoud = 0;
 
+let scaleX = 1;
+let scaleY = 1;
 ///////////////////////////////
 // FPS skaitliukas
 ///////////////////////////////
@@ -109,7 +133,7 @@ function mainLoop(currentTime) {
     lastFpsUpdate = currentTime;
     console.log(`FPS: ${fps}`);
   }
-
+  ctx.fillRect(grild[0].x, grild[0].y, 50, 50);
   ratas++;
   if (ratas > 600) ratas = 0;
 
@@ -130,16 +154,16 @@ function mainLoop(currentTime) {
 
         ctx.drawImage(
           priesas.img,
-          priesas.x,
-          priesas.y,
+          priesas.x * scaleX,
+          priesas.y * scaleY,
           priesas.plotis,
           priesas.aukstis
         );
 
         ctx.fillStyle = "red";
         ctx.fillRect(
-          priesas.x,
-          priesas.y - 10,
+          priesas.x * scaleX,
+          priesas.y - 10 * scaleY,
           (priesas.hp / priesas.fullHp) * priesas.plotis,
           5
         );
@@ -148,9 +172,9 @@ function mainLoop(currentTime) {
       }
     }
   }
-
+  // console.log(ePlotis,eAukstis)
   karioLogika(ctx, deltaTime);
-  console.log(priesai.length);
+  // console.log(priesai.length);
   atnaujintiSovinius(ctx);
 
   requestAnimationFrame(mainLoop);

@@ -70,18 +70,33 @@ function updateCanvasSize() {
     eAukstis = window.innerHeight;
     ePlotis = (eAukstis * 16) / 9;
   }
+  updateGrid()
+  // Priklausomai nuo lango dydžio, nustatomas naujas canvas dydis
+
+
+  // Atnaujinami seni canvas dydžiai
+  oldPlotis = ePlotis;
+  oldAukstis = eAukstis;
+
+  // Atnaujinami canvas parametrai
   popierius.width = ePlotis;
   popierius.height = eAukstis;
+
+  // Apskaičiuojami skalavimo santykiai
+  scaleX = ePlotis / oldPlotis;
+  scaleY = eAukstis / oldAukstis;
+
+  // Pirmą kartą sukuriami karių būriai
   firstLoud++;
-  if(firstLoud ===2) {
-    for (let i = 1; i < 7; i++) {
-      for (let j = 1; j < 9; j++) {
-        
-        sukurkKari(eAukstis / 20 * j,eAukstis- (eAukstis / 20  * i) , eAukstis / 20, eAukstis / 20, 10, 30);
+  if(firstLoud === 2) {
+    for (let i = 1; i < 2; i++) {
+      for (let j = 1; j < 2; j++) {
+        sukurkKari(eAukstis / 20 * j, eAukstis - (eAukstis / 20 * i), eAukstis / 20, eAukstis / 20, 10, 30);
       }
     }
   }
 }
+
 
 function pasukRageli() {
   switch (window.orientation) {
@@ -102,7 +117,7 @@ function pakeisti() {
   if (inGame) {
     popierius.style.display = "block";
     main.style.display = "none";
-    console.log(nextRound)
+    // console.log(nextRound)
     nextRound.style.display = "block";
     
   } else {
@@ -128,7 +143,7 @@ function startRound() {
 function atnaujintiSovinius(ctx) {
   for (let i = sovinys.length - 1; i >= 0; i--) {
     let sv = sovinys[i];
-    ctx.drawImage(sv.img, sv.x, sv.y, sv.plotis, sv.aukstis);
+    ctx.drawImage(sv.img, sv.x * scaleX, sv.y * scaleY, sv.plotis, sv.aukstis);
     if (sv.guliLaiko > 0) {
       sv.guliLaiko--;
       continue;
@@ -159,6 +174,6 @@ function karioLogika(ctx, deltaTime) {
       karys.reloding = 0;
       suzeikPriesa(karys.dmg, karys.target, 'img/arow.png', i);
     }
-    ctx.drawImage(karys.img, karys.x, karys.y, karys.plotis, karys.aukstis);
+    ctx.drawImage(karys.img, karys.x * scaleX, karys.y * scaleY, karys.plotis, karys.aukstis);
   }
 }
