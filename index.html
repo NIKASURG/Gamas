@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <!-- Settings Modal -->
+    <!-- Settings -->
     <div id="settingsModal" class="modal">
       <div class="modal-content">
         <span class="close-button" id="closeSettings">&times;</span>
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <!-- Credits Modal -->
+    <!-- Credits -->
     <div id="creditsModal" class="modal">
       <div class="modal-content">
         <span class="close-button" id="closeCredits">&times;</span>
@@ -72,8 +72,43 @@
       </div>
     </div>
 
+    <!-- Shop -->
+    <div id="shopModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" id="closeShop">&times;</span>
+        <h2 class="game-title" style="font-size: 2rem">Shop</h2>
+        <div class="shop-items">
+          <div class="shop-item">
+            <img
+              src="img/archer.jpeg"
+              alt="Better Archer"
+              width="50"
+              height="50"
+            />
+            <h3>Better Archer</h3>
+            <p>Damage: +5</p>
+            <p>Cost: 100 gold</p>
+            <button class="buy-button" data-item="archer">Buy</button>
+          </div>
+          <div class="shop-item">
+            <img
+              src="img/arow.png"
+              alt="Improved Arrows"
+              width="50"
+              height="50"
+            />
+            <h3>Improved Arrows</h3>
+            <p>Speed: +10%</p>
+            <p>Cost: 75 gold</p>
+            <button class="buy-button" data-item="arrows">Buy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="container" class="container">
       <button id="menuButton" onclick="pakeisti()">Menu</button>
+      <button id="shopButton">Shop</button>
       <canvas id="popierius"> </canvas>
     </div>
 
@@ -139,10 +174,21 @@
 
           // Hide the Next Round button specifically
 
-
           setTimeout(function () {
             document.getElementById("container").style.zIndex = "5";
           }, 500);
+        });
+
+      document
+        .getElementById("shopButton")
+        .addEventListener("click", function () {
+          document.getElementById("shopModal").style.display = "flex";
+        });
+
+      document
+        .getElementById("closeShop")
+        .addEventListener("click", function () {
+          document.getElementById("shopModal").style.display = "none";
         });
     </script>
   </body>
