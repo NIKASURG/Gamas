@@ -1,4 +1,3 @@
-
 let inGame = false;
 
 function kiekPriesu() {
@@ -21,7 +20,15 @@ function sukurkPriesa(kiek, koki) {
   }
 }
 
-function sukurkKari(x = 50, y = 50, plotis = 50, aukstis = 50, dmg = 20, reloudTime = 1, img = "img/archer.jpeg") {
+function sukurkKari(
+  x = 50,
+  y = 50,
+  plotis = 50,
+  aukstis = 50,
+  dmg = 20,
+  reloudTime = 1,
+  img = "img/archer.jpeg"
+) {
   karei.push(new Defender(x, y, plotis, aukstis, dmg, reloudTime, img));
 }
 
@@ -53,13 +60,28 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0) {
   let startX = karei[karioIndex].x + karei[karioIndex].plotis;
   let startY = karei[karioIndex].y + karei[karioIndex].aukstis / 2;
   let distX = priesas.x - startX;
-  let distY = (priesas.y + priesas.aukstis / 2) - startY;
+  let distY = priesas.y + priesas.aukstis / 2 - startY;
   let distance = Math.sqrt(distX * distX + distY * distY);
   let speed = 1;
   let speedX = (distX / distance) * speed;
   let speedY = (distY / distance) * speed;
 
-  sovinys.push(new Sovinys(startX, startY, priesas.x, priesas.y + priesas.aukstis / 2, 20, 20, img, false, 30, -5, speedX, speedY));
+  sovinys.push(
+    new Sovinys(
+      startX,
+      startY,
+      priesas.x,
+      priesas.y + priesas.aukstis / 2,
+      20,
+      20,
+      img,
+      false,
+      30,
+      -5,
+      speedX,
+      speedY
+    )
+  );
 }
 
 function updateCanvasSize() {
@@ -73,11 +95,17 @@ function updateCanvasSize() {
   popierius.width = ePlotis;
   popierius.height = eAukstis;
   firstLoud++;
-  if(firstLoud ===2) {
+  if (firstLoud === 2) {
     for (let i = 1; i < 7; i++) {
       for (let j = 1; j < 9; j++) {
-        
-        sukurkKari(eAukstis / 20 * j,eAukstis- (eAukstis / 20  * i) , eAukstis / 20, eAukstis / 20, 10, 30);
+        sukurkKari(
+          (eAukstis / 20) * j,
+          eAukstis - (eAukstis / 20) * i,
+          eAukstis / 20,
+          eAukstis / 20,
+          10,
+          30
+        );
       }
     }
   }
@@ -94,7 +122,6 @@ function pasukRageli() {
       rotateImage.style.display = "none";
       break;
   }
-  
 }
 
 function pakeisti() {
@@ -102,20 +129,16 @@ function pakeisti() {
   if (inGame) {
     popierius.style.display = "block";
     main.style.display = "none";
-    console.log(nextRound)
+    console.log(nextRound);
     nextRound.style.display = "block";
-    
   } else {
     main.style.display = "block";
     popierius.style.display = "none";
     nextRound.style.display = "none";
-
   }
   if (!(document.fullscreenElement != null)) {
     document.documentElement.requestFullscreen();
-   
   }
-
 }
 
 function startRound() {
@@ -123,7 +146,6 @@ function startRound() {
   nextRound.style.display = "none";
   inRound = true;
 }
-
 
 function atnaujintiSovinius(ctx) {
   for (let i = sovinys.length - 1; i >= 0; i--) {
@@ -157,7 +179,7 @@ function karioLogika(ctx, deltaTime) {
       karys.reloding += deltaTime * 60;
     } else {
       karys.reloding = 0;
-      suzeikPriesa(karys.dmg, karys.target, 'img/arow.png', i);
+      suzeikPriesa(karys.dmg, karys.target, "img/arow.png", i);
     }
     ctx.drawImage(karys.img, karys.x, karys.y, karys.plotis, karys.aukstis);
   }
