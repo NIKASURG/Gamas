@@ -54,8 +54,8 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
     default:
       return;
   }
+  console.log(priesas)
 
-  priesas.hp -= dmg;
 
   let startX = karei[karioIndex].x + karei[karioIndex].plotis;
   let startY = karei[karioIndex].y + karei[karioIndex].aukstis / 2;
@@ -70,7 +70,7 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
     new Sovinys(
       grild[karys.pozicija].x + karys.x * grild[karys.pozicija].p,
       grild[karys.pozicija].y + karys.y * grild[karys.pozicija].p,
-
+      
       priesas.x - 20,
       priesas.y,
       20,
@@ -79,9 +79,9 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
       img,
       false,
       30,
-      -5,
-      speedX,
-      speedY
+      dmg,
+      priesas
+     
     )
   );
 }
@@ -162,7 +162,8 @@ function pakeisti() {
 function startRound() {
   sukurkPriesa(kiekPriesu());
   nextRound.style.display = "none";
-  inRound = true;
+    inRound = true;
+    sovinys.length= 0;
 }
 function atnaujintiSovinius(ctx) {
   for (let i = sovinys.length - 1; i >= 0; i--) {
@@ -170,10 +171,6 @@ function atnaujintiSovinius(ctx) {
 
     ctx.drawImage(sv.img, sv.x, sv.y, sv.plotis, sv.aukstis);
 
-    if (sv.guliLaiko > 0) {
-      sv.guliLaiko--;
-      continue;
-    }
 
     // Jei dar nėra trajektorijos – apskaičiuojam
     if (!sv.trajektorija) {
@@ -182,7 +179,6 @@ function atnaujintiSovinius(ctx) {
       const end = { x: sv.targetX, y: sv.targetY };
       sv.trajektorija = gautiParabolesFunkcija(start, current, end);
       sv.kryptis = sv.targetX > sv.x ? 1 : -1;
-      sv.greitis = 3; // Galima keisti kaip nori
     }
 
     // Judėjimas parabolės trajektorija
@@ -191,7 +187,17 @@ function atnaujintiSovinius(ctx) {
 
     // Jei šovinys arti taikinio, jį pašalina
     if (Math.abs(sv.x - sv.targetX) < 2 && Math.abs(sv.y - sv.targetY) < 2) {
-      sovinys.splice(i, 1);
+          sv.priesas.hp -= 5;
+          if(sv.priesas.hp < 0) {
+            sv.greitis = 0;
+            sv.priesas = false;
+            sv.img.src = "img/ismigusiStrele.png";
+          }
+          if(sv.priesas){
+
+            sovinys.splice(i, 1);
+          }
+
     }
   }
 }

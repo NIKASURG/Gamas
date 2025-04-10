@@ -6,16 +6,25 @@
 // plotis ir aukstis defaultas yra 50, tai reiskia kad kareivis bus 50px x 50px
 
 class Defender {
-  constructor(x, y, plotis = 50, aukstis = 50, dmg = 20, reloudTime = 1, img = "default_soldier.png", pozicija = 0) {
-      this.x = x;
-      this.y = y;
-      this.plotis = plotis;
-      this.aukstis = aukstis;
-      this.dmg = dmg;
-      this.reloudTime = reloudTime;
-      this.pozicija = pozicija;
-      this.reloding = 0;
-      this.target = "random";
+  constructor(
+    x,
+    y,
+    plotis = 50,
+    aukstis = 50,
+    dmg = 20,
+    reloudTime = 1,
+    img = "default_soldier.png",
+    pozicija = 0
+  ) {
+    this.x = x;
+    this.y = y;
+    this.plotis = plotis;
+    this.aukstis = aukstis;
+    this.dmg = dmg;
+    this.reloudTime = reloudTime;
+    this.pozicija = pozicija;
+    this.reloding = 0;
+    this.target = "random";
 
     this.img = new Image();
     this.img.src = img;
@@ -54,7 +63,9 @@ class Sovinys {
     aukstis = 10,
     img = "img/arow.jpeg",
     judaAukstyn = true,
-    guliLaiko = 30
+    guliLaiko = 300,
+    dmg,
+    priesas = null
   ) {
     this.x = x;
     this.y = y;
@@ -66,7 +77,10 @@ class Sovinys {
     this.img.src = img;
     this.judaAukstyn = judaAukstyn;
     this.guliLaiko = guliLaiko;
-    this.asReikalingas = true
+    this.asReikalingas = true;
+    this.dmg = dmg;
+    this.priesas = priesas;
+    this.greitis = 3;
     // Pradinis Y greitis, kad šovinys kiltų į viršų
     this.pradinisYgreitis = -5; // Neigiamas, kad kiltų aukštyn
     this.maxAukstis = window.innerHeight / 2; // pusė ekrano aukščio

@@ -59,6 +59,7 @@ backGround.src = "img/bg.png";
 let eAukstis = window.innerHeight;
 let ePlotis = (eAukstis * 16) / 9;
 
+let grild = [];
 
 
 function updateGrid(){
