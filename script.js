@@ -58,15 +58,16 @@ backGround.src = "img/bg.png";
 
 let eAukstis = window.innerHeight;
 let ePlotis = (eAukstis * 16) / 9;
-
+let statrtMonsterHp = 0;
+let roundHp = 0;
 let grild = [];
 
 
 function updateGrid(){
 
   grild = [{
-    x: ePlotis / 8,
-    y: eAukstis / 1.36,
+    x: ePlotis / 300,
+    y: eAukstis / 1.42,
     p: eAukstis / 32,
   },
   
@@ -87,7 +88,6 @@ const ctx = popierius.getContext("2d");
 // Žaidimo kintamieji
 ///////////////////////////////
 let raund = 1;
-let ySpawnZona = eAukstis / 4;
 let ratas = 0;
 inRound = false;
 
@@ -139,6 +139,8 @@ function mainLoop(currentTime) {
 
   if (inRound) {
     if (priesai.length === 0) {
+      statrtMonsterHp = 0;
+
       raund++;
       inRound = false;
       nextRound.style.display = "block";
@@ -172,12 +174,24 @@ function mainLoop(currentTime) {
       }
     }
   }
-  
+  roundHp = 0;
+  for (let i = 0; i < priesai.length; i++) {
+    roundHp += priesai[i].hp;
+    
+  }
 
   // console.log(ePlotis,eAukstis)
   karioLogika(ctx, deltaTime);
   // console.log(priesai.length);
   ctx.font = '22px Arial';
+  // Pirma nupiešiam pilką foną
+ctx.fillStyle = "#333";
+ctx.fillRect(ePlotis / 4, eAukstis / 10, ePlotis / 2, eAukstis / 100);
+
+// Tada nupiešiam raudoną gyvybių kiekį
+ctx.fillStyle = "red";
+console.log(roundHp , statrtMonsterHp)
+ctx.fillRect(ePlotis / 4, eAukstis / 10, (roundHp / statrtMonsterHp) * (ePlotis / 2), eAukstis/100);
 
   ctx.fillText(fps+ ' Fps',ePlotis / 8,eAukstis / 10);
   atnaujintiSovinius(ctx);

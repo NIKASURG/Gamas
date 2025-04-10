@@ -5,19 +5,24 @@ function kiekPriesu() {
 }
 
 function sukurkPriesa(kiek, koki) {
+
   for (let i = 0; i < kiek; i++) {
+    monsterHp =   Math.random() * 100 + 50
+
     priesai.push(
       new Enemy(
         ePlotis + Math.random() * 50,
-        eAukstis - Math.random() * ySpawnZona - 100,
-        50,
-        50,
+        eAukstis / 1.4 + Math.random() * (eAukstis / 4.5),
+        eAukstis / 20,
+        eAukstis / 20,
         0.8,
-        Math.random() * 100 + 50,
+      monsterHp,
         "img/vaiduoklis.png"
       )
     );
+    statrtMonsterHp+= monsterHp;
   }
+
 }
 
 function sukurkKari(
@@ -54,7 +59,7 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
     default:
       return;
   }
-  console.log(priesas)
+  // console.log(priesas)
 
 
   let startX = karei[karioIndex].x + karei[karioIndex].plotis;
@@ -112,8 +117,8 @@ function updateCanvasSize() {
   // Pirmą kartą sukuriami karių būriai
   firstLoud++;
   if (firstLoud === 1) {
-    for (let xi = 1; xi < 5; xi++) {
-      for (let yi = 1; yi < 5; yi++) {
+    for (let xi = 1; xi < 8; xi++) {
+      for (let yi = 1; yi < 8; yi++) {
         sukurkKari(
           xi,
           yi,
