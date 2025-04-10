@@ -58,14 +58,15 @@ backGround.src = "img/bg.png";
 
 let eAukstis = window.innerHeight;
 let ePlotis = (eAukstis * 16) / 9;
-console.log(ePlotis, eAukstis);
+
 
 
 function updateGrid(){
 
   grild = [{
     x: ePlotis / 8,
-    y: eAukstis / 4 * 3
+    y: eAukstis / 1.36,
+    p: eAukstis / 32,
   },
   
   {
@@ -75,7 +76,7 @@ function updateGrid(){
 ]
 }
 updateGrid()
-console.log(grild[0]);
+
 popierius.width = ePlotis;
 popierius.height = eAukstis;
 
@@ -105,7 +106,6 @@ let lastTime = performance.now();
 let lastFpsUpdate = lastTime;
 let frameCount = 0;
 let fps = 0;
-
 ///////////////////////////////
 // Pagrindinis žaidimo ciklas
 ///////////////////////////////
@@ -131,9 +131,8 @@ function mainLoop(currentTime) {
     fps = frameCount;
     frameCount = 0;
     lastFpsUpdate = currentTime;
-    console.log(`FPS: ${fps}`);
   }
-  ctx.fillRect(grild[0].x, grild[0].y, 50, 50);
+  // ctx.fillRect(grild[0].x, grild[0].y, 50, 50);
   ratas++;
   if (ratas > 600) ratas = 0;
 
@@ -172,9 +171,14 @@ function mainLoop(currentTime) {
       }
     }
   }
+  
+
   // console.log(ePlotis,eAukstis)
   karioLogika(ctx, deltaTime);
   // console.log(priesai.length);
+  ctx.font = '22px Arial';
+
+  ctx.fillText(fps+ ' Fps',ePlotis / 8,eAukstis / 10);
   atnaujintiSovinius(ctx);
 
   requestAnimationFrame(mainLoop);

@@ -32,7 +32,7 @@ function sukurkKari(
   karei.push(new Defender(x, y, plotis, aukstis, dmg, reloudTime, img));
 }
 
-function suzeikPriesa(dmg, taikinys, img, karioIndex = 0) {
+function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
   if (!priesai.length) return;
   let priesas;
   switch (taikinys) {
@@ -68,12 +68,14 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0) {
 
   sovinys.push(
     new Sovinys(
-      startX,
-      startY,
-      priesas.x,
-      priesas.y + priesas.aukstis / 2,
+      grild[karys.pozicija].x + karys.x * grild[karys.pozicija].p,
+      grild[karys.pozicija].y + karys.y * grild[karys.pozicija].p,
+
+      priesas.x - 20,
+      priesas.y,
       20,
       20,
+
       img,
       false,
       30,
@@ -92,9 +94,8 @@ function updateCanvasSize() {
     eAukstis = window.innerHeight;
     ePlotis = (eAukstis * 16) / 9;
   }
-  updateGrid()
+  updateGrid();
   // Priklausomai nuo lango dydžio, nustatomas naujas canvas dydis
-
 
   // Atnaujinami seni canvas dydžiai
   oldPlotis = ePlotis;
@@ -110,16 +111,23 @@ function updateCanvasSize() {
 
   // Pirmą kartą sukuriami karių būriai
   firstLoud++;
-  if(firstLoud ===2) {
-    for (let i = 1; i < 7; i++) {
-      for (let j = 1; j < 9; j++) {
-        
-        sukurkKari(eAukstis / 20 * j,eAukstis- (eAukstis / 20  * i) , eAukstis / 20, eAukstis / 20, 10, 30);
+  if (firstLoud === 1) {
+    for (let xi = 1; xi < 5; xi++) {
+      for (let yi = 1; yi < 5; yi++) {
+        sukurkKari(
+          xi,
+          yi,
+          eAukstis / 20,
+          eAukstis / 20,
+          10,
+          30,
+          "img/archer.jpeg",
+          0
+        );
       }
     }
   }
 }
-
 
 function pasukRageli() {
   switch (window.orientation) {
@@ -139,7 +147,7 @@ function pakeisti() {
   if (inGame) {
     popierius.style.display = "block";
     main.style.display = "none";
-    console.log(nextRound)
+    console.log(nextRound);
     nextRound.style.display = "block";
   } else {
     main.style.display = "block";
@@ -156,41 +164,104 @@ function startRound() {
   nextRound.style.display = "none";
   inRound = true;
 }
-
 function atnaujintiSovinius(ctx) {
   for (let i = sovinys.length - 1; i >= 0; i--) {
     let sv = sovinys[i];
-    ctx.drawImage(sv.img, sv.x * scaleX, sv.y * scaleY, sv.plotis, sv.aukstis);
+
+    ctx.drawImage(sv.img, sv.x, sv.y, sv.plotis, sv.aukstis);
+
     if (sv.guliLaiko > 0) {
       sv.guliLaiko--;
       continue;
     }
-    if (sv.judaAukstyn) {
-      sv.y += sv.pradinisYgreitis;
-      sv.pradinisYgreitis += 0.1;
-      if (sv.y <= sv.maxAukstis) {
-        sv.judaAukstyn = false;
-      }
+
+    // Jei dar nėra trajektorijos – apskaičiuojam
+    if (!sv.trajektorija) {
+      const start = { x: sv.x, y: sv.y };
+      const current = { x: sv.x + 1, y: sv.y - 1 }; // Dirbtinis taškas šalia, kad būtų kampas
+      const end = { x: sv.targetX, y: sv.targetY };
+      sv.trajektorija = gautiParabolesFunkcija(start, current, end);
+      sv.kryptis = sv.targetX > sv.x ? 1 : -1;
+      sv.greitis = 3; // Galima keisti kaip nori
     }
-    if (!sv.judaAukstyn) {
-      sv.x += (sv.targetX - sv.x) * 0.005;
-      sv.y += (sv.targetY - sv.y) * 0.005;
-    }
+
+    // Judėjimas parabolės trajektorija
+    sv.x += sv.kryptis * sv.greitis;
+    sv.y = sv.trajektorija(sv.x);
+
+    // Jei šovinys arti taikinio, jį pašalina
     if (Math.abs(sv.x - sv.targetX) < 2 && Math.abs(sv.y - sv.targetY) < 2) {
       sovinys.splice(i, 1);
     }
   }
 }
+function gautiParabolesFunkcija(start, current, end) {
+  const { x: x0, y: y0 } = start;
+  const { x: x1, y: y1 } = end;
+  const { x: xc, y: yc } = current;
+
+  const slope = (yc - y0) / (xc - x0);
+
+  const A = [
+    [x0 ** 2, x0, 1],
+    [x1 ** 2, x1, 1],
+    [2 * x0, 1, 0],
+  ];
+  const B = [y0, y1, slope];
+
+  function determinant(m) {
+    return (
+      m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) -
+      m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) +
+      m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0])
+    );
+  }
+
+  function replaceColumn(matrix, colIndex, newCol) {
+    return matrix.map((row, i) => {
+      const newRow = row.slice();
+      newRow[colIndex] = newCol[i];
+      return newRow;
+    });
+  }
+
+  const D = determinant(A);
+  const Da = determinant(replaceColumn(A, 0, B));
+  const Db = determinant(replaceColumn(A, 1, B));
+  const Dc = determinant(replaceColumn(A, 2, B));
+
+  const a = Da / D;
+  const b = Db / D;
+  const c = Dc / D;
+
+  return function getY(x) {
+    return a * x * x + b * x + c;
+  };
+}
 
 function karioLogika(ctx, deltaTime) {
+  
   for (let i = karei.length - 1; i >= 0; i--) {
     let karys = karei[i];
     if (karys.reloding < karys.reloudTime) {
       karys.reloding += deltaTime * 60;
     } else {
       karys.reloding = 0;
-      suzeikPriesa(karys.dmg, karys.target, "img/arow.png", i);
+      suzeikPriesa(
+        karys.dmg,
+        karys.target,
+        "img/arow.png",
+        i,
+        karys.pozicija,
+        karys
+      );
     }
-    ctx.drawImage(karys.img, karys.x * scaleX, karys.y * scaleY, karys.plotis, karys.aukstis);
+    ctx.drawImage(
+      karys.img,
+      grild[karys.pozicija].x + karys.x * grild[karys.pozicija].p,
+      grild[karys.pozicija].y + karys.y * grild[karys.pozicija].p,
+      grild[karys.pozicija].p,
+      grild[karys.pozicija].p
+    );
   }
 }
