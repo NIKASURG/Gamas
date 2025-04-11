@@ -1,7 +1,7 @@
 let inGame = false;
 
 function kiekPriesu() {
-  return 10 * raund * 0.5;
+  return 100 * raund * 0.5;
 }
 
 function sukurkPriesa(kiek, koki) {
@@ -11,7 +11,7 @@ function sukurkPriesa(kiek, koki) {
 
     priesai.push(
       new Enemy(
-        ePlotis + Math.random() * 50,
+        ePlotis + Math.random() * ePlotis / 2,
         eAukstis / 1.4 + Math.random() * (eAukstis / 4.5),
         eAukstis / 20,
         eAukstis / 20,
@@ -22,6 +22,7 @@ function sukurkPriesa(kiek, koki) {
     );
     statrtMonsterHp+= monsterHp;
   }
+  startMonsterHp = 0;
 
 }
 
@@ -38,6 +39,7 @@ function sukurkKari(
 }
 
 function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
+  
   if (!priesai.length) return;
   let priesas;
   switch (taikinys) {
@@ -61,7 +63,7 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
   }
   // console.log(priesas)
 
-
+  if (priesas.x > ePlotis) {return;}
   let startX = karei[karioIndex].x + karei[karioIndex].plotis;
   let startY = karei[karioIndex].y + karei[karioIndex].aukstis / 2;
   let distX = priesas.x - startX;

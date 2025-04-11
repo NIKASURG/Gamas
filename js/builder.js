@@ -24,7 +24,7 @@ class Defender {
     this.reloudTime = reloudTime;
     this.pozicija = pozicija;
     this.reloding = 0;
-    this.target = "random";
+    this.target = taikytisAI[Math.floor(Math.random() * taikytisAI.length)];
 
     this.img = new Image();
     this.img.src = img;

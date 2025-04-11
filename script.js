@@ -55,7 +55,7 @@ function enterFullScreen() {
 ///////////////////////////////
 const backGround = new Image();
 backGround.src = "img/bg.png";
-
+let taikytisAI = ['first', 'weakest', 'random'];
 let eAukstis = window.innerHeight;
 let ePlotis = (eAukstis * 16) / 9;
 let statrtMonsterHp = 0;
