@@ -94,13 +94,9 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
 }
 
 function updateCanvasSize() {
-  if (eAukstis > window.innerHeight) {
+
     eAukstis = window.innerHeight;
     ePlotis = (eAukstis * 16) / 9;
-  } else {
-    eAukstis = window.innerHeight;
-    ePlotis = (eAukstis * 16) / 9;
-  }
   updateGrid();
   // Priklausomai nuo lango dydžio, nustatomas naujas canvas dydis
 
