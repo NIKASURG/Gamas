@@ -5,25 +5,23 @@ function kiekPriesu() {
 }
 
 function sukurkPriesa(kiek, koki) {
-
   for (let i = 0; i < kiek; i++) {
-    monsterHp =   Math.random() * 100 + 50
+    monsterHp = Math.random() * 100 + 50;
 
     priesai.push(
       new Enemy(
-        ePlotis + Math.random() * ePlotis / 2,
+        ePlotis + (Math.random() * ePlotis) / 2,
         eAukstis / 1.4 + Math.random() * (eAukstis / 4.5),
         eAukstis / 20,
         eAukstis / 20,
         0.8,
-      monsterHp,
+        monsterHp,
         "img/vaiduoklis.png"
       )
     );
-    statrtMonsterHp+= monsterHp;
+    statrtMonsterHp += monsterHp;
   }
   startMonsterHp = 0;
-
 }
 
 function sukurkKari(
@@ -39,7 +37,6 @@ function sukurkKari(
 }
 
 function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
-  
   if (!priesai.length) return;
   let priesas;
   switch (taikinys) {
@@ -63,7 +60,9 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
   }
   // console.log(priesas)
 
-  if (priesas.x > ePlotis) {return;}
+  if (priesas.x > ePlotis) {
+    return;
+  }
   let startX = karei[karioIndex].x + karei[karioIndex].plotis;
   let startY = karei[karioIndex].y + karei[karioIndex].aukstis / 2;
   let distX = priesas.x - startX;
@@ -77,7 +76,7 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
     new Sovinys(
       grild[karys.pozicija].x + karys.x * grild[karys.pozicija].p,
       grild[karys.pozicija].y + karys.y * grild[karys.pozicija].p,
-      
+
       priesas.x - 20,
       priesas.y,
       20,
@@ -88,15 +87,18 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
       30,
       dmg,
       priesas
-     
     )
   );
 }
 
 function updateCanvasSize() {
-
+  if (eAukstis > (window.innerHeight * 16) / 9) {
     eAukstis = window.innerHeight;
     ePlotis = (eAukstis * 16) / 9;
+  } else {
+    eAukstis = (window.innerWidth * 9) / 16;
+    ePlotis = window.innerWidth;
+  }
   updateGrid();
   // Priklausomai nuo lango dydžio, nustatomas naujas canvas dydis
 
@@ -165,15 +167,14 @@ function pakeisti() {
 function startRound() {
   sukurkPriesa(kiekPriesu());
   nextRound.style.display = "none";
-    inRound = true;
-    sovinys.length= 0;
+  inRound = true;
+  sovinys.length = 0;
 }
 function atnaujintiSovinius(ctx) {
   for (let i = sovinys.length - 1; i >= 0; i--) {
     let sv = sovinys[i];
 
     ctx.drawImage(sv.img, sv.x, sv.y, sv.plotis, sv.aukstis);
-
 
     // Jei dar nėra trajektorijos – apskaičiuojam
     if (!sv.trajektorija) {
@@ -190,17 +191,15 @@ function atnaujintiSovinius(ctx) {
 
     // Jei šovinys arti taikinio, jį pašalina
     if (Math.abs(sv.x - sv.targetX) < 2 && Math.abs(sv.y - sv.targetY) < 2) {
-          sv.priesas.hp -= 5;
-          if(sv.priesas.hp < 0) {
-            sv.greitis = 0;
-            sv.priesas = false;
-            sv.img.src = "img/ismigusiStrele.png";
-          }
-          if(sv.priesas){
-
-            sovinys.splice(i, 1);
-          }
-
+      sv.priesas.hp -= 5;
+      if (sv.priesas.hp < 0) {
+        sv.greitis = 0;
+        sv.priesas = false;
+        sv.img.src = "img/ismigusiStrele.png";
+      }
+      if (sv.priesas) {
+        sovinys.splice(i, 1);
+      }
     }
   }
 }
@@ -249,7 +248,6 @@ function gautiParabolesFunkcija(start, current, end) {
 }
 
 function karioLogika(ctx, deltaTime) {
-  
   for (let i = karei.length - 1; i >= 0; i--) {
     let karys = karei[i];
     if (karys.reloding < karys.reloudTime) {
