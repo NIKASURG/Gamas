@@ -94,9 +94,9 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
 }
 
 function updateCanvasSize() {
-  if (ePlotis > window.innerWidth) {
-    ePlotis = window.innerWidth;
-    eAukstis = (ePlotis * 9) / 16;
+  if (eAukstis > window.innerHeight) {
+    eAukstis = window.innerHeight;
+    ePlotis = (eAukstis * 16) / 9;
   } else {
     eAukstis = window.innerHeight;
     ePlotis = (eAukstis * 16) / 9;
