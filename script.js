@@ -155,7 +155,7 @@ function mainLoop(currentTime) {
         }
         
 
-    spriteAnimation(priesasImgs,12,6,10,ctx, priesas.x * scaleX,priesas.y * scaleY);
+    spriteAnimation(priesasImgs,12,6,10,ctx, priesas.x * scaleX,priesas.y * scaleY,priesas.plotis,priesas.aukstis);
 
         // ctx.drawImage(
         //   priesas.img,
@@ -167,9 +167,9 @@ function mainLoop(currentTime) {
         
         ctx.fillStyle = "red";
         ctx.fillRect(
-          priesas.x * scaleX,
-          priesas.y - 10 * scaleY,
-          (priesas.hp / priesas.fullHp) * priesas.plotis,
+          priesas.x * scaleX - priesas.plotis/1.3,
+          priesas.y * scaleY +30,
+          (priesas.hp / priesas.fullHp) * priesas.plotis / 1.5,
           5
         );
         

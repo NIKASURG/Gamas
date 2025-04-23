@@ -12,8 +12,8 @@ function sukurkPriesa(kiek, koki) {
       new Enemy(
         ePlotis + (Math.random() * ePlotis) / 2,
         eAukstis / 1.4 + Math.random() * (eAukstis / 4.5),
-        eAukstis / 20,
-        eAukstis / 20,
+        eAukstis / 10,
+        eAukstis / 10,
         0.8,
         monsterHp,
         "img/vaiduoklis.png"
@@ -277,7 +277,10 @@ currentFrame = 0;
 
 frameX = 0;
 
-function spriteAnimation(img,frameXCount, neededFrames, frameSpeed,ctx,x,y) {
+viliausVirksmas = true;
+
+
+function spriteAnimation(img,frameXCount, neededFrames, frameSpeed,ctx,x,y,xPlotis,yAukstis) {
   // const frameX = (currentFrame % frameCount) * frameWidth;
   // const frameY = Math.floor(currentFrame / frameCount) * frameHeight;\
   frameWidth = (img.width / (frameXCount-(frameXCount-neededFrames)))/2;
@@ -285,7 +288,7 @@ function spriteAnimation(img,frameXCount, neededFrames, frameSpeed,ctx,x,y) {
   
   
   const frameDuration = 0.1; // sekundėmis = 100 ms
-  
+  kadroY = img.height/frameXCount
     if (ratas > frameDuration) {
          ratas = 0;
          frameX += frameWidth;
@@ -294,19 +297,28 @@ function spriteAnimation(img,frameXCount, neededFrames, frameSpeed,ctx,x,y) {
         }
     }
   
-  
+    let puse = 1
+    ctx.save();
+    if(!viliausVirksmas){
+      
+      ctx.scale(-1, 1);
+      puse = -1
+    }
+
 console.log(img)
   ctx.drawImage(
     img,
     frameX,//kadroX
-    130,// kadroY
+    kadroY,// kadroY
     frameWidth,//kadroPlots
     frameWidth,//kadroAukstis
-    x,//x
+    x *puse,//x
     y,//y
-    100,//laukelioPlotis
-    100//laukelioAukstis
+    xPlotis ,//laukelioPlotis
+    yAukstis//laukelioAukstis
   );
+  ctx.restore();
+
 
 
 }

@@ -35,8 +35,8 @@ class Enemy {
   constructor(
     x,
     y,
-    plotis = 50,
-    aukstis = 50,
+    plotis = 100,
+    aukstis = 100,
     speed = 1,
     hp = 10,
     img = "default_enemy.png"
