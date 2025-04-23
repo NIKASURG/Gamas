@@ -25,7 +25,7 @@ class Defender {
     this.pozicija = pozicija;
     this.reloding = 0;
     this.target = taikytisAI[Math.floor(Math.random() * taikytisAI.length)];
-
+    this.frame = 0;
     this.img = new Image();
     this.img.src = img;
   }
@@ -50,6 +50,8 @@ class Enemy {
     this.fullHp = hp;
     this.img = new Image();
     this.img.src = img;
+    this.frame = 0;
+
   }
 }
 
@@ -81,6 +83,8 @@ class Sovinys {
     this.dmg = dmg;
     this.priesas = priesas;
     this.greitis = 3;
+    this.frame = 0;
+
     // Pradinis Y greitis, kad šovinys kiltų į viršų
     this.pradinisYgreitis = -5; // Neigiamas, kad kiltų aukštyn
     this.maxAukstis = window.innerHeight / 2; // pusė ekrano aukščio

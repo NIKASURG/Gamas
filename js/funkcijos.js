@@ -274,3 +274,44 @@ function karioLogika(ctx, deltaTime) {
     );
   }
 }
+totalFrames = 4;
+currentFrame = 0;
+
+frameX = 0;
+
+function spriteAnimation(img,frameXCount, neededFrames, frameSpeed,ctx,x,y) {
+  // const frameX = (currentFrame % frameCount) * frameWidth;
+  // const frameY = Math.floor(currentFrame / frameCount) * frameHeight;\
+  frameWidth = (img.width / (frameXCount-(frameXCount-neededFrames)))/2;
+  console.log(frameWidth)
+  
+  
+  const frameDuration = 0.1; // sekundėmis = 100 ms
+  
+    if (ratas > frameDuration) {
+         ratas = 0;
+         frameX += frameWidth;
+        if (frameX >= frameWidth * neededFrames) {
+            frameX = 0;
+        }
+    }
+  
+  
+console.log(img)
+  ctx.drawImage(
+    img,
+    frameX,//kadroX
+    130,// kadroY
+    frameWidth,//kadroPlots
+    frameWidth,//kadroAukstis
+    x,//x
+    y,//y
+    100,//laukelioPlotis
+    100//laukelioAukstis
+  );
+
+
+}
+
+
+

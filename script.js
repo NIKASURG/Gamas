@@ -55,6 +55,8 @@ function enterFullScreen() {
 ///////////////////////////////
 const backGround = new Image();
 backGround.src = "img/bg.png";
+const priesasImgs = new Image();
+priesasImgs.src = "img/Veikeju_sprite/Enemy/Character6.png";
 let taikytisAI = ['first', 'weakest', 'random'];
 let eAukstis = window.innerHeight;
 let ePlotis = (eAukstis * 16) / 9;
@@ -97,7 +99,7 @@ const karei = [];
 const sovinys = [];
 
 let firstLoud = 0;
-
+let framesByHz =0;
 let scaleX = 1;
 let scaleY = 1;
 ///////////////////////////////
@@ -116,17 +118,15 @@ function mainLoop(currentTime) {
   } else {
     // FullScreen is enabled
   }
-
   ctx.clearRect(0, 0, ePlotis, eAukstis);
   ctx.drawImage(backGround, 0, 0, ePlotis, eAukstis);
-
   for (let i = 0; i < karei.length; i++) {
     const kare = karei[i];
   }
-
+  
   let deltaTime = (currentTime - lastTime) / 1000;
   lastTime = currentTime;
-
+  
   frameCount++;
   if (currentTime - lastFpsUpdate >= 1000) {
     fps = frameCount;
@@ -134,13 +134,13 @@ function mainLoop(currentTime) {
     lastFpsUpdate = currentTime;
   }
   // ctx.fillRect(grild[0].x, grild[0].y, 50, 50);
-  ratas++;
-  if (ratas > 600) ratas = 0;
-
+  console.log(deltaTime)
+  ratas += deltaTime;
+  
   if (inRound) {
     if (priesai.length === 0) {
       statrtMonsterHp = 0;
-
+      
       raund++;
       inRound = false;
       nextRound.style.display = "block";
@@ -153,15 +153,18 @@ function mainLoop(currentTime) {
           priesai.splice(i, 1);
           continue;
         }
+        
 
-        ctx.drawImage(
-          priesas.img,
-          priesas.x * scaleX,
-          priesas.y * scaleY,
-          priesas.plotis,
-          priesas.aukstis
-        );
+    spriteAnimation(priesasImgs,12,6,10,ctx, priesas.x * scaleX,priesas.y * scaleY);
 
+        // ctx.drawImage(
+        //   priesas.img,
+        //   priesas.x * scaleX,
+        //   priesas.y * scaleY,
+        //   priesas.plotis,
+        //   priesas.aukstis
+        // );
+        
         ctx.fillStyle = "red";
         ctx.fillRect(
           priesas.x * scaleX,
@@ -169,7 +172,7 @@ function mainLoop(currentTime) {
           (priesas.hp / priesas.fullHp) * priesas.plotis,
           5
         );
-
+        
         priesas.x -= priesas.speed * deltaTime * 60;
       }
     }
@@ -179,23 +182,26 @@ function mainLoop(currentTime) {
     roundHp += priesai[i].hp;
     
   }
-
+  
   // console.log(ePlotis,eAukstis)
   karioLogika(ctx, deltaTime);
   // console.log(priesai.length);
   ctx.font = '22px Arial';
   // Pirma nupiešiam pilką foną
-ctx.fillStyle = "#333";
-ctx.fillRect(ePlotis / 4, eAukstis / 10, ePlotis / 2, eAukstis / 100);
+  ctx.fillStyle = "#333";
+  ctx.fillRect(ePlotis / 4, eAukstis / 10, ePlotis / 2, eAukstis / 100);
+  
+  // Tada nupiešiam raudoną gyvybių kiekį
+  ctx.fillStyle = "red";
+  console.log(roundHp , statrtMonsterHp)
+  ctx.fillRect(ePlotis / 4, eAukstis / 10, (roundHp / statrtMonsterHp) * (ePlotis / 2), eAukstis/100);
 
-// Tada nupiešiam raudoną gyvybių kiekį
-ctx.fillStyle = "red";
-console.log(roundHp , statrtMonsterHp)
-ctx.fillRect(ePlotis / 4, eAukstis / 10, (roundHp / statrtMonsterHp) * (ePlotis / 2), eAukstis/100);
-
+    
+  
+  
   ctx.fillText(fps+ ' Fps',ePlotis / 8,eAukstis / 10);
   atnaujintiSovinius(ctx);
-
+  
   requestAnimationFrame(mainLoop);
 }
 
