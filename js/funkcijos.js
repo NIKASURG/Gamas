@@ -277,7 +277,7 @@ currentFrame = 0;
 
 frameX = 0;
 
-viliausVirksmas = true;
+viliausVirksmas = false;
 
 
 function spriteAnimation(img,frameXCount, neededFrames, frameSpeed,ctx,x,y,xPlotis,yAukstis) {
