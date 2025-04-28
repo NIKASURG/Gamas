@@ -134,7 +134,7 @@ function mainLoop(currentTime) {
     lastFpsUpdate = currentTime;
   }
   // ctx.fillRect(grild[0].x, grild[0].y, 50, 50);
-  console.log(deltaTime)
+  // console.log(deltaTime)
   ratas += deltaTime;
   
   if (inRound) {
@@ -173,7 +173,9 @@ function mainLoop(currentTime) {
           5
         );
         
+        if (priesas.x > ePlotis / 3.5 ) {
         priesas.x -= priesas.speed * deltaTime * 60;
+      }
       }
     }
   }
@@ -193,14 +195,14 @@ function mainLoop(currentTime) {
   
   // Tada nupiešiam raudoną gyvybių kiekį
   ctx.fillStyle = "red";
-  console.log(roundHp , statrtMonsterHp)
+  // console.log(roundHp , statrtMonsterHp)
   ctx.fillRect(ePlotis / 4, eAukstis / 10, (roundHp / statrtMonsterHp) * (ePlotis / 2), eAukstis/100);
 
     
   
   
   ctx.fillText(fps+ ' Fps',ePlotis / 8,eAukstis / 10);
-  atnaujintiSovinius(ctx);
+  atnaujintiSovinius(ctx,deltaTime);
   
   requestAnimationFrame(mainLoop);
 }

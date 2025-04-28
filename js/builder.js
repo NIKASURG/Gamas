@@ -20,11 +20,12 @@ class Defender {
     this.y = y;
     this.plotis = plotis;
     this.aukstis = aukstis;
-    this.dmg = dmg;
-    this.reloudTime = reloudTime;
+    this.dmg = 50;
+    this.reloudTime = 150;
     this.pozicija = pozicija;
     this.reloding = 0;
     this.target = taikytisAI[Math.floor(Math.random() * taikytisAI.length)];
+    // this.target = "first";
     this.frame = 0;
     this.img = new Image();
     this.img.src = img;
@@ -78,13 +79,13 @@ class Sovinys {
     this.img = new Image();
     this.img.src = img;
     this.judaAukstyn = judaAukstyn;
-    this.guliLaiko = guliLaiko;
+    this.guliLaiko = 8000;
     this.asReikalingas = true;
     this.dmg = dmg;
     this.priesas = priesas;
-    this.greitis = 3;
+    this.greitis = 300;
     this.frame = 0;
-
+    
     // Pradinis Y greitis, kad šovinys kiltų į viršų
     this.pradinisYgreitis = -5; // Neigiamas, kad kiltų aukštyn
     this.maxAukstis = window.innerHeight / 2; // pusė ekrano aukščio
