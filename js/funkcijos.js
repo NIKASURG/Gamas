@@ -1,7 +1,8 @@
 let inGame = false;
 
 function kiekPriesu() {
-  return 100 * raund * 0.5;
+  // return 100 * raund * 0.5;
+  return 100
 }
 
 function sukurkPriesa(kiek, koki) {
@@ -77,8 +78,8 @@ function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
       grild[karys.pozicija].x + karys.x * grild[karys.pozicija].p,
       grild[karys.pozicija].y + karys.y * grild[karys.pozicija].p,
 
-      priesas.x - 20,
-      priesas.y,
+      priesas.x ,
+      priesas.y ,
       20,
       20,
 
@@ -117,8 +118,8 @@ function updateCanvasSize() {
   // Pirmą kartą sukuriami karių būriai
   firstLoud++;
   if (firstLoud === 1) {
-    for (let xi = 1; xi < 8; xi++) {
-      for (let yi = 1; yi < 8; yi++) {
+    for (let xi = 0; xi < 7; xi++) {
+      for (let yi = 0; yi < 7; yi++) {
         sukurkKari(
           xi,
           yi,
@@ -181,10 +182,10 @@ function atnaujintiSovinius(ctx,deltaTime) {
       const start = { x: sv.x, y: sv.y };
       const current = { x: sv.x + 1, y: sv.y - 1 }; // Dirbtinis taškas šalia, kad būtų kampas
      
-        const end = { x: sv.targetX, y: sv.targetY };
+      const end = { x: sv.priesas.x-sv.priesas.plotis / 2, y: sv.priesas.y+220};
 
       sv.trajektorija = gautiParabolesFunkcija(start, current, end);
-      sv.kryptis = sv.targetX > sv.x ? 1 : -1;
+      sv.kryptis = sv.priesas.x - sv.priesas.plotis / 2> sv.x ? 1 : -1;
     }
 
     // Judėjimas parabolės trajektorija
@@ -192,8 +193,10 @@ function atnaujintiSovinius(ctx,deltaTime) {
     sv.y = sv.trajektorija(sv.x);
 
     // Jei šovinys arti taikinio, jį pašalina
-    if (Math.abs(sv.x - sv.targetX) < 2 && Math.abs(sv.y - sv.targetY) < 2) {
+    if (sv.x  > sv.priesas.x - sv.priesas.plotis / 2 || sv.y  > sv.priesas.y ) {
       sv.priesas.hp -= 5;
+      
+     
       
       if (sv.priesas.hp < 0) {
         sv.greitis = 0;
@@ -209,8 +212,6 @@ function atnaujintiSovinius(ctx,deltaTime) {
 
         }
       }
-
-       
       if (sv.priesas) {
         sovinys.splice(i, 1);
       }
@@ -276,6 +277,7 @@ function karioLogika(ctx, deltaTime) {
         karys.pozicija,
         karys
       );
+
     }
     ctx.drawImage(
       karys.img,
