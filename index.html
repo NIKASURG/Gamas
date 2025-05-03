@@ -109,12 +109,15 @@
     <div id="container" class="container">
       <button id="menuButton" onclick="pakeisti()">Menu</button>
       <button id="shopButton">Shop</button>
-      <canvas id="popierius"> </canvas>
+      <canvas id="canvas"> </canvas>
     </div>
+    <div id="debugScrean" style="display: none;">
+        <button id="showHp">Rodyti HP</button>
+        <button id="rodytiFps">Rodyti FPS</button>
 
-    <script src="js/builder.js"></script>
-    <script src="js/funkcijos.js"></script>
-    <script src="script.js"></script>
+
+    </div>
+    
     <script>
       document
         .getElementById("settingsButton")
@@ -150,7 +153,7 @@
           container.style.opacity = "1";
           container.style.zIndex = "15";
 
-          const canvas = document.getElementById("popierius");
+          const canvas = document.getElementById("canvas");
           canvas.style.display = "block";
 
           if (typeof updateCanvasSize === "function") {
@@ -191,6 +194,11 @@
           document.getElementById("shopModal").style.display = "none";
         });
     </script>
+    <script src="./js/veikejoPremade.js"></script>
+    <script src="./js/funkcijos.js"></script>
+    <script src="./js/veikejai.js"></script>
+    <script src="index.js"></script>
+    <script src="./js/eventLiseners.js"></script>
   </body>
 </html>
 

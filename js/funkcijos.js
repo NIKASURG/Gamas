@@ -1,343 +1,67 @@
-let inGame = false;
 
-function kiekPriesu() {
-  // return 100 * raund * 0.5;
-  return 100
-}
 
-function sukurkPriesa(kiek, koki) {
-  for (let i = 0; i < kiek; i++) {
-    monsterHp = Math.random() * 100 + 50;
+function updateCanvas(){
 
-    priesai.push(
-      new Enemy(
-        ePlotis + (Math.random() * ePlotis) / 2,
-        eAukstis / 1.4 + Math.random() * (eAukstis / 4.5),
-        eAukstis / 10,
-        eAukstis / 10,
-        0.8,
-        monsterHp,
-        "img/vaiduoklis.png"
-      )
-    );
-    statrtMonsterHp += monsterHp;
-  }
-  startMonsterHp = 0;
-}
-
-function sukurkKari(
-  x = 50,
-  y = 50,
-  plotis = 50,
-  aukstis = 50,
-  dmg = 20,
-  reloudTime = 1,
-  img = "img/archer.jpeg"
-) {
-  karei.push(new Defender(x, y, plotis, aukstis, dmg, reloudTime, img));
-}
-
-function suzeikPriesa(dmg, taikinys, img, karioIndex = 0, pozicija = 0, karys) {
-  if (!priesai.length) return;
-  let priesas;
-  switch (taikinys) {
-    case "first":
-      priesas = priesai.reduce((a, b) => (a.x < b.x ? a : b));
-      break;
-    case "last":
-      priesas = priesai.reduce((a, b) => (a.x > b.x ? a : b));
-      break;
-    case "random":
-      priesas = priesai[Math.floor(Math.random() * priesai.length)];
-      break;
-    case "strongest":
-      priesas = priesai.reduce((max, p) => (p.hp > max.hp ? p : max));
-      break;
-    case "weakest":
-      priesas = priesai.reduce((min, p) => (p.hp < min.hp ? p : min));
-      break;
-    default:
-      return;
-  }
-  // console.log(priesas)
-
-  if (priesas.x > ePlotis) {
-    return;
-  }
-  let startX = karei[karioIndex].x + karei[karioIndex].plotis;
-  let startY = karei[karioIndex].y + karei[karioIndex].aukstis / 2;
-  let distX = priesas.x - startX;
-  let distY = priesas.y + priesas.aukstis / 2 - startY;
-  let distance = Math.sqrt(distX * distX + distY * distY);
-  let speed = 1;
-  let speedX = (distX / distance) * speed;
-  let speedY = (distY / distance) * speed;
-
-  sovinys.push(
-    new Sovinys(
-      grild[karys.pozicija].x + karys.x * grild[karys.pozicija].p,
-      grild[karys.pozicija].y + karys.y * grild[karys.pozicija].p,
-
-      priesas.x ,
-      priesas.y ,
-      20,
-      20,
-
-      img,
-      false,
-      30,
-      dmg,
-      priesas
-    )
-  );
-}
-
-function updateCanvasSize() {
-  if (eAukstis > (window.innerHeight * 16) / 9) {
-    eAukstis = window.innerHeight;
-    ePlotis = (eAukstis * 16) / 9;
-  } else {
+  if ((window.innerWidth * 9) / 16 <= window.innerHeight) {
     eAukstis = (window.innerWidth * 9) / 16;
     ePlotis = window.innerWidth;
-  }
-  updateGrid();
-  // Priklausomai nuo lango dydžio, nustatomas naujas canvas dydis
-
-  // Atnaujinami seni canvas dydžiai
-  oldPlotis = ePlotis;
-  oldAukstis = eAukstis;
-
-  // Atnaujinami canvas parametrai
-  popierius.width = ePlotis;
-  popierius.height = eAukstis;
-
-  // Apskaičiuojami skalavimo santykiai
-  scaleX = ePlotis / oldPlotis;
-  scaleY = eAukstis / oldAukstis;
-
-  // Pirmą kartą sukuriami karių būriai
-  firstLoud++;
-  if (firstLoud === 1) {
-    for (let xi = 0; xi < 7; xi++) {
-      for (let yi = 0; yi < 7; yi++) {
-        sukurkKari(
-          xi,
-          yi,
-          eAukstis / 20,
-          eAukstis / 20,
-          10,
-          30,
-          "img/archer.jpeg",
-          0
-        );
-      }
-    }
-  }
-}
-
-function pasukRageli() {
-  switch (window.orientation) {
-    case 0:
-    case 180:
-      rotateImage.style.display = "block";
-      break;
-    case 90:
-    case -90:
-      rotateImage.style.display = "none";
-      break;
-  }
-}
-
-function pakeisti() {
-  inGame = !inGame;
-  if (inGame) {
-    popierius.style.display = "block";
-    main.style.display = "none";
-    // console.log(nextRound);
-    nextRound.style.display = "block";
   } else {
-    main.style.display = "block";
-    popierius.style.display = "none";
-    nextRound.style.display = "none";
+    eAukstis = window.innerHeight;
+    ePlotis = (window.innerHeight * 16) / 9;
+    
   }
-  if (!(document.fullscreenElement != null)) {
-    document.documentElement.requestFullscreen();
-  }
+  preskaiciokDydi()  
+
+  canvas.width = ePlotis;
+  canvas.height = eAukstis;
+  document.body.style.overflow = 'hidden'; 
+}
+function sukurkPersonaza(data,x,y){
+  priesai.push(new veikejas(data,x,y));
 }
 
-function startRound() {
-  sukurkPriesa(kiekPriesu());
-  nextRound.style.display = "none";
-  inRound = true;
-  sovinys.length = 0;
+function preskaiciokDydi() {
+  const bazinisPlotis = 1920; 
+  const mastelis = ePlotis / bazinisPlotis;
+  Dydis = [[mastelis * 100, mastelis * 100], [mastelis * 100, mastelis * 100]];
 }
-function atnaujintiSovinius(ctx,deltaTime) {
-  for (let i = sovinys.length - 1; i >= 0; i--) {
-    let sv = sovinys[i];
+function generateEnemyWave(waveNumber, enemyCosts, seed, baseDifficulty = 20, growth = 10) {
+  let random = createSeededRandom(seed + waveNumber); // skirtinga seed kiekvienai bangai
 
-    ctx.drawImage(sv.img, sv.x, sv.y, sv.plotis, sv.aukstis);
-    console.log(sv)
-    // Jei dar nėra trajektorijos – apskaičiuojam
-    if (!sv.trajektorija) {
-      const start = { x: sv.x, y: sv.y };
-      const current = { x: sv.x + 1, y: sv.y - 1 }; // Dirbtinis taškas šalia, kad būtų kampas
-     
-      const end = { x: sv.priesas.x-sv.priesas.plotis / 2, y: sv.priesas.y+220};
+  let totalDifficulty = baseDifficulty + waveNumber * growth;
+  let remaining = totalDifficulty;
+  let result = [];
 
-      sv.trajektorija = gautiParabolesFunkcija(start, current, end);
-      sv.kryptis = sv.priesas.x - sv.priesas.plotis / 2> sv.x ? 1 : -1;
-    }
+  while (remaining > 0) {
+      let progress = 1 - remaining / totalDifficulty;
 
-    // Judėjimas parabolės trajektorija
-    sv.x += sv.kryptis * sv.greitis * deltaTime;
-    sv.y = sv.trajektorija(sv.x);
+      let dynamicRatio = 0.1 + progress * 0.4;
+      let maxAllowed = remaining * dynamicRatio;
 
-    // Jei šovinys arti taikinio, jį pašalina
-    if (sv.x  > sv.priesas.x - sv.priesas.plotis / 2 || sv.y  > sv.priesas.y ) {
-      sv.priesas.hp -= 5;
-      
-     
-      
-      if (sv.priesas.hp < 0) {
-        sv.greitis = 0;
-        sv.priesas = false;
-        sv.img.src= "img/ismigusiStrele.png";
-      }
-      // console.log(sv.priesas.hp);
-      if(!sv.priesas){
-        // console.log("sovinys guli");
-        sv.guliLaiko -= deltaTime * 1000;
-        if (sv.guliLaiko < 0) {
-          sovinys.splice(i, 1);
+      let allowOverpowered = random() < 0.05;
 
-        }
-      }
-      if (sv.priesas) {
-        sovinys.splice(i, 1);
-      }
-    }
-  }
-}
-function gautiParabolesFunkcija(start, current, end) {
-  const { x: x0, y: y0 } = start;
-  const { x: x1, y: y1 } = end;
-  const { x: xc, y: yc } = current;
-
-  const slope = (yc - y0) / (xc - x0);
-
-  const A = [
-    [x0 ** 2, x0, 1],
-    [x1 ** 2, x1, 1],
-    [2 * x0, 1, 0],
-  ];
-  const B = [y0, y1, slope];
-
-  function determinant(m) {
-    return (
-      m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) -
-      m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) +
-      m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0])
-    );
-  }
-
-  function replaceColumn(matrix, colIndex, newCol) {
-    return matrix.map((row, i) => {
-      const newRow = row.slice();
-      newRow[colIndex] = newCol[i];
-      return newRow;
-    });
-  }
-
-  const D = determinant(A);
-  const Da = determinant(replaceColumn(A, 0, B));
-  const Db = determinant(replaceColumn(A, 1, B));
-  const Dc = determinant(replaceColumn(A, 2, B));
-
-  const a = Da / D;
-  const b = Db / D;
-  const c = Dc / D;
-
-  return function getY(x) {
-    return a * x * x + b * x + c;
-  };
-}
-
-function karioLogika(ctx, deltaTime) {
-  for (let i = karei.length - 1; i >= 0; i--) {
-    let karys = karei[i];
-    if (karys.reloding < karys.reloudTime) {
-      karys.reloding += deltaTime * 60;
-    } else {
-      karys.reloding = 0;
-      suzeikPriesa(
-        karys.dmg,
-        karys.target,
-        "img/arow.png",
-        i,
-        karys.pozicija,
-        karys
+      let validChoices = enemyCosts.filter(cost =>
+          cost <= remaining && (allowOverpowered || cost <= maxAllowed)
       );
 
-    }
-    ctx.drawImage(
-      karys.img,
-      grild[karys.pozicija].x + karys.x * grild[karys.pozicija].p,
-      grild[karys.pozicija].y + karys.y * grild[karys.pozicija].p,
-      grild[karys.pozicija].p,
-      grild[karys.pozicija].p
-    );
+      if (validChoices.length === 0) {
+          validChoices = enemyCosts.filter(cost => cost <= remaining);
+          if (validChoices.length === 0) break;
+      }
+
+      let choice = validChoices[Math.floor(random() * validChoices.length)];
+      result.push(choice);
+      remaining -= choice;
   }
-}
-totalFrames = 4;
-currentFrame = 0;
 
-frameX = 0;
-
-viliausVirksmas = false;
-
-
-function spriteAnimation(img,frameXCount, neededFrames, frameSpeed,ctx,x,y,xPlotis,yAukstis) {
-  // const frameX = (currentFrame % frameCount) * frameWidth;
-  // const frameY = Math.floor(currentFrame / frameCount) * frameHeight;\
-  frameWidth = (img.width / (frameXCount-(frameXCount-neededFrames)))/2;
-  // console.log(frameWidth)
-  
-  
-  const frameDuration = 0.1; // sekundėmis = 100 ms
-  kadroY = img.height/frameXCount
-    if (ratas > frameDuration) {
-         ratas = 0;
-         frameX += frameWidth;
-        if (frameX >= frameWidth * neededFrames) {
-            frameX = 0;
-        }
-    }
-  
-    let puse = 1
-    ctx.save();
-    if(!viliausVirksmas){
-      
-      ctx.scale(-1, 1);
-      puse = -1
-    }
-
-// console.log(img)
-  ctx.drawImage(
-    img,
-    frameX,//kadroX
-    kadroY,// kadroY
-    frameWidth,//kadroPlots
-    frameWidth,//kadroAukstis
-    x *puse,//x
-    y,//y
-    xPlotis ,//laukelioPlotis
-    yAukstis//laukelioAukstis
-  );
-  ctx.restore();
-
-
-
+  return result;
 }
 
-
-
+function createSeededRandom(seed) {
+  return function() {
+    let t = seed += 0x6D2B79F5;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+};
+}
