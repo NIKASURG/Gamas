@@ -18,12 +18,14 @@
     />
   </head>
   <body>
+    <button id="nextRoundButton" class="menu-button">Next Round</button>
+
     <div id="turnDeviceNotification"></div>
 
     <div id="main">
       <div class="scroll-container">
         <h1 class="game-title">Castle Defender</h1>
-        <button id="playButton" class="menu-button" onclick="pakeisti()">
+        <button id="playButton" class="menu-button" >
           Play
         </button>
         <button id="settingsButton" class="menu-button">Settings</button>
@@ -107,7 +109,7 @@
     </div>
 
     <div id="container" class="container">
-      <button id="menuButton" onclick="pakeisti()">Menu</button>
+      <button id="menuButton" >Menu</button>
       <button id="shopButton">Shop</button>
       <canvas id="canvas"> </canvas>
     </div>
@@ -117,7 +119,6 @@
 
 
     </div>
-    
     <script>
       document
         .getElementById("settingsButton")

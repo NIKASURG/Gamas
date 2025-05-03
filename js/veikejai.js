@@ -4,8 +4,8 @@ class veikejas{
     this.y = y;
     this.data = data;
 
-    this.dydis = data.dydis;
     this.givybesStart = data.givybes;
+    this.dydis = data.dydis;
     this.greitis = data.greitis;
     this.spriteIlgisKadru = data.spriteIlgis;
     this.spriteAukstisKadru = data.spriteAukstis;
@@ -117,6 +117,10 @@ class veikejas{
         if(this.x > 20) {
             this.x += this.greitis * this.veikejoZiurejimoPuse;
         }
+    }
+    suzeiti(dmg){
+        this.givybes -= dmg; ;
+       
     }
 
 }
