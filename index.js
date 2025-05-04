@@ -7,7 +7,7 @@ backGrount.src = 'img/bg.png';
 let lastTime = 0;
 const fps = 60;  
 let pause = false;
-let seed = 80085;
+let seed = 1234567890;
 let enemyCosts =[]
 let bangosPradeta = false;
 
@@ -17,6 +17,7 @@ enemes.forEach(e => {
 });
 let wave = 1;
 // let waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed)
+let waweEnemesCombination = []
 let waweLaikas = 0;
 let waweImamas = 0;
 let fpsCounter = 0;
@@ -54,17 +55,21 @@ function animate(timestamp) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(backGrount, 0, 0, canvas.width, canvas.height);
     waweLaikas++;
-    if (bangosPradeta && waweLaikas > 50 / wave) {
-    if (waweImamas < waweEnemesCombination.length) {
-        let ran = createSeededRandom(seed + waweImamas);
-        let randomY = Math.floor(ran() * 15) + 70;
-        let randomEnemy = enemes.find(e => e.hard === waweEnemesCombination[waweImamas]);
-        if (randomEnemy) {
-            priesai.push(new veikejas(randomEnemy, 100, randomY));
+    let ran = createSeededRandom(seed + waweImamas);
+
+    if (bangosPradeta && waweLaikas >  ran() * 25 + 25) {
+        for(let i = 0; i < ran() * 10; i++) {
+            if (waweImamas < waweEnemesCombination.length) {
+                 ran = createSeededRandom(seed + waweImamas + i);
+                let randomY = Math.floor(ran() * 15) + 70;
+                let randomEnemy = enemes.find(e => e.hard === waweEnemesCombination[waweImamas]);
+                if (randomEnemy) {
+                    priesai.push(new veikejas(randomEnemy, 100 + ran() * 10 , randomY));
+                }
+                waweLaikas = 0;
+                waweImamas++;
+            }
         }
-        waweLaikas = 0;
-        waweImamas++;
-    }
 
     if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
         bangosPradeta = false;
@@ -100,6 +105,7 @@ function animate(timestamp) {
         
         ctx.fillText(`Wave: ${wave}`, (80/100) * ePlotis, (5/100) *eAukstis);
         if (debugScrean|| rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, 50);
+        if(debugScrean) {ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70);ctx.fillText(`Sukurta priesu: ${priesai.length}`, 20, 90);}
     requestAnimationFrame(animate);
 }
 

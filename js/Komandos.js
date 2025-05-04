@@ -33,7 +33,23 @@ input.addEventListener('keydown', function(event) {
             case 'SetWave':
                 wave = parseInt(komanda.split(' ')[1]);
                 break;
+            case 'kill':
+                if(komanda.split(' ')[1] === 'all'){
+                    priesai.forEach((priesas) => {
+                        priesas.givybes = -1;
+                    });
+                }
+                if(komanda.split(' ')[1] === 'alll'){
+                    priesai.forEach((priesas) => {
+                        priesas.givybes = -1;
+                    });
+                    waweEnemesCombination = [];
+                    waweImamas = 0;
+                    console.log(priesai,waweEnemesCombination);
 
+
+                }
+                break;
             default:
                 console.log('Nežinoma komanda:', komanda);
         }

@@ -90,7 +90,7 @@ class veikejas{
             console.log()
             ctx.fillStyle = 'red';
             if(this.givybes >= 0) {
-            ctx.fillRect(atvaizdoX , atvaizdoY, (this.givybes / this.givybesStart) * Dydis[this.dydis][0] , 5);
+            ctx.fillRect(atvaizdoX + Dydis[this.dydis][0] /5, atvaizdoY + 10 , (this.givybes / this.givybesStart) * Dydis[this.dydis][0] /2 , eAukstis / 300);
             }
             if(rodytiGivybes){
                 ctx.fillStyle = 'white';
