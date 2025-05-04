@@ -6,7 +6,7 @@ let backGrount = new Image();
 backGrount.src = 'img/bg.png';
 let lastTime = 0;
 const fps = 60;  
-let pause = true;
+let pause = false;
 let seed = 80085;
 let enemyCosts =[]
 let bangosPradeta = false;
@@ -26,7 +26,7 @@ let currentFps = 0;
 //debugKintamieji
 
 let debugScrean = false;
-let rodytiFps = true;
+let rodytiFps = false;
 let rodytiGivybes = false;
 
 ctx.font = '22px Arial';
@@ -56,12 +56,11 @@ function animate(timestamp) {
     waweLaikas++;
     if (bangosPradeta && waweLaikas > 50 / wave) {
     if (waweImamas < waweEnemesCombination.length) {
-        let randomX = 100;
         let ran = createSeededRandom(seed + waweImamas);
         let randomY = Math.floor(ran() * 15) + 70;
         let randomEnemy = enemes.find(e => e.hard === waweEnemesCombination[waweImamas]);
         if (randomEnemy) {
-            priesai.push(new veikejas(randomEnemy, randomX - 20, randomY));
+            priesai.push(new veikejas(randomEnemy, 100, randomY));
         }
         waweLaikas = 0;
         waweImamas++;
@@ -90,7 +89,7 @@ function animate(timestamp) {
         for (let i = 0; i < priesai.length; i++) {
             priesai[i].animuok();
             priesai[i].judeti();
-            priesai[i].suzeiti(4);
+            // priesai[i].suzeiti(4);
             if(priesai[i].mires){
                 priesai.splice(i, 1);
                 i--;

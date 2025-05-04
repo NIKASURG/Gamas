@@ -11,24 +11,7 @@ window.addEventListener('keydown', function(event) {
         }
     }
 });
-document.getElementById('rodytiFps').addEventListener('click', function() {
-    rodytiFps = !rodytiFps;
-    if (rodytiFps) {
-        document.getElementById('rodytiFps').innerText = 'Slepti Fps';
-    } else {
-        document.getElementById('rodytiFps').innerText = 'Rodyti FPS';
-    }
-}
-);
-document.getElementById('showHp').addEventListener('click', function() {
-    rodytiGivybes = !rodytiGivybes;
-    if (rodytiGivybes) {
-        document.getElementById('showHp').innerText = 'Slepti HP';
-    } else {
-        document.getElementById('showHp').innerText = 'Rodyti Hp';
-    }
-}
-);
+
 document.getElementById('playButton').addEventListener('click', function() {
     nextRoundButton.style.display = '';
 });

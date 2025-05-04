@@ -120,6 +120,9 @@ class veikejas{
     }
     suzeiti(dmg){
         this.givybes -= dmg; ;
+        if(dmg== -1){
+            this.givybes = 0
+        }
        
     }
 
