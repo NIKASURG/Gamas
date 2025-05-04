@@ -30,11 +30,19 @@
         </button>
         <button id="settingsButton" class="menu-button">Settings</button>
         <button id="creditsButton" class="menu-button">Credits</button>
-        <p>Save game progres by authedintaining with</p>
+        <div id="showLogin">
 
-        <button type="button" id="google-login" class="login-with-google-btn" >
-           Google
-        </button>
+          <p>Save game progres by authedintaining with</p>
+          
+          <button type="button" id="google-login" class="login-with-google-btn" >
+            Google
+          </button>
+        </div>
+        <div id="showLogout" style="display: none">
+          <p>Logged in as: <span id="userEmail"></span></p>
+          <button type="button" id="google-logout">
+            Logout
+          </button></div>
       </div>
     </div>
 

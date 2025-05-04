@@ -18,13 +18,28 @@ const provider = new GoogleAuthProvider();
 
 // Kai paspaudžiamas mygtukas
 document.getElementById("google-login").addEventListener("click", () => {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
-      console.log("Prisijungė:", user.displayName);
-      // čia gali nukreipti žaidėją arba išsaugoti vartotojo info
-    })
-    .catch((error) => {
-      console.error("Prisijungimo klaida:", error.message);
-    });
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            const user = result.user;
+            console.log("Prisijungė:", user.displayName);
+            document.getElementById("showLogin").style.display = "none";
+            document.getElementById("showLogout").style.display = "block";
+            document.getElementById("userEmail").textContent = user.email;
+        })
+        .catch((error) => {
+            console.error("Prisijungimo klaida:", error.message);
+        });
+});
+
+document.getElementById("google-logout").addEventListener("click", () => {
+    auth.signOut()
+        .then(() => {
+            console.log("Atsijungė");
+            document.getElementById("showLogin").style.display = "block";
+            document.getElementById("showLogout").style.display = "none";
+            document.getElementById("userEmail").textContent = "";
+        })
+        .catch((error) => {
+            console.error("Atsijungimo klaida:", error.message);
+        });
 });

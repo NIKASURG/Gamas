@@ -1,4 +1,10 @@
-window.addEventListener('resize', function() {updateCanvas();});
+window.addEventListener("resize", updateCanvas);
+window.addEventListener("orientationchange", updateCanvas);
+document.addEventListener("fullscreenchange", updateCanvas);
+document.addEventListener("webkitfullscreenchange", updateCanvas); // Safari
+document.addEventListener("mozfullscreenchange", updateCanvas);    // Firefox
+document.addEventListener("msfullscreenchange", updateCanvas);     // IE/Edge
+
 window.addEventListener('load', function() {
     nextRoundButton.style.display = 'none';});
 window.addEventListener('keydown', function(event) {
@@ -20,4 +26,9 @@ document.getElementById('nextRoundButton').addEventListener('click', function() 
     bangosPradeta = true;
     waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed);
     nextRoundButton.style.display = 'none';
+});
+canvas.addEventListener("mousemove", function(e) {
+     pelesX = e.offsetX;
+     pelesY = e.offsetY;
+   
 });

@@ -236,7 +236,7 @@
     height: 100%;
     width: 100%;
     display: none;
-    background-image: url("./img/rotate.png");
+    /* background-image: url("./img/rotate.png"); */
     background-size: cover;
     z-index: 1000;
   }
@@ -316,7 +316,7 @@
       min-height: 400px;
     }
   
-    @media (orientation: portrait) {
+    /* @media (orientation: portrait) {
       #turnDeviceNotification {
         display: none;
       }
@@ -326,7 +326,7 @@
       #turnDeviceNotification {
         display: block;
       }
-    }
+    } */
   }
   
 #debugScrean{

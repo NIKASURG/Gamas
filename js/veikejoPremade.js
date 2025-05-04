@@ -20,3 +20,21 @@ let soligers = [
         saudimoGreitis: 1, img: 'soliger.png', plotis: 50, aukstis: 50
     },
 ];
+
+function setHomeSqueres(){
+
+    homeSqueres = []
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            homeSqueres.push({
+                x:  (i * 5  + 10) /100 * ePlotis,
+                y: ( 100 - j * 8 -20 ) /100 * eAukstis,
+                plotis: (4 / 100) * ePlotis,
+                aukstis: (4 / 100) * ePlotis,
+            });        
+        }
+        
+    }
+    
+}
+setHomeSqueres();

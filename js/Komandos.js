@@ -50,6 +50,10 @@ input.addEventListener('keydown', function(event) {
 
                 }
                 break;
+            case 'clear':
+                 localStorage.setItem("gameState", JSON.stringify());
+
+            break;
             default:
                 console.log('Nežinoma komanda:', komanda);
         }

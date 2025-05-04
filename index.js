@@ -1,21 +1,37 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+let homeSqueres = []
 let priesai = []
+try {
+    console.log(savasData)
+} catch (e) {
+    savasData = {
+        coins: 0,
+    }
+}
+
+try {
+    console.log(wave)
+} catch (e) {
+    wave = 1
+}
+setInterval(saveGameState, 10000);
+
 updateCanvas();
-let backGrount = new Image();   
+let backGrount = new Image();
 backGrount.src = 'img/bg.png';
 let lastTime = 0;
-const fps = 60;  
+const fps = 60;
 let pause = false;
 let seed = 1234567890;
-let enemyCosts =[]
+let enemyCosts = []
 let bangosPradeta = false;
-
+let pelesX = 0;
+let pelesY = 0;
 enemes.forEach(e => {
-    
+
     enemyCosts.push(e.hard);
 });
-let wave = 1;
 // let waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed)
 let waweEnemesCombination = []
 let waweLaikas = 0;
@@ -57,29 +73,43 @@ function animate(timestamp) {
     waweLaikas++;
     let ran = createSeededRandom(seed + waweImamas);
 
-    if (bangosPradeta && waweLaikas >  ran() * 25 + 25) {
-        for(let i = 0; i < ran() * 10; i++) {
+    if (bangosPradeta && waweLaikas > ran() * 25 + 25) {
+        for (let i = 0; i < ran() * 10; i++) {
             if (waweImamas < waweEnemesCombination.length) {
-                 ran = createSeededRandom(seed + waweImamas + i);
+                ran = createSeededRandom(seed + waweImamas + i);
                 let randomY = Math.floor(ran() * 15) + 70;
                 let randomEnemy = enemes.find(e => e.hard === waweEnemesCombination[waweImamas]);
                 if (randomEnemy) {
-                    priesai.push(new veikejas(randomEnemy, 100 + ran() * 10 , randomY));
+                    priesai.push(new veikejas(randomEnemy, 100 + ran() * 10, randomY));
                 }
                 waweLaikas = 0;
                 waweImamas++;
             }
         }
 
-    if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
-        bangosPradeta = false;
-        pause = true;
-        waweImamas = 0;
-        waweLaikas = 0;
-        wave++;
-        nextRoundButton.style.display = '';
+        if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
+            bangosPradeta = false;
+            waweImamas = 0;
+            waweLaikas = 0;
+            wave++;
+            nextRoundButton.style.display = '';
+            saveGameState();
+
+        }
+    } 
+    if (!bangosPradeta) {
+        for (let i = 0; i < homeSqueres.length; i++) {
+            ctx.save();
+            blure = 0.5
+            if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
+                blure = 0.9
+            }
+            ctx.fillStyle = 'rgba(65, 65, 85, ' + blure + ')';
+
+            ctx.fillRect(homeSqueres[i].x, homeSqueres[i].y, homeSqueres[i].plotis, homeSqueres[i].aukstis);
+            ctx.restore();
+        }
     }
-}
 
     if (timestamp - fpsLastUpdate > 1000) {
         currentFps = fpsCounter;
@@ -87,25 +117,25 @@ function animate(timestamp) {
         fpsLastUpdate = timestamp;
         // ctx.fillStyle = "red";
         //  ctx.fillStyle = "#333";
-        
-        }
-        
-        
-        for (let i = 0; i < priesai.length; i++) {
-            priesai[i].animuok();
-            priesai[i].judeti();
-            // priesai[i].suzeiti(4);
-            if(priesai[i].mires){
-                priesai.splice(i, 1);
-                i--;
-            }
-            
 
+    }
+
+
+    for (let i = 0; i < priesai.length; i++) {
+        priesai[i].animuok();
+        priesai[i].judeti();
+        // priesai[i].suzeiti(4);
+        if (priesai[i].mires) {
+            priesai.splice(i, 1);
+            i--;
         }
-        
-        ctx.fillText(`Wave: ${wave}`, (80/100) * ePlotis, (5/100) *eAukstis);
-        if (debugScrean|| rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, 50);
-        if(debugScrean) {ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70);ctx.fillText(`Sukurta priesu: ${priesai.length}`, 20, 90);}
+
+
+    }
+
+    ctx.fillText(`Wave: ${wave}`, (80 / 100) * ePlotis, (5 / 100) * eAukstis);
+    if (debugScrean || rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, 50);
+    if (debugScrean) { ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70); ctx.fillText(`Sukurta priesu: ${priesai.length}`, 20, 90); }
     requestAnimationFrame(animate);
 }
 

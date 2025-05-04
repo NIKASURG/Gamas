@@ -1,7 +1,7 @@
 
 
 function updateCanvas(){
-
+  
   if ((window.innerWidth * 9) / 16 <= window.innerHeight) {
     eAukstis = (window.innerWidth * 9) / 16;
     ePlotis = window.innerWidth;
@@ -10,6 +10,7 @@ function updateCanvas(){
     ePlotis = (window.innerHeight * 16) / 9;
     
   }
+  setHomeSqueres()
   preskaiciokDydi()  
 
   canvas.width = ePlotis;
@@ -65,3 +66,28 @@ function createSeededRandom(seed) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 };
 }
+function saveGameState() {
+  const gameState = {
+    wave: wave,
+    playerData: savasData 
+  };
+  
+  localStorage.setItem("gameState", JSON.stringify(gameState));
+}
+function loadGameState() {
+  const savedGameState = localStorage.getItem("gameState");
+  if (savedGameState) {
+    const gameState = JSON.parse(savedGameState);
+    wave = gameState.wave;
+    savasData = gameState.playerData; 
+  }
+}
+
+loadGameState();
+function arPeleViduje(pelesX, pelesY, box) {
+  return pelesX >= box.x &&
+         pelesX <= box.x + box.plotis &&
+         pelesY >= box.y &&
+         pelesY <= box.y + box.aukstis;
+}
+
