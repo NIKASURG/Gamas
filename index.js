@@ -17,7 +17,7 @@ try {
 setTimeout(() => {
     for (let i = 0; i < savasData.ownedSoligers.length; i++) {
         vieta = savasData.ownedSoligers[i].homeSquere
-        savi.push(new veikejas (soligers[savasData.ownedSoligers[i].nr] ,homeSqueres[vieta].xProc, homeSqueres[vieta].yProc));
+        savi.push(new veikejas (soligers[savasData.ownedSoligers[i].nr] ,homeSqueres[vieta].xProc- homeSqueres[vieta].plotis/100, homeSqueres[vieta].yProc- homeSqueres[vieta].aukstis/100));
         homeSqueres[vieta].ocupied = true;
     }
 } , 1000);
