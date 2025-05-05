@@ -2,18 +2,28 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let homeSqueres = []
 let priesai = []
+let savi = []
 let selectCharacter = document.getElementById('selectCharacter');
 try {
     console.log(savasData)
 } catch (e) {
     savasData = {
         coins: 0,
-        ownedSoligers:{
-            
-        }
+        ownedSoligers:[
+            {nr:0,homeSquere: 5},
+        ]
     }
 }
+setTimeout(() => {
+    for (let i = 0; i < savasData.ownedSoligers.length; i++) {
+        vieta = savasData.ownedSoligers[i].homeSquere
+        savi.push(new veikejas (soligers[savasData.ownedSoligers[i].nr] ,homeSqueres[vieta].xProc, homeSqueres[vieta].yProc));
+        homeSqueres[vieta].ocupied = true;
+    }
+} , 1000);
 
+
+// console.log(savi);
 try {
     console.log(wave)
 } catch (e) {
@@ -119,7 +129,7 @@ function animate(timestamp) {
                     <p>selected characher</p>
 
                     <p>Ur characters</p>
-                    
+
                     `
       
                 }
@@ -128,6 +138,8 @@ function animate(timestamp) {
             ctx.fillStyle = 'rgba(65, 65, 85, ' + blure + ')';
 
             ctx.fillRect(homeSqueres[i].x, homeSqueres[i].y, homeSqueres[i].plotis, homeSqueres[i].aukstis);
+           
+            if(homeSqueres[i].ocupied){}    
             ctx.restore();
         }
     }
@@ -153,7 +165,9 @@ function animate(timestamp) {
 
 
     }
-
+    for (let j = 0; j < savi.length; j++) {
+        savi[j].animuok();
+    }
     ctx.fillText(`Wave: ${wave}`, (80 / 100) * ePlotis, (5 / 100) * eAukstis);
     if (debugScrean || rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, 50);
     if (debugScrean) { ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70); ctx.fillText(`Sukurta priesu: ${priesai.length}`, 20, 90); }

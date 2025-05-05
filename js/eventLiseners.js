@@ -29,8 +29,8 @@ document.getElementById('nextRoundButton').addEventListener('click', function() 
     nextRoundButton.style.display = 'none';
 });
 canvas.addEventListener("mousemove", function(e) {
-     pelesX = e.offsetX;
-     pelesY = e.offsetY;}
+    pelesX = e.offsetX;
+    pelesY = e.offsetY;}
 );
 
 canvas.addEventListener("mousedown", function(e) {
@@ -38,5 +38,5 @@ canvas.addEventListener("mousedown", function(e) {
     setTimeout(() => {
         mouseDown = false;
     }
-    , 100);
+    , 10);
 });

@@ -17,7 +17,7 @@ let enemes = [
 ];
 let soligers = [
     {
-        saudimoGreitis: 1, img: 'soliger.png', plotis: 50, aukstis: 50
+        saudimoGreitis: 1, img: './img/Veikeju_sprite/Good_guys/Character1.png', dydis:1, spriteIlgis: 12, spriteAukstis: 22, spriteReikemasKadrasY: 1, reikemiKadrai: 4, veikejoZiurejimoPuse: 1,price:100,
     },
 ];
 
@@ -29,8 +29,11 @@ function setHomeSqueres(){
             homeSqueres.push({
                 x:  (i * 5  + 10) /100 * ePlotis,
                 y: ( 100 - j * 8 -20 ) /100 * eAukstis,
+                xProc: (i * 5  + 10) ,
+                yProc: ( 100 - j * 8 -20 ) ,
                 plotis: (4 / 100) * ePlotis,
                 aukstis: (4 / 100) * ePlotis,
+                ocupied: false,
             });        
         }
         
