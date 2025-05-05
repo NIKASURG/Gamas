@@ -2,11 +2,15 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let homeSqueres = []
 let priesai = []
+let selectCharacter = document.getElementById('selectCharacter');
 try {
     console.log(savasData)
 } catch (e) {
     savasData = {
         coins: 0,
+        ownedSoligers:{
+            
+        }
     }
 }
 
@@ -28,6 +32,9 @@ let enemyCosts = []
 let bangosPradeta = false;
 let pelesX = 0;
 let pelesY = 0;
+let mouseDown = false;
+let vaveHp = 0;
+let leftVaveHp = 0;
 enemes.forEach(e => {
 
     enemyCosts.push(e.hard);
@@ -103,7 +110,21 @@ function animate(timestamp) {
             blure = 0.5
             if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
                 blure = 0.9
+                if(mouseDown){
+                    mouseDown = false;
+                    selectCharacter.style.display = 'block';
+                    selectCharacter.innerHTML=`
+                    
+                    <button onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
+                    <p>selected characher</p>
+
+                    <p>Ur characters</p>
+                    
+                    `
+      
+                }
             }
+            
             ctx.fillStyle = 'rgba(65, 65, 85, ' + blure + ')';
 
             ctx.fillRect(homeSqueres[i].x, homeSqueres[i].y, homeSqueres[i].plotis, homeSqueres[i].aukstis);

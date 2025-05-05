@@ -16,6 +16,7 @@ window.addEventListener('keydown', function(event) {
             document.getElementById('debugScrean').style.display = 'none';
         }
     }
+  
 });
 
 document.getElementById('playButton').addEventListener('click', function() {
@@ -29,6 +30,13 @@ document.getElementById('nextRoundButton').addEventListener('click', function() 
 });
 canvas.addEventListener("mousemove", function(e) {
      pelesX = e.offsetX;
-     pelesY = e.offsetY;
-   
+     pelesY = e.offsetY;}
+);
+
+canvas.addEventListener("mousedown", function(e) {
+    mouseDown = true;
+    setTimeout(() => {
+        mouseDown = false;
+    }
+    , 100);
 });
