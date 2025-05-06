@@ -112,6 +112,9 @@ function suzeikPriesa(dmg, taikinys,) {
     default:
       return;
   }
+  // console.log(priesas);
+  priesas.givybes -= dmg;
+  return priesas;
 }
 function removeCharacter(i) {
   const nr = homeSqueres[i].ocupied;
@@ -123,7 +126,6 @@ function removeCharacter(i) {
 }
 function sudeliokSavus(){
   savi = [];
-  setTimeout(() => {
       for (let i = 0; i < savasData.ownedSoligers.length; i++) {
       vieta = savasData.ownedSoligers[i].homeSquere;
       if(vieta != null ) {
@@ -136,6 +138,7 @@ function sudeliokSavus(){
       }
       
   }
-} , 1000);
+
 
 }
+
