@@ -112,6 +112,9 @@ function suzeikPriesa(dmg, taikinys,) {
     default:
       return;
   }
+  // console.log(priesas);
+  priesas.givybes -= dmg;
+  return priesas;
 }
 function removeCharacter(i) {
   const nr = homeSqueres[i].ocupied;

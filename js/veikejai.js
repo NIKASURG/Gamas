@@ -132,5 +132,21 @@ class veikejas{
         }
        
     }
+    atack(){
+        let priesas = suzeikPriesa(this.data.jega,this.taikinys);
+        let atvaizdoX = (this.x / 100) * ePlotis;
+        if (this.veikejoZiurejimoPuse == -1) {
+            atvaizdoX = -atvaizdoX - Dydis[this.dydis][0]; 
+        }
+        
+        const atvaizdoY = (this.y/100) * eAukstis
+        if(priesas){
+
+            ctx.beginPath(); // Start a new path
+            ctx.moveTo(atvaizdoX, atvaizdoY); // Move the pen to (30, 50)
+            ctx.lineTo((priesas.x/100) * ePlotis, (priesas.y/100) * eAukstis); // Draw a line to (150, 100)
+            ctx.stroke(); // Render the path
+        }
+    }
   
 }

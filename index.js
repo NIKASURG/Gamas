@@ -179,6 +179,7 @@ function animate(timestamp) {
     }
     for (let j = 0; j < savi.length; j++) {
         savi[j].animuok();
+        savi[j].atack();
     }
     ctx.fillText(`Wave: ${wave}`, (80 / 100) * ePlotis, (5 / 100) * eAukstis);
     ctx.fillText(`Coins: ${savasData.coins}`, (90 / 100) * ePlotis, (5 / 100) * eAukstis);
