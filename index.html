@@ -88,33 +88,121 @@
 
     <!-- Shop -->
     <div id="shopModal" class="modal">
-      <div class="modal-content">
-        <span class="close-button" id="closeShop">&times;</span>
-        <h2 class="game-title" style="font-size: 2rem">Shop</h2>
+      <div class="modal-content shop-container">
+        <div class="shop-header">
+          <div class="shop-header-top">
+            <h2 class="shop-title">Shop</h2>
+            <span class="close-button shop-close" id="closeShop">&times;</span>
+          </div>
+          <div class="shop-filters">
+            <button class="filter-button active" data-filter="castle">
+              Castle
+            </button>
+            <button class="filter-button" data-filter="arrows">Arrows</button>
+            <button class="filter-button" data-filter="units">Units</button>
+          </div>
+        </div>
         <div class="shop-items">
-          <div class="shop-item">
-            <img
-              src="img/archer.jpeg"
-              alt="Better Archer"
-              width="50"
-              height="50"
-            />
-            <h3>Better Archer</h3>
-            <p>Damage: +5</p>
-            <p>Cost: 100 gold</p>
+          <div class="shop-item legendary" data-category="units">
+            <div class="shop-item-icon">
+              <img
+                src="img/archer.jpeg"
+                alt="Master Archer"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Master Archer</h3>
+              <p>Damage: +15, Range: +20%</p>
+            </div>
+            <div class="shop-item-price">300</div>
+            <button class="buy-button" data-item="master-archer">Buy</button>
+          </div>
+
+          <div class="shop-item rare" data-category="arrows">
+            <div class="shop-item-icon">
+              <img
+                src="img/arow.png"
+                alt="Enchanted Arrows"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Enchanted Arrows</h3>
+              <p>Speed: +20%, Piercing: +2</p>
+            </div>
+            <div class="shop-item-price">150</div>
+            <button class="buy-button" data-item="enchanted-arrows">Buy</button>
+          </div>
+
+          <div class="shop-item common" data-category="units">
+            <div class="shop-item-icon">
+              <img
+                src="img/archer.jpeg"
+                alt="Better Archer"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Better Archer</h3>
+              <p>Damage: +5</p>
+            </div>
+            <div class="shop-item-price">100</div>
             <button class="buy-button" data-item="archer">Buy</button>
           </div>
-          <div class="shop-item">
-            <img
-              src="img/arow.png"
-              alt="Improved Arrows"
-              width="50"
-              height="50"
-            />
-            <h3>Improved Arrows</h3>
-            <p>Speed: +10%</p>
-            <p>Cost: 75 gold</p>
+
+          <div class="shop-item common" data-category="arrows">
+            <div class="shop-item-icon">
+              <img
+                src="img/arow.png"
+                alt="Improved Arrows"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Improved Arrows</h3>
+              <p>Speed: +10%</p>
+            </div>
+            <div class="shop-item-price">75</div>
             <button class="buy-button" data-item="arrows">Buy</button>
+          </div>
+
+          <div class="shop-item rare" data-category="castle">
+            <div class="shop-item-icon">
+              <img
+                src="img/kilaia.png"
+                alt="Reinforced Walls"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Reinforced Walls</h3>
+              <p>Defense: +15%, Durability: +20%</p>
+            </div>
+            <div class="shop-item-price">200</div>
+            <button class="buy-button" data-item="walls">Buy</button>
+          </div>
+
+          <div class="shop-item legendary" data-category="castle">
+            <div class="shop-item-icon">
+              <img
+                src="img/vaiduoklis.png"
+                alt="Ancient Guardian"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Ancient Guardian</h3>
+              <p>Summons a powerful spirit to defend your castle</p>
+            </div>
+            <div class="shop-item-price">500</div>
+            <button class="buy-button" data-item="guardian">Buy</button>
           </div>
         </div>
       </div>
@@ -205,6 +293,32 @@
         .addEventListener("click", function () {
           document.getElementById("shopModal").style.display = "none";
         });
+
+      // Shop filter functionality
+      const filterButtons = document.querySelectorAll(".filter-button");
+      const shopItems = document.querySelectorAll(".shop-item");
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Remove active class from all buttons
+          filterButtons.forEach((btn) => btn.classList.remove("active"));
+
+          // Add active class to clicked button
+          button.classList.add("active");
+
+          const filter = button.getAttribute("data-filter");
+
+          // Show/hide items based on filter
+          shopItems.forEach((item) => {
+            const category = item.getAttribute("data-category");
+            if (category === filter) {
+              item.style.display = "flex";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        });
+      });
     </script>
     <script src="./js/veikejoPremade.js"></script>
     <script src="./js/funkcijos.js"></script>

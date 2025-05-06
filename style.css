@@ -10,12 +10,15 @@ body {
   font-family: "Poppins", sans-serif;
   background: #2c1b0e; /* Dark brown background */
   color: #3a2921; /* Dark text color for scroll */
-  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
 #nextRoundButton {
   position: fixed;
-  bottom: 0;
+  bottom: 2%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000; /* Use a high value to ensure it's on top */
@@ -38,15 +41,14 @@ body {
 }
 
 .scroll-container {
-  padding: 2rem;
   max-width: 600px;
   width: 90%;
   background: #d4a76a; /* Light brown background as fallback */
   border: 8px solid #8b4513; /* Brown border */
   border-radius: 10px;
   position: relative;
-  padding: 60px 40px;
-  min-height: 400px;
+  padding: 8% 5%;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,14 +69,15 @@ body {
   background: #d4a76a; /* Light brown */
   border: 2px solid #8b4513; /* Saddle brown border */
   color: #3a2921;
-  padding: 12px 30px;
-  margin: 15px 0;
-  font-size: 1.2rem;
+  padding: 8px 16px;
+  margin: 8px 0;
+  font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
-  width: 200px;
+  width: 30%;
+  max-width: 160px;
   text-align: center;
   font-family: "MedievalSharp", cursive;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -119,9 +122,9 @@ button {
   background: #d4a76a;
   border: 2px solid #8b4513;
   color: #3a2921;
-  padding: 12px 30px;
-  margin: 15px 0;
-  font-size: 1.2rem;
+  padding: 8px 16px;
+  margin: 8px 0;
+  font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -135,84 +138,255 @@ button {
 /* Menu button in game */
 #menuButton {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  padding: 10px 20px;
-  font-size: 1rem;
+  top: 3%;
+  left: 3%;
+  padding: 6px 12px;
+  font-size: 0.9rem;
   z-index: 30;
+  background-color: #8b4513;
+  color: #ffd700;
+  border: 2px solid #d4a76a;
+  border-radius: 0;
+  font-weight: bold;
 }
 
 /* Shop styles */
 .shop-items {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
   margin-top: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+/* Additional shop item types */
+.shop-item.legendary {
+  border: 4px solid #ffd700;
+  background-color: #3a1f0d;
+}
+
+.shop-item.rare {
+  border: 4px solid #c0c0c0;
+  background-color: #2a2a3a;
+}
+
+.shop-item.common {
+  border: 4px solid #cd7f32;
+  background-color: #3a2921;
 }
 
 .shop-item {
-  background-color: rgba(139, 69, 19, 0.7);
-  border: 2px solid #8b4513;
-  border-radius: 8px;
-  padding: 15px;
-  width: 200px;
-  text-align: center;
+  background-color: #3a2921;
+  border: 4px solid #d4a76a;
+  border-radius: 0;
+  padding: 12px 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.shop-item-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2c1b0e;
+  border: 2px solid #d4a76a;
+}
+
+.shop-item-info {
+  flex-grow: 1;
 }
 
 .shop-item h3 {
-  margin: 10px 0;
+  margin: 0 0 5px 0;
   font-family: "MedievalSharp", cursive;
+  color: #d4a76a;
+  font-size: 1.2rem;
 }
 
 .shop-item p {
-  margin: 5px 0;
+  margin: 0;
+  color: #d4a76a;
+  font-size: 0.9rem;
 }
 
-.buy-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
+.shop-item-price {
+  display: flex;
+  align-items: center;
+  color: #ffd700;
+  font-weight: bold;
   font-family: "MedievalSharp", cursive;
 }
 
+.shop-item-price::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #ffd700;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.buy-button {
+  background-color: #8b4513;
+  color: #ffd700;
+  border: 2px solid #d4a76a;
+  padding: 8px 15px;
+  border-radius: 0;
+  cursor: pointer;
+  font-family: "MedievalSharp", cursive;
+  font-weight: bold;
+  margin-left: 10px;
+  transition: all 0.2s ease;
+}
+
 .buy-button:hover {
-  background-color: #45a049;
+  background-color: #5d2906;
+  transform: scale(1.05);
+}
+
+/* Shop container and header */
+.shop-container {
+  position: fixed;
+  top: 30%;
+  right: -30%;
+  transform: translateY(-50%);
+  background-color: #2c1b0e;
+  border: 8px solid #d4a76a;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 100;
+  padding-bottom: 20px;
+}
+
+/* Shop filter buttons */
+.shop-filters {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+.filter-button {
+  background-color: #3a2921;
+  color: #d4a76a;
+  border: 2px solid #d4a76a;
+  padding: 5px 10px;
+  font-family: "MedievalSharp", cursive;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+  text-align: center;
+  max-width: 100px;
+}
+
+.filter-button:hover {
+  background-color: #4a3931;
+  transform: scale(1.05);
+}
+
+.filter-button.active {
+  background-color: #8b4513;
+  color: #ffd700;
+  border-color: #ffd700;
+}
+
+.shop-header {
+  background-color: #3a2921;
+  border-bottom: 4px solid #d4a76a;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+}
+
+.shop-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.shop-title {
+  color: #d4a76a;
+  font-family: "MedievalSharp", cursive;
+  font-size: 1.5rem;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.shop-close {
+  background-color: #8b4513;
+  border: 2px solid #d4a76a;
+  color: #ffd700;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
 #shopButton {
   position: absolute;
-  top: 10%;
-  left: 90%;
+  top: 3%;
+  right: 3%;
   z-index: 10;
   background-color: #8b4513;
-  color: white;
-  border: 2px solid #5d2906;
-  border-radius: 8px;
-  padding: 8px 15px;
+  color: #ffd700;
+  border: 2px solid #d4a76a;
+  border-radius: 0;
+  padding: 6px 12px;
   font-family: "MedievalSharp", cursive;
   cursor: pointer;
+  font-weight: bold;
 }
 
 #shopButton:hover {
   background-color: #5d2906;
+  transform: scale(1.05);
 }
 
 /* Style for the Next Round button specifically */
 #nextRound {
   position: fixed;
-  bottom: 20px;
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
+  padding: 8px 16px;
+  font-size: 0.95rem;
   z-index: 25;
+  background-color: #8b4513;
+  color: #ffd700;
+  border: 2px solid #d4a76a;
+  border-radius: 0;
+  font-weight: bold;
 }
 
 #nextRound:hover {
-  background: #c69c6d;
+  background-color: #5d2906;
   transform: translateX(-50%) scale(1.05);
 }
 
@@ -259,7 +433,7 @@ button {
   background: #d4a76a; /* Light brown background as fallback */
   border: 8px solid #8b4513; /* Brown border */
   border-radius: 10px;
-  padding: 40px 30px;
+  padding: 5% 4%;
   width: 80%;
   max-width: 500px;
   max-height: 80vh;
@@ -271,9 +445,9 @@ button {
 
 .close-button {
   position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 24px;
+  top: 5%;
+  right: 5%;
+  font-size: 1.5rem;
   cursor: pointer;
   color: #8b0000;
   font-weight: bold;
@@ -306,14 +480,69 @@ button {
   }
 
   .menu-button {
-    padding: 10px 25px;
+    padding: 3% 6%;
     font-size: 1rem;
-    width: 180px;
+    width: 60%;
+    max-width: 180px;
   }
 
   .scroll-container {
-    padding: 40px 30px;
-    min-height: 400px;
+    padding: 6% 4%;
+    min-height: 40vh;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 2% 4%;
+  }
+
+  .filter-button {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    max-width: 80px;
+  }
+
+  .shop-filters {
+    gap: 5px;
+  }
+
+  #menuButton,
+  #shopButton {
+    padding: 1.5% 3%;
+    font-size: 0.9rem;
+  }
+
+  /* Shop responsive styles */
+  .shop-container {
+    width: 95%;
+    max-height: 85vh;
+  }
+
+  .shop-title {
+    font-size: 1.3rem;
+  }
+
+  .shop-item {
+    padding: 10px;
+  }
+
+  .shop-item-icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+  }
+
+  .shop-item h3 {
+    font-size: 1rem;
+  }
+
+  .shop-item p {
+    font-size: 0.8rem;
+  }
+
+  .buy-button {
+    padding: 6px 10px;
+    font-size: 0.9rem;
   }
 
   /* @media (orientation: portrait) {
@@ -331,8 +560,8 @@ button {
 
 #debugScrean {
   position: fixed;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 9999;
@@ -410,10 +639,11 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  width: 90%;
+  max-width: 800px;
   height: 80%;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
 }
