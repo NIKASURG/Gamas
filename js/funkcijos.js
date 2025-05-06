@@ -126,7 +126,6 @@ function removeCharacter(i) {
 }
 function sudeliokSavus(){
   savi = [];
-  setTimeout(() => {
       for (let i = 0; i < savasData.ownedSoligers.length; i++) {
       vieta = savasData.ownedSoligers[i].homeSquere;
       if(vieta != null ) {
@@ -139,6 +138,7 @@ function sudeliokSavus(){
       }
       
   }
-} , 1000);
+
 
 }
+
