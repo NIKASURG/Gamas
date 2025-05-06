@@ -4,7 +4,9 @@ document.addEventListener("fullscreenchange", updateCanvas);
 document.addEventListener("webkitfullscreenchange", updateCanvas); // Safari
 document.addEventListener("mozfullscreenchange", updateCanvas);    // Firefox
 document.addEventListener("msfullscreenchange", updateCanvas);     // IE/Edge
-
+document.addEventListener("menuButton",()=>{
+    pause = true
+});
 window.addEventListener('load', function() {
     nextRoundButton.style.display = 'none';});
 window.addEventListener('keydown', function(event) {
@@ -38,5 +40,5 @@ canvas.addEventListener("mousedown", function(e) {
     setTimeout(() => {
         mouseDown = false;
     }
-    , 10);
+    , 100);
 });

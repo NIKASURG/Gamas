@@ -51,7 +51,7 @@ input.addEventListener('keydown', function(event) {
                 }
                 break;
             case 'clear':
-                 localStorage.setItem("gameState", JSON.stringify());
+                 localStorage.removeItem("gameState");
 
             break;
             default:

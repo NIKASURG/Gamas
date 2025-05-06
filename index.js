@@ -10,19 +10,16 @@ try {
     savasData = {
         coins: 0,
         ownedSoligers:[
-            {nr:0,homeSquere: 5},
+            {nr:0,homeSquere: 5,extraData: {upgrade: 0}},
+            {nr:1,homeSquere:4,extraData: {upgrade: 0}},
+            {nr:2,homeSquere:null,extraData: {upgrade: 0}},
+
+
         ]
     }
 }
-setTimeout(() => {
-    for (let i = 0; i < savasData.ownedSoligers.length; i++) {
-        vieta = savasData.ownedSoligers[i].homeSquere
-        savi.push(new veikejas (soligers[savasData.ownedSoligers[i].nr] ,homeSqueres[vieta].xProc- homeSqueres[vieta].plotis/100, homeSqueres[vieta].yProc- homeSqueres[vieta].aukstis/100));
-        homeSqueres[vieta].ocupied = true;
-    }
-} , 1000);
 
-
+sudeliokSavus();
 // console.log(savi);
 try {
     console.log(wave)
@@ -45,6 +42,7 @@ let pelesY = 0;
 let mouseDown = false;
 let vaveHp = 0;
 let leftVaveHp = 0;
+let laikinasGlobalusI = 0;
 enemes.forEach(e => {
 
     enemyCosts.push(e.hard);
@@ -118,28 +116,42 @@ function animate(timestamp) {
         for (let i = 0; i < homeSqueres.length; i++) {
             ctx.save();
             blure = 0.5
+            laikinasGlobalusI = i;
+            buttons = ``
+            
             if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
                 blure = 0.9
                 if(mouseDown){
+                    if (homeSqueres[i] && homeSqueres[i].ocupied !== null && homeSqueres[i].ocupied !== undefined) {
+                        buttons = `<button onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
+                    }
+                    for (let j = 0; j < savasData.ownedSoligers.length; j++) {
+                    if(homeSqueres[i].ocupied === null && savasData.ownedSoligers[j].homeSquere ===null){
+                        buttons += `<button onclick="savasData.ownedSoligers[${j}].homeSquere = ${i}; homeSqueres[${i}].ocupied = ${j}; sudeliokSavus(); selectCharacter.style.display = 'none';">
+                        ${savasData.ownedSoligers[j].nr}
+                        </button>`;
+                    }}
+                    
                     mouseDown = false;
                     selectCharacter.style.display = 'block';
                     selectCharacter.innerHTML=`
                     
                     <button onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
                     <p>selected characher</p>
+                   `+ `${buttons}`+`
 
                     <p>Ur characters</p>
-
+                    
                     `
       
                 }
+
             }
             
             ctx.fillStyle = 'rgba(65, 65, 85, ' + blure + ')';
 
             ctx.fillRect(homeSqueres[i].x, homeSqueres[i].y, homeSqueres[i].plotis, homeSqueres[i].aukstis);
-           
-            if(homeSqueres[i].ocupied){}    
+             
             ctx.restore();
         }
     }
@@ -162,13 +174,15 @@ function animate(timestamp) {
             priesai.splice(i, 1);
             i--;
         }
-
+        
 
     }
     for (let j = 0; j < savi.length; j++) {
         savi[j].animuok();
     }
     ctx.fillText(`Wave: ${wave}`, (80 / 100) * ePlotis, (5 / 100) * eAukstis);
+    ctx.fillText(`Coins: ${savasData.coins}`, (90 / 100) * ePlotis, (5 / 100) * eAukstis);
+    
     if (debugScrean || rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, 50);
     if (debugScrean) { ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70); ctx.fillText(`Sukurta priesu: ${priesai.length}`, 20, 90); }
     requestAnimationFrame(animate);

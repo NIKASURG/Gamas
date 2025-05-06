@@ -1,5 +1,5 @@
 class veikejas{
-   constructor(data, x, y) {
+   constructor(data, x = 0, y= 0) {
     this.x = x;
     this.y = y;
     this.data = data;
@@ -16,10 +16,11 @@ class veikejas{
         this.kadroPlotis = this.img.width / this.spriteIlgisKadru;
         this.kadroAukstis = this.img.height / this.spriteAukstisKadru;
         this.spriteOffsetY = (this.reikemasKadrasY - 1) * this.kadroAukstis;
+        this.esamasKadrasX = Math.floor(Math.random() * this.reikemiKadrai) * this.kadroPlotis;
     }
+    this.taikinys = 'first';
     this.mires = false;
     this.linkMirties = false;
-    this.esamasKadrasX = 0;
     this.esamasKadrasY = 0;
     this.reikemasKadrasY = data.spriteReikemasKadrasY;
     this.reikemiKadrai = data.reikemiKadrai;
@@ -28,13 +29,14 @@ class veikejas{
     this.mirtiesReikalingiX = data.mirtiesReikalingiX;
     this.veikejoZiurejimoPuse = data.veikejoZiurejimoPuse;
     this.primasPoMirties = true
+    this.pasirinktas = true;
 
 }
 
     
     kadras(){
         this.spriteGreitis++;
-        if(this.spriteGreitis > 5) {
+        if(this.spriteGreitis > 10 - this.reikemiKadrai) {
             this.spriteGreitis = 0;
             // console.log(this.kadroPlotis,this.reikemiKadrai)
             this.esamasKadrasX += this.kadroPlotis
@@ -51,6 +53,11 @@ class veikejas{
        
     }
     animuok() {
+        if(!this.pasirinktas){
+            return;
+
+        }
+        // console.log(this.data)
         this.kadras();
         ctx.save();
         ctx.scale(this.veikejoZiurejimoPuse, 1);
@@ -125,5 +132,5 @@ class veikejas{
         }
        
     }
-
+  
 }

@@ -90,4 +90,52 @@ function arPeleViduje(pelesX, pelesY, box) {
          pelesY >= box.y &&
          pelesY <= box.y + box.aukstis;
 }
+function suzeikPriesa(dmg, taikinys,) {
+  if (!priesai.length) return;
+  let priesas;
+  switch (taikinys) {
+    case "first":
+      priesas = priesai.reduce((a, b) => (a.x < b.x ? a : b));
+      break;
+    case "last":
+      priesas = priesai.reduce((a, b) => (a.x > b.x ? a : b));
+      break;
+    case "random":
+      priesas = priesai[Math.floor(Math.random() * priesai.length)];
+      break;
+    case "strongest":
+      priesas = priesai.reduce((max, p) => (p.hp > max.hp ? p : max));
+      break;
+    case "weakest":
+      priesas = priesai.reduce((min, p) => (p.hp < min.hp ? p : min));
+      break;
+    default:
+      return;
+  }
+}
+function removeCharacter(i) {
+  const nr = homeSqueres[i].ocupied;
+  if (nr !== null) {
+      savasData.ownedSoligers[nr].homeSquere = null;
+      homeSqueres[i].ocupied = null;
+      sudeliokSavus();
+  }
+}
+function sudeliokSavus(){
+  savi = [];
+  setTimeout(() => {
+      for (let i = 0; i < savasData.ownedSoligers.length; i++) {
+      vieta = savasData.ownedSoligers[i].homeSquere;
+      if(vieta != null ) {
+          savi.push(new veikejas (soligers[savasData.ownedSoligers[i].nr] ,homeSqueres[vieta].xProc- homeSqueres[vieta].plotis/100, homeSqueres[vieta].yProc- homeSqueres[vieta].aukstis  /100));
 
+          homeSqueres[vieta].ocupied = savasData.ownedSoligers[i].nr;
+      }else{
+          savi.push(new veikejas (soligers[savasData.ownedSoligers[i].nr]));
+          savi[savi.length-1].pasirinktas = false;
+      }
+      
+  }
+} , 1000);
+
+}
