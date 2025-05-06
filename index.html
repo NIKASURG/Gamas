@@ -25,31 +25,26 @@
     <div id="main">
       <div class="scroll-container">
         <h1 class="game-title">Castle Defender</h1>
-        <button id="playButton" class="menu-button" >
-          Play
-        </button>
+        <button id="playButton" class="menu-button">Play</button>
         <button id="settingsButton" class="menu-button">Settings</button>
         <button id="creditsButton" class="menu-button">Credits</button>
         <div id="showLogin">
-
           <p>Save game progres by authedintaining with</p>
-          
-          <button type="button" id="google-login" class="login-with-google-btn" >
+
+          <button type="button" id="google-login" class="login-with-google-btn">
             Google
           </button>
         </div>
         <div id="showLogout" style="display: none">
           <p>Logged in as: <span id="userEmail"></span></p>
-          <button type="button" id="google-logout">
-            Logout
-          </button></div>
+          <button type="button" id="google-logout">Logout</button>
+        </div>
       </div>
     </div>
-    <div id="selectCharacter">
-      
-      </div>
 
-    </div>
+    <!-- Character Selection -->
+    <div id="selectCharacter"></div>
+
     <!-- Settings -->
     <div id="settingsModal" class="modal">
       <div class="modal-content">
@@ -126,17 +121,14 @@
     </div>
 
     <div id="container" class="container">
-      <button id="menuButton" >Menu</button>
+      <button id="menuButton">Menu</button>
       <button id="shopButton">Shop</button>
       <canvas id="canvas"> </canvas>
     </div>
-    <div id="debugScrean" style="display: none;">
-        <div class="komanduKonteineris">
-          
-          <input type="text" id="komandos" placeholder="Komandos" />
-          
-        </div>
-
+    <div id="debugScrean" style="display: none">
+      <div class="komanduKonteineris">
+        <input type="text" id="komandos" placeholder="Komandos" />
+      </div>
     </div>
     <script>
       document
@@ -221,9 +213,5 @@
     <script src="./js/eventLiseners.js"></script>
     <script src="./js/Komandos.js"></script>
     <script type="module" src="./js/fireBase.js"></script>
-
-
   </body>
 </html>
-
-
