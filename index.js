@@ -36,11 +36,10 @@ catch(e){
   };
 }
 setTimeout(() => {
-  sudeliokSavus();
   document.getElementById('fullscreenToggle').checked = setings.autoFullScrean
-  lock = false
-},1000);
-setInterval(saveGameState, 10000);
+  
+},1);
+setInterval(saveGameState, 2000);
 updateCanvas();
 let backGrount = new Image();
 backGrount.src = "img/bg.png";

@@ -31,6 +31,13 @@ document.getElementById('playButton').addEventListener('click', function() {
     if (!window.screenTop && !window.screenY&& setings.autoFullScrean) {
         openFullscreen()
     }
+    if(lock){
+
+        lock = false
+        setTimeout(() => {
+            sudeliokSavus();
+        },200);
+    }
 });
 document.getElementById('nextRoundButton').addEventListener('click', function() {
     pause = false;
