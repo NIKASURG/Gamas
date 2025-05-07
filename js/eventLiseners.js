@@ -54,6 +54,8 @@ canvas.addEventListener("mousedown", function(e) {
     mouseDown = true;
     setTimeout(() => {
         mouseDown = false;
+        saveGameState()
+
     }
     , 100);
     if (!window.screenTop && !window.screenY && setings.autoFullScrean) {
