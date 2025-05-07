@@ -4,7 +4,9 @@ document.addEventListener("fullscreenchange", updateCanvas);
 document.addEventListener("webkitfullscreenchange", updateCanvas); // Safari
 document.addEventListener("mozfullscreenchange", updateCanvas);    // Firefox
 document.addEventListener("msfullscreenchange", updateCanvas);     // IE/Edge
-document.getElementById('fullscreenToggle').addEventListener('click', ()=>{ setings.autoFullScrean = document.getElementById('fullscreenToggle').checked} 
+document.getElementById('fullscreenToggle').addEventListener('click', ()=>{ setings.autoFullScrean = document.getElementById('fullscreenToggle').checked;
+    saveGameState()
+} 
 )
 document.addEventListener("menuButton",()=>{
     

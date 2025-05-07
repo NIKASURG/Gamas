@@ -5,6 +5,7 @@ let priesai = [];
 let savi = [];
 let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
+let lock = true
 // ctx.translate(0, 0);
 
 try {
@@ -37,6 +38,7 @@ catch(e){
 setTimeout(() => {
   sudeliokSavus();
   document.getElementById('fullscreenToggle').checked = setings.autoFullScrean
+  lock = false
 },1000);
 setInterval(saveGameState, 10000);
 updateCanvas();
@@ -131,7 +133,7 @@ function animate(timestamp) {
 
       if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
         blure = 0.9;
-        if (mouseDown) {
+        if (mouseDown && !lock) {
           if (
             homeSqueres[i] &&
             homeSqueres[i].ocupied !== null &&
@@ -168,7 +170,6 @@ function animate(timestamp) {
       }
 
       ctx.fillStyle = "rgba(65, 65, 85, " + blure + ")";
-
       ctx.fillRect(
         homeSqueres[i].x,
         homeSqueres[i].y,

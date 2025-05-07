@@ -164,7 +164,7 @@ function sudeliokSavus() {
 }
 
 function openFullscreen() {
-  console.log('afadfadf')
+  
   if (document.documentElement.requestFullscreen) {
     document.documentElement.requestFullscreen();
   } else if (document.documentElement.webkitRequestFullscreen) {
