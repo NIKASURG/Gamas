@@ -28,15 +28,14 @@ window.addEventListener('keydown', function(event) {
 
 document.getElementById('playButton').addEventListener('click', function() {
     nextRoundButton.style.display = '';
-    if (!window.screenTop && !window.screenY&& setings.autoFullScrean) {
+    
+    if (window.screenTop && window.screenY&& setings.autoFullScrean) {
         openFullscreen()
     }
     if(lock){
 
         lock = false
-        setTimeout(() => {
-            sudeliokSavus();
-        },200);
+        
     }
 });
 document.getElementById('nextRoundButton').addEventListener('click', function() {
@@ -58,7 +57,8 @@ canvas.addEventListener("mousedown", function(e) {
 
     }
     , 100);
-    if (!window.screenTop && !window.screenY && setings.autoFullScrean) {
+    if (window.screenTop && window.screenY && setings.autoFullScrean) {
+        
         openFullscreen()
     }
 });

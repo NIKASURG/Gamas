@@ -19,6 +19,8 @@ class veikejas {
       this.esamasKadrasX =
         Math.floor(Math.random() * this.reikemiKadrai) * this.kadroPlotis;
     };
+    this.saudimoGreitis = data.saudimoGreitis;
+    this.saudimoLaukimas = 0;
     this.taikinys = "first";
     this.mires = false;
     this.linkMirties = false;
@@ -91,7 +93,6 @@ class veikejas {
     );
 
     if (this.givybes) {
-      console.log();
       ctx.fillStyle = "red";
       if (this.givybes >= 0) {
         ctx.fillRect(
@@ -142,7 +143,9 @@ class veikejas {
     if (priesas === undefined) {
       return;
     }
-    // streles.push(new Sovinys(this.x,this.y,priesas))
+    this.saudimoLaukimas += 1
+    
+    streles.push(new Sovinys(this.x,this.y,priesas))
     // console.log(priesas)
     let atvaizdoX = (this.x / 100) * ePlotis;
     if (this.veikejoZiurejimoPuse == -1) {
@@ -173,9 +176,19 @@ class Sovinys {
     const vidurysY = (y1 + this.y2) / 2 - 100;
     this.ctrlX = vidurysX;
     this.ctrlY = vidurysY;
-
+    this.givenimoLaikas = 0;
+    this.mirus = false;
+    this.ismigusi = false;
     this.t = 0;
   }
 
-  animuok(ctx) {}
+  animuok() {
+    this.givenimoLaikas += 1
+    if(this.givenimoLaikas > 100)
+    {
+      this.mirus = true
+    }
+    console.log(this.givenimoLaikas)
+    // console.log(this.taikinioNuoroda)
+  }
 }

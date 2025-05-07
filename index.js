@@ -1,6 +1,5 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d", { alpha: false });
-let homeSqueres = [];
 let priesai = [];
 let savi = [];
 let streles = [];
@@ -35,6 +34,8 @@ catch(e){
     autoFullScrean: true,
   };
 }
+sudeliokSavus();
+
 setTimeout(() => {
   document.getElementById('fullscreenToggle').checked = setings.autoFullScrean
   
@@ -204,7 +205,7 @@ function animate(timestamp) {
   for (let i = 0; i < streles.length; i++) {
     console.log(streles);
     streles[i].animuok();
-    if (streles[i].y > 100) {
+    if (streles[i].y > 100 || streles[i].mirus) {
       streles.splice(i, 1);
       i--;
     }

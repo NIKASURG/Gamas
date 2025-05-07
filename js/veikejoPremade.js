@@ -74,6 +74,7 @@ let soligers = [
     veikejoZiurejimoPuse: 1,
     price: 100,
     jega: 5,
+    saudimoGreitis: 100,
   },
   {
     saudimoGreitis: 1,
@@ -86,6 +87,7 @@ let soligers = [
     veikejoZiurejimoPuse: 1,
     price: 100,
     jega: 5,
+    saudimoGreitis: 100,
   },
   {
     saudimoGreitis: 1,
@@ -98,6 +100,7 @@ let soligers = [
     veikejoZiurejimoPuse: 1,
     price: 100,
     jega: 5,
+    saudimoGreitis: 100,
   },
   {
     saudimoGreitis: 1,
@@ -110,6 +113,7 @@ let soligers = [
     veikejoZiurejimoPuse: 1,
     price: 100,
     jega: 5,
+    saudimoGreitis: 100,
   },
   {
     saudimoGreitis: 1,
@@ -122,22 +126,48 @@ let soligers = [
     veikejoZiurejimoPuse: 1,
     price: 100,
     jega: 5,
+    saudimoGreitis: 100,
   },
 ];
 
+pi = 3
+ji = 3
+
+class langeliaiNamu{
+  constructor(i, j){
+        this.x = ((i * 5 + 10) / 100) * ePlotis,
+        this.y=  ((100 - j * 8 - 20) / 100) * eAukstis,
+        this.xProc= i * 5 + 10,
+        this.yProc= 100 - j * 8 - 20,
+        this.plotis= (4 / 100) * ePlotis,
+        this.aukstis= (4 / 100) * ePlotis,
+        this.ocupied= null
+  }
+  update(i,j){
+        this.x = ((i * 5 + 10) / 100) * ePlotis
+        this.y=  ((100 - j * 8 - 20) / 100) * eAukstis
+        this.xProc= i * 5 + 10
+        this.yProc= 100 - j * 8 - 20
+        this.plotis= (4 / 100) * ePlotis
+        this.aukstis= (4 / 100) * ePlotis
+  }
+}
+let homeSqueres = [];
+
+for (let i = 0; i < pi; i++) {
+  for (let j = 0; j < ji; j++) {
+    
+    homeSqueres.push(new langeliaiNamu(i,j))
+  }
+  
+}
+
 function setHomeSqueres() {
-  homeSqueres = [];
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      homeSqueres.push({
-        x: ((i * 5 + 10) / 100) * ePlotis,
-        y: ((100 - j * 8 - 20) / 100) * eAukstis,
-        xProc: i * 5 + 10,
-        yProc: 100 - j * 8 - 20,
-        plotis: (4 / 100) * ePlotis,
-        aukstis: (4 / 100) * ePlotis,
-        ocupied: null,
-      });
+  laik = 0
+  for (let i = 0; i < pi; i++) {
+    for (let j = 0; j < ji; j++) {
+      homeSqueres[laik].update(i,j);
+      laik++
     }
   }
 }
