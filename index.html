@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <title>Castle Defender</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- <link rel="manifest" href="manifest.json" /> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <button id="nextRoundButton" class="menu-button">Next Round</button>
+
+    <div id="turnDeviceNotification"></div>
+
+    <div id="main">
+      <div class="scroll-container">
+        <h1 class="game-title">Castle Defender</h1>
+        <button id="playButton" class="menu-button">Play</button>
+        <button id="settingsButton" class="menu-button">Settings</button>
+        <button id="creditsButton" class="menu-button">Credits</button>
+        <div id="showLogin">
+          <p>Save game progres by authedintaining with</p>
+
+          <button type="button" id="google-login" class="login-with-google-btn">
+            Google
+          </button>
+        </div>
+        <div id="showLogout" style="display: none">
+          <p>Logged in as: <span id="userEmail"></span></p>
+          <button type="button" id="google-logout">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Character Selection -->
+    <div id="selectCharacter"></div>
+
+    <!-- Settings -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" id="closeSettings">&times;</span>
+        <h2 class="game-title" style="font-size: 2rem">Settings</h2>
+        <div class="settings-panel">
+          <div class="settings-option">
+            <label for="musicVolume">Music Volume</label>
+            <input type="range" id="musicVolume" min="0" max="100" value="70" />
+          </div>
+          <div class="settings-option">
+            <label for="sfxVolume">SFX Volume</label>
+            <input type="range" id="sfxVolume" min="0" max="100" value="80" />
+          </div>
+          
+          <div class="settings-option">
+            <label for="fullscreenToggle">Fullscreen</label>
+            <input type="checkbox"  checked id="fullscreenToggle" />
+          </div>
+          <button id="saveSettings" class="menu-button">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Credits -->
+    <div id="creditsModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" id="closeCredits">&times;</span>
+        <h2 class="game-title" style="font-size: 2rem">Credits</h2>
+        <div style="text-align: center; margin-top: 20px">
+          <p><strong>Game Design & Development</strong><br />Your Name</p>
+          <p><strong>Artwork</strong><br />Your Artist</p>
+          <p><strong>Music & Sound Effects</strong><br />Your Sound Designer</p>
+          <p>
+            <strong>Special Thanks</strong><br />To everyone who supported this
+            project
+          </p>
+          <p style="margin-top: 30px">© 2025 Castle Defender</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shop -->
+    <div id="shopModal" class="modal">
+      <div class="modal-content shop-container">
+        <div class="shop-header">
+          <div class="shop-header-top">
+            <h2 class="shop-title">Shop</h2>
+            <span class="close-button shop-close" id="closeShop">&times;</span>
+          </div>
+          <div class="shop-filters">
+            <button class="filter-button active" data-filter="castle">
+              Castle
+            </button>
+            <button class="filter-button" data-filter="arrows">Arrows</button>
+            <button class="filter-button" data-filter="units">Units</button>
+          </div>
+        </div>
+        <div class="shop-items">
+          <div class="shop-item legendary" data-category="units">
+            <div class="shop-item-icon">
+              <img
+                src="img/archer.jpeg"
+                alt="Master Archer"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Master Archer</h3>
+              <p>Damage: +15, Range: +20%</p>
+            </div>
+            <div class="shop-item-price">300</div>
+            <button class="buy-button" data-item="master-archer">Buy</button>
+          </div>
+
+          <div class="shop-item rare" data-category="arrows">
+            <div class="shop-item-icon">
+              <img
+                src="img/arow.png"
+                alt="Enchanted Arrows"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Enchanted Arrows</h3>
+              <p>Speed: +20%, Piercing: +2</p>
+            </div>
+            <div class="shop-item-price">150</div>
+            <button class="buy-button" data-item="enchanted-arrows">Buy</button>
+          </div>
+
+          <div class="shop-item common" data-category="units">
+            <div class="shop-item-icon">
+              <img
+                src="img/archer.jpeg"
+                alt="Better Archer"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Better Archer</h3>
+              <p>Damage: +5</p>
+            </div>
+            <div class="shop-item-price">100</div>
+            <button class="buy-button" data-item="archer">Buy</button>
+          </div>
+
+          <div class="shop-item common" data-category="arrows">
+            <div class="shop-item-icon">
+              <img
+                src="img/arow.png"
+                alt="Improved Arrows"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Improved Arrows</h3>
+              <p>Speed: +10%</p>
+            </div>
+            <div class="shop-item-price">75</div>
+            <button class="buy-button" data-item="arrows">Buy</button>
+          </div>
+
+          <div class="shop-item rare" data-category="castle">
+            <div class="shop-item-icon">
+              <img
+                src="img/kilaia.png"
+                alt="Reinforced Walls"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Reinforced Walls</h3>
+              <p>Defense: +15%, Durability: +20%</p>
+            </div>
+            <div class="shop-item-price">200</div>
+            <button class="buy-button" data-item="walls">Buy</button>
+          </div>
+
+          <div class="shop-item legendary" data-category="castle">
+            <div class="shop-item-icon">
+              <img
+                src="img/vaiduoklis.png"
+                alt="Ancient Guardian"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="shop-item-info">
+              <h3>Ancient Guardian</h3>
+              <p>Summons a powerful spirit to defend your castle</p>
+            </div>
+            <div class="shop-item-price">500</div>
+            <button class="buy-button" data-item="guardian">Buy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="container" class="container">
+      <button id="menuButton">Menu</button>
+      <button id="shopButton">Shop</button>
+      <canvas id="canvas"> </canvas>
+    </div>
+    <div id="debugScrean" style="display: none">
+      <div class="komanduKonteineris">
+        <input type="text" id="komandos" placeholder="Komandos" />
+      </div>
+    </div>
+    <script>
+      document
+        .getElementById("settingsButton")
+        .addEventListener("click", function () {
+          document.getElementById("settingsModal").style.display = "flex";
+        });
+
+      document
+        .getElementById("creditsButton")
+        .addEventListener("click", function () {
+          document.getElementById("creditsModal").style.display = "flex";
+        });
+
+      document
+        .getElementById("closeSettings")
+        .addEventListener("click", function () {
+          document.getElementById("settingsModal").style.display = "none";
+        });
+
+      document
+        .getElementById("closeCredits")
+        .addEventListener("click", function () {
+          document.getElementById("creditsModal").style.display = "none";
+        });
+
+      document
+        .getElementById("playButton")
+        .addEventListener("click", function () {
+          document.getElementById("main").style.opacity = "0";
+
+          // Show the game container
+          const container = document.getElementById("container");
+          container.style.opacity = "1";
+          container.style.zIndex = "15";
+
+          const canvas = document.getElementById("canvas");
+          canvas.style.display = "block";
+
+          if (typeof updateCanvasSize === "function") {
+            updateCanvasSize();
+          }
+
+          setTimeout(function () {
+            document.getElementById("main").style.display = "none";
+          }, 500);
+        });
+
+      document
+        .getElementById("menuButton")
+        .addEventListener("click", function () {
+          // Show the main menu
+          document.getElementById("main").style.display = "flex";
+          document.getElementById("main").style.opacity = "1";
+
+          // Hide the game container
+          document.getElementById("container").style.opacity = "0";
+
+          // Hide the Next Round button specifically
+
+          setTimeout(function () {
+            document.getElementById("container").style.zIndex = "5";
+          }, 500);
+        });
+
+      document
+        .getElementById("shopButton")
+        .addEventListener("click", function () {
+          document.getElementById("shopModal").style.display = "flex";
+        });
+
+      document
+        .getElementById("closeShop")
+        .addEventListener("click", function () {
+          document.getElementById("shopModal").style.display = "none";
+        });
+
+      // Shop filter functionality
+      const filterButtons = document.querySelectorAll(".filter-button");
+      const shopItems = document.querySelectorAll(".shop-item");
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Remove active class from all buttons
+          filterButtons.forEach((btn) => btn.classList.remove("active"));
+
+          // Add active class to clicked button
+          button.classList.add("active");
+
+          const filter = button.getAttribute("data-filter");
+
+          // Show/hide items based on filter
+          shopItems.forEach((item) => {
+            const category = item.getAttribute("data-category");
+            if (category === filter) {
+              item.style.display = "flex";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        });
+      });
+    </script>
+    <script src="./js/veikejoPremade.js"></script>
+    <script src="./js/funkcijos.js"></script>
+    <script src="./js/veikejai.js"></script>
+    <script src="index.js"></script>
+    <script src="./js/eventLiseners.js"></script>
+    <script src="./js/Komandos.js"></script>
+    <script type="module" src="./js/fireBase.js"></script>
+  </body>
+</html>
