@@ -1,10 +1,12 @@
 const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d", { alpha: false });
 let homeSqueres = [];
 let priesai = [];
 let savi = [];
 let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
+// ctx.translate(0, 0);
+
 try {
   console.log(savasData);
 } catch (e) {
@@ -18,13 +20,16 @@ try {
   };
 }
 setTimeout(() => {
-
-sudeliokSavus();})
+  sudeliokSavus();
+});
 // console.log(savi);
 try {
   console.log(wave);
 } catch (e) {
   wave = 1;
+  setings = {
+    autoFullScren: true,
+  };
 }
 setInterval(saveGameState, 10000);
 
@@ -65,7 +70,7 @@ ctx.font = "22px Arial";
 
 function animate(timestamp) {
   if (pause) {
-    ctx.drawImage(backGrount, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
 
     requestAnimationFrame(animate);
     return;
@@ -82,8 +87,7 @@ function animate(timestamp) {
 
   // FPS skaičiavimas
   fpsCounter++;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(backGrount, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
   waweLaikas++;
   let ran = createSeededRandom(seed + waweImamas);
 
@@ -192,13 +196,12 @@ function animate(timestamp) {
     savi[j].atack();
   }
   for (let i = 0; i < streles.length; i++) {
-    console.log(streles)
-        streles[i].animuok()    
-        if(streles[i].y > 100){
-          streles.splice(i,1)
-          i--
-          
-        }
+    console.log(streles);
+    streles[i].animuok();
+    if (streles[i].y > 100) {
+      streles.splice(i, 1);
+      i--;
+    }
   }
   ctx.fillText(`Wave: ${wave}`, (80 / 100) * ePlotis, (5 / 100) * eAukstis);
   ctx.fillText(

@@ -5,6 +5,7 @@ document.addEventListener("webkitfullscreenchange", updateCanvas); // Safari
 document.addEventListener("mozfullscreenchange", updateCanvas);    // Firefox
 document.addEventListener("msfullscreenchange", updateCanvas);     // IE/Edge
 document.addEventListener("menuButton",()=>{
+    
     pause = true
 });
 window.addEventListener('load', function() {
@@ -23,6 +24,9 @@ window.addEventListener('keydown', function(event) {
 
 document.getElementById('playButton').addEventListener('click', function() {
     nextRoundButton.style.display = '';
+    if (!window.screenTop && !window.screenY) {
+        openFullscreen()
+    }
 });
 document.getElementById('nextRoundButton').addEventListener('click', function() {
     pause = false;
@@ -41,4 +45,7 @@ canvas.addEventListener("mousedown", function(e) {
         mouseDown = false;
     }
     , 100);
+    if (!window.screenTop && !window.screenY) {
+        openFullscreen()
+    }
 });

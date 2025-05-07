@@ -126,7 +126,7 @@ class veikejas {
       this.x += this.greitis * this.veikejoZiurejimoPuse;
     }
   }
-  
+
   suzeiti(dmg) {
     this.givybes -= dmg;
     if (dmg == -1) {
@@ -139,8 +139,10 @@ class veikejas {
       return;
     }
     let priesas = suzeikPriesa(this.data.jega, this.taikinys);
-    if(priesas ===undefined){return}
-    streles.push(new Sovinys(this.x,this.y,priesas))
+    if (priesas === undefined) {
+      return;
+    }
+    // streles.push(new Sovinys(this.x,this.y,priesas))
     // console.log(priesas)
     let atvaizdoX = (this.x / 100) * ePlotis;
     if (this.veikejoZiurejimoPuse == -1) {
@@ -175,9 +177,5 @@ class Sovinys {
     this.t = 0;
   }
 
-  animuok(ctx) {
-   
-  }
-
-
+  animuok(ctx) {}
 }
