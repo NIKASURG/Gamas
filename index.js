@@ -19,20 +19,26 @@ try {
     ],
   };
 }
-setTimeout(() => {
-  sudeliokSavus();
-});
 // console.log(savi);
 try {
   console.log(wave);
 } catch (e) {
   wave = 1;
+}
+try{
+  console.log(setings)
+}
+catch(e){
+  
   setings = {
-    autoFullScren: true,
+    autoFullScrean: true,
   };
 }
+setTimeout(() => {
+  sudeliokSavus();
+  document.getElementById('fullscreenToggle').checked = setings.autoFullScrean
+},1000);
 setInterval(saveGameState, 10000);
-
 updateCanvas();
 let backGrount = new Image();
 backGrount.src = "img/bg.png";

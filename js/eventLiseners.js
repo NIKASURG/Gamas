@@ -4,6 +4,8 @@ document.addEventListener("fullscreenchange", updateCanvas);
 document.addEventListener("webkitfullscreenchange", updateCanvas); // Safari
 document.addEventListener("mozfullscreenchange", updateCanvas);    // Firefox
 document.addEventListener("msfullscreenchange", updateCanvas);     // IE/Edge
+document.getElementById('fullscreenToggle').addEventListener('click', ()=>{ setings.autoFullScrean = document.getElementById('fullscreenToggle').checked} 
+)
 document.addEventListener("menuButton",()=>{
     
     pause = true
@@ -24,7 +26,7 @@ window.addEventListener('keydown', function(event) {
 
 document.getElementById('playButton').addEventListener('click', function() {
     nextRoundButton.style.display = '';
-    if (!window.screenTop && !window.screenY) {
+    if (!window.screenTop && !window.screenY&& setings.autoFullScrean) {
         openFullscreen()
     }
 });
@@ -45,7 +47,7 @@ canvas.addEventListener("mousedown", function(e) {
         mouseDown = false;
     }
     , 100);
-    if (!window.screenTop && !window.screenY) {
+    if (!window.screenTop && !window.screenY && setings.autoFullScrean) {
         openFullscreen()
     }
 });
