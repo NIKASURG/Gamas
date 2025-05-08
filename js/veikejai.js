@@ -21,7 +21,7 @@ class veikejas {
     };
     this.saudimoGreitis = data.saudimoGreitis;
     this.saudimoLaukimas = 0;
-    this.taikinys = "first";
+    this.taikinys = "random";
     this.mires = false;
     this.linkMirties = false;
     this.esamasKadrasY = 0;
@@ -136,59 +136,95 @@ class veikejas {
   }
 
   atack() {
+    this.saudimoLaukimas += 1
     if (!this.pasirinktas) {
       return;
     }
-    let priesas = suzeikPriesa(this.data.jega, this.taikinys);
-    if (priesas === undefined) {
-      return;
-    }
-    this.saudimoLaukimas += 1
-    
-    streles.push(new Sovinys(this.x,this.y,priesas))
-    // console.log(priesas)
-    let atvaizdoX = (this.x / 100) * ePlotis;
-    if (this.veikejoZiurejimoPuse == -1) {
-      atvaizdoX = -atvaizdoX - Dydis[this.dydis][0];
-    }
+    if(this.saudimoGreitis< this.saudimoLaukimas){
+   
+      this.saudimoLaukimas = 0 
+      streles.push(new Sovinys(this.x,this.y,this.data.jega, this.taikinys))
+      // console.log(priesas)
+      let atvaizdoX = (this.x / 100) * ePlotis;
+      if (this.veikejoZiurejimoPuse == -1) {
+        atvaizdoX = -atvaizdoX - Dydis[this.dydis][0];
+      }
 
-    const atvaizdoY = (this.y / 100) * eAukstis;
-
-    if (priesas && showAtack) {
-      ctx.beginPath();
-      ctx.moveTo(atvaizdoX, atvaizdoY);
-      ctx.lineTo((priesas.x / 100) * ePlotis, (priesas.y / 100) * eAukstis);
-      ctx.stroke();
-    }
+      const atvaizdoY = (this.y / 100) * eAukstis;
+      
+    // if (priesas && showAtack) {
+    //   ctx.beginPath();
+    //   ctx.moveTo(atvaizdoX, atvaizdoY);
+    //   ctx.lineTo((priesas.x / 100) * ePlotis, (priesas.y / 100) * eAukstis);
+    //   ctx.stroke();
+    // }
+  }    
   }
 }
 class Sovinys {
-  constructor(x1, y1, taikinioNuoroda) {
+  constructor(x1, y1, jega, taikinis) {
     this.x1 = x1;
     this.y1 = y1;
     this.x = x1;
-    this.y = y1;
-    this.taikinioNuoroda = taikinioNuoroda;
-    this.x2 = taikinioNuoroda.x2;
-    this.y2 = taikinioNuoroda.y2;
-
-    const vidurysX = (x1 + this.x2) / 2;
-    const vidurysY = (y1 + this.y2) / 2 - 100;
-    this.ctrlX = vidurysX;
-    this.ctrlY = vidurysY;
+    this.y = y1 + 3;
+    this.pradziosX = x1;
+    this.pradziosY = y1;
+  this.jega = jega
     this.givenimoLaikas = 0;
     this.mirus = false;
     this.ismigusi = false;
     this.t = 0;
-  }
+    this.g = 0.1;
+    this.priesas = suzeikPriesa(taikinis);
+  
+    const dx = this.priesas.x - x1;
+    const dy = this.priesas.y - y1;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1; 
+  
+    this.kryptisX = dx / dist;
+    this.kryptisY = dy / dist;
+    this.bendrasKelias = dist;
+    this.nueita = 0;
+    this.greitis = 1.5; 
+    this.img = new Image();
+    this.img.src = 'img/arow.png'
 
-  animuok() {
-    this.givenimoLaikas += 1
-    if(this.givenimoLaikas > 100)
-    {
-      this.mirus = true
-    }
-    console.log(this.givenimoLaikas)
-    // console.log(this.taikinioNuoroda)
   }
+  animuok() {
+    if (!this.priesas) return;
+  
+    this.givenimoLaikas += 1;
+    if (this.givenimoLaikas > 300) {
+      this.mirus = true;
+      return;
+    }
+  
+      this.nueita += this.greitis;
+  
+    const progress = this.nueita / this.bendrasKelias;
+  
+    if (progress >= 1 && !this.priesas.mires) {
+      this.mirus = true;
+      
+      this.priesas.givybes -= 10000;
+      return;
+    }else if(this.priesas.mires && this.x> this.priesas.x && this.y> this.priesas.y){
+      this.img.src = 'img/ismigusiStrele.png'
+      this.nueita -= this.greitis;
+    }
+    
+    const x = this.pradziosX + this.kryptisX * this.nueita;
+    const yBase = this.pradziosY + this.kryptisY * this.nueita;
+  
+    const maxArcHeight = 30;
+    const arcHeight = Math.min(maxArcHeight, this.bendrasKelias / 2);
+    const parabola = -4 * arcHeight * progress * (1 - progress);
+    const y = yBase + parabola;
+  
+    this.x = x;
+    this.y = y;
+  
+    ctx.drawImage(this.img,(x / 100) * ePlotis, (y / 100) * eAukstis, eAukstis/40, eAukstis/40);
+  }
+  
 }

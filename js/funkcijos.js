@@ -108,7 +108,7 @@ function arPeleViduje(pelesX, pelesY, box) {
     pelesY <= box.y + box.aukstis
   );
 }
-function suzeikPriesa(dmg, taikinys) {
+function suzeikPriesa( taikinys) {
   if (!priesai.length) return;
   let priesas;
   switch (taikinys) {
@@ -130,8 +130,7 @@ function suzeikPriesa(dmg, taikinys) {
     default:
       return;
   }
-  // console.log(priesas);
-  priesas.givybes -= dmg;
+  console.log(priesas);
   return priesas;
 }
 function removeCharacter(i) {

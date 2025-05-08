@@ -55,7 +55,6 @@ let pelesY = 0;
 let mouseDown = false;
 let vaveHp = 0;
 let leftVaveHp = 0;
-let laikinasGlobalusI = 0;
 enemes.forEach((e) => {
   enemyCosts.push(e.hard);
 });
@@ -98,7 +97,14 @@ function animate(timestamp) {
   ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
   waweLaikas++;
   let ran = createSeededRandom(seed + waweImamas);
-
+  for (let i = 0; i < streles.length; i++) {
+    // console.log(streles);
+    streles[i].animuok();
+    if (streles[i].y > 100 || streles[i].mirus) {
+      streles.splice(i, 1);
+      i--;
+    }
+  }
   if (bangosPradeta && waweLaikas > ran() * 25 + 25) {
     for (let i = 0; i < ran() * 10; i++) {
       if (waweImamas < waweEnemesCombination.length) {
@@ -128,7 +134,6 @@ function animate(timestamp) {
     for (let i = 0; i < homeSqueres.length; i++) {
       ctx.save();
       blure = 0.5;
-      laikinasGlobalusI = i;
       buttons = ``;
 
       if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
@@ -200,16 +205,12 @@ function animate(timestamp) {
   }
   for (let j = 0; j < savi.length; j++) {
     savi[j].animuok();
-    savi[j].atack();
-  }
-  for (let i = 0; i < streles.length; i++) {
-    console.log(streles);
-    streles[i].animuok();
-    if (streles[i].y > 100 || streles[i].mirus) {
-      streles.splice(i, 1);
-      i--;
+    if(priesai.length > 0){
+
+      savi[j].atack();
     }
   }
+
   ctx.fillText(`Wave: ${wave}`, (80 / 100) * ePlotis, (5 / 100) * eAukstis);
   ctx.fillText(
     `Coins: ${savasData.coins}`,

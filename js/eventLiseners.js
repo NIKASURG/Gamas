@@ -4,7 +4,8 @@ document.addEventListener("fullscreenchange", updateCanvas);
 document.addEventListener("webkitfullscreenchange", updateCanvas); // Safari
 document.addEventListener("mozfullscreenchange", updateCanvas);    // Firefox
 document.addEventListener("msfullscreenchange", updateCanvas);     // IE/Edge
-document.getElementById('fullscreenToggle').addEventListener('click', ()=>{ setings.autoFullScrean = document.getElementById('fullscreenToggle').checked;
+document.getElementById('fullscreenToggle').addEventListener('click', ()=>{
+     setings.autoFullScrean = document.getElementById('fullscreenToggle').checked;
     saveGameState()
 } 
 )
@@ -27,7 +28,10 @@ window.addEventListener('keydown', function(event) {
 });
 
 document.getElementById('playButton').addEventListener('click', function() {
-    nextRoundButton.style.display = '';
+    if(!bangosPradeta){
+
+        nextRoundButton.style.display = '';
+    }
     
     if (window.screenTop && window.screenY&& setings.autoFullScrean) {
         openFullscreen()

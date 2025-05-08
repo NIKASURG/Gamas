@@ -74,7 +74,7 @@ let soligers = [
     veikejoZiurejimoPuse: 1,
     price: 100,
     jega: 5,
-    saudimoGreitis: 100,
+    saudimoGreitis: 40,
   },
   {
     saudimoGreitis: 1,
@@ -87,7 +87,7 @@ let soligers = [
     veikejoZiurejimoPuse: 1,
     price: 100,
     jega: 5,
-    saudimoGreitis: 100,
+    saudimoGreitis: 40,
   },
   {
     saudimoGreitis: 1,
@@ -100,7 +100,7 @@ let soligers = [
     veikejoZiurejimoPuse: 1,
     price: 100,
     jega: 5,
-    saudimoGreitis: 100,
+    saudimoGreitis: 40,
   },
   {
     saudimoGreitis: 1,
@@ -113,7 +113,7 @@ let soligers = [
     veikejoZiurejimoPuse: 1,
     price: 100,
     jega: 5,
-    saudimoGreitis: 100,
+    saudimoGreitis: 40,
   },
   {
     saudimoGreitis: 1,
@@ -126,7 +126,7 @@ let soligers = [
     veikejoZiurejimoPuse: 1,
     price: 100,
     jega: 5,
-    saudimoGreitis: 100,
+    saudimoGreitis: 40,
   },
 ];
 
