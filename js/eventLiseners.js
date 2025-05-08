@@ -43,9 +43,13 @@ document.getElementById('playButton').addEventListener('click', function() {
     }
 });
 document.getElementById('nextRoundButton').addEventListener('click', function() {
+    leftVaveHp= 0
     pause = false;
     bangosPradeta = true;
     waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed);
+    apskaiciokWaveHp()
+    vaveHp = leftVaveHp;
+    
     nextRoundButton.style.display = 'none';
 });
 canvas.addEventListener("mousemove", function(e) {

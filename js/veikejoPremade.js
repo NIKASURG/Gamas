@@ -73,7 +73,7 @@ let soligers = [
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
     price: 100,
-    jega: 5,
+    jega: 50,
     saudimoGreitis: 40,
   },
   {
@@ -86,7 +86,7 @@ let soligers = [
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
     price: 100,
-    jega: 5,
+    jega: 50,
     saudimoGreitis: 40,
   },
   {
@@ -99,7 +99,7 @@ let soligers = [
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
     price: 100,
-    jega: 5,
+    jega: 50,
     saudimoGreitis: 40,
   },
   {
@@ -112,7 +112,7 @@ let soligers = [
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
     price: 100,
-    jega: 5,
+    jega: 50,
     saudimoGreitis: 40,
   },
   {
@@ -125,7 +125,7 @@ let soligers = [
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
     price: 100,
-    jega: 5,
+    jega: 50,
     saudimoGreitis: 40,
   },
 ];

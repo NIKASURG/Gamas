@@ -21,7 +21,7 @@ class veikejas {
     };
     this.saudimoGreitis = data.saudimoGreitis;
     this.saudimoLaukimas = 0;
-    this.taikinys = "random";
+    this.taikinys = "first";
     this.mires = false;
     this.linkMirties = false;
     this.esamasKadrasY = 0;
@@ -129,6 +129,7 @@ class veikejas {
   }
 
   suzeiti(dmg) {
+
     this.givybes -= dmg;
     if (dmg == -1) {
       this.givybes = 0;
@@ -206,7 +207,15 @@ class Sovinys {
     if (progress >= 1 && !this.priesas.mires) {
       this.mirus = true;
       
-      this.priesas.givybes -= 10000;
+      if(this.priesas.givybes >= this.jega)
+      {
+        leftVaveHp -= this.jega
+      }else if(this.priesas.givybes > 0 ){
+        leftVaveHp -= this.priesas.givybes 
+      }
+
+      this.priesas.givybes -= this.jega;
+
       return;
     }else if(this.priesas.mires && this.x> this.priesas.x && this.y> this.priesas.y){
       this.img.src = 'img/ismigusiStrele.png'

@@ -112,6 +112,7 @@ function animate(timestamp) {
         let randomY = Math.floor(ran() * 15) + 70;
         let randomEnemy = enemes.find(
           (e) => e.hard === waweEnemesCombination[waweImamas]
+
         );
         if (randomEnemy) {
           priesai.push(new veikejas(randomEnemy, 100 + ran() * 10, randomY));
@@ -217,6 +218,14 @@ function animate(timestamp) {
     (90 / 100) * ePlotis,
     (5 / 100) * eAukstis
   );
+  ctx.fillStyle = "black";
+
+  ctx.fillRect(50,50,ePlotis /2,5)
+
+  ctx.fillStyle = "red";
+  console.log(leftVaveHp)
+  ctx.fillRect(50,50,(leftVaveHp /vaveHp) *(ePlotis/2),5)
+  ctx.fillStyle = "black";
 
   if (debugScrean || rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, 50);
   if (debugScrean) {

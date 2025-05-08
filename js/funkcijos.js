@@ -130,7 +130,7 @@ function suzeikPriesa( taikinys) {
     default:
       return;
   }
-  console.log(priesas);
+  // console.log(priesas);
   return priesas;
 }
 function removeCharacter(i) {
@@ -173,4 +173,13 @@ function openFullscreen() {
     /* IE11 */
     document.documentElement.msRequestFullscreen();
   }
+}
+function apskaiciokWaveHp(){
+  leftVaveHp = 0
+  for (let i = 0; i < waweEnemesCombination.length; i++) {
+    let hardReiksme = waweEnemesCombination[i];
+    let priesas = enemes.find(e => e.hard === hardReiksme);
+
+    leftVaveHp += priesas.givybes;;
+}
 }
