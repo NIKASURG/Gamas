@@ -188,3 +188,53 @@ function setRumuHp(){
   rumuHp = savasData.rumuHp
   maxRumuHp = rumuHp
 }
+function apsipirkti() {
+  updateParduotuvesVidu()
+  parduotuvesVidus.forEach((item) => {
+    console.log("dasfadg");
+    const itemDiv = document.createElement("konteineris");
+    itemDiv.className = `shop-item ${item.rarity}`;
+    itemDiv.dataset.category = item.category;
+    dissable = savasData.coins < item.price
+    itemDiv.innerHTML = `
+                 <div class="shop-item-icon">
+                 <img src="${item.img}" alt="${item.alt}" width="40" height="40" />
+                 </div>
+                 <div class="shop-item-info">
+                   <h3>${item.name}</h3>
+                   <p>Power:${item.jega}</p>
+                   <p>Shoting speed:${item.saudimoGreitis}</p>
+
+                 </div>
+                 
+                 <div class="shop-item-price">${item.price}</div>
+                 <button   ${dissable   ? "disabled" : ""}  class="buy-button" data-item="${item.itemId}">Buy</button>
+                 `;
+                
+    document.getElementById("parduotuve").appendChild(itemDiv);
+  });
+}
+function updateParduotuvesVidu(){
+  parduotuvesVidus = []
+  // zinau jog tai durnas sprendimas, as tsg noriu jog tai viektu, mano pasiteisinimas, as be miego tai cia priminimas perasyti sita !!!!!!!
+  // !!!!!butinai perasiti 
+  let laikinas = []
+  for (let i = 0; i < soligers.length; i++) {
+    laikinas.push(i)
+    
+  }
+  for (let i = 0; i < savasData.ownedSoligers.length; i++) {
+    
+    if(
+      laikinas.includes(savasData.ownedSoligers[i].nr)
+    ){
+      
+      indexOf =laikinas.indexOf(savasData.ownedSoligers[i].nr)
+      laikinas.splice(indexOf, 1)
+    }
+  }
+  for (let i = 0; i < laikinas.length; i++) {
+      parduotuvesVidus.push(soligers[laikinas[i]])
+    
+  }
+}

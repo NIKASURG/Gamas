@@ -4,19 +4,82 @@ let priesai = [];
 let savi = [];
 let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
-let lock = true
+let lock = true;
 // ctx.translate(0, 0);
-let rumuHp
-let maxRumuHp
-let pralaimeta = false
+
+//  rarity pasirinkimai "legendary", "rare",,"common"
+
+let parduotuvesVidus = [
+    // {
+    //   name: "Master Archer",
+    //   image: "img/archer.jpeg",
+    //   alt: "Master Archer",
+    //   description: "Damage: +15, Range: +20%",
+    //   price: 300,
+    //   rarity: "legendary",
+    //   category: "units",
+    //   itemId: "master-archer"
+    // },
+    // {
+    //   name: "Enchanted Arrows",
+    //   image: "img/arow.png",
+    //   alt: "Enchanted Arrows",
+    //   description: "Speed: +20%, Piercing: +2",
+    //   price: 150,
+    //   rarity: "rare",
+    //   category: "arrows",
+    //   itemId: "enchanted-arrows"
+    // },
+    // {
+    //   name: "Better Archer",
+    //   image: "img/archer.jpeg",
+    //   alt: "Better Archer",
+    //   description: "Damage: +5",
+    //   price: 100,
+    //   rarity: "common",
+    //   category: "units",
+    //   itemId: "archer"
+    // },
+    // {
+    //   name: "Improved Arrows",
+    //   image: "img/arow.png",
+    //   alt: "Improved Arrows",
+    //   description: "Speed: +10%",
+    //   price: 75,
+    //   rarity: "common",
+    //   category: "arrows",
+    //   itemId: "arrows"
+    // },
+    // {
+    //   name: "Reinforced Walls",
+    //   image: "img/kilaia.png",
+    //   alt: "Reinforced Walls",
+    //   description: "Defense: +15%, Durability: +20%",
+    //   price: 200,
+    //   rarity: "rare",
+    //   category: "castle",
+    //   itemId: "walls"
+    // },
+    // {
+    //   name: "Ancient Guardian",
+    //   image: "img/vaiduoklis.png",
+    //   alt: "Ancient Guardian",
+    //   description: "Summons a powerful spirit to defend your castle",
+    //   price: 500,
+    //   rarity: "legendary",
+    //   category: "castle",
+    //   itemId: "guardian"
+    // }
+  ];
+let rumuHp;
+let maxRumuHp;
+let pralaimeta = false;
 try {
- if(savasData){
-  pass;
- }
+  console.log(savasData);
 } catch (e) {
   savasData = {
     coins: 0,
-    rumuHp:100,
+    rumuHp: 100,
     ownedSoligers: [
       { nr: 0, homeSquere: 5, extraData: { upgrade: 0 } },
       { nr: 1, homeSquere: 4, extraData: { upgrade: 0 } },
@@ -27,19 +90,13 @@ try {
 
 // console.log(savi);
 try {
-  if(wave){
-    pass
-  }
+  console.log(wave);
 } catch (e) {
   wave = 1;
 }
-try{
-  if(setings){
-    pass
-  }
-}
-catch(e){
-  
+try {
+  console.log(setings);
+} catch (e) {
   setings = {
     autoFullScrean: true,
   };
@@ -47,9 +104,8 @@ catch(e){
 sudeliokSavus();
 
 setTimeout(() => {
-  document.getElementById('fullscreenToggle').checked = setings.autoFullScrean
-  
-},1);
+  document.getElementById("fullscreenToggle").checked = setings.autoFullScrean;
+}, 1);
 setInterval(saveGameState, 2000);
 updateCanvas();
 let backGrount = new Image();
@@ -83,6 +139,7 @@ let debugScrean = false;
 let rodytiFps = false;
 let rodytiGivybes = false;
 let showAtack = false;
+const piniguDezute = document.getElementById("pinigai");
 
 ctx.font = "22px Arial";
 
@@ -117,14 +174,12 @@ function animate(timestamp) {
     }
   }
   if (bangosPradeta && waweLaikas > ran() * 25 + 25) {
-   
     for (let i = 0; i < ran() * 10; i++) {
       if (waweImamas < waweEnemesCombination.length) {
         ran = createSeededRandom(seed + waweImamas + i);
         let randomY = Math.floor(ran() * 15) + 70;
         let randomEnemy = enemes.find(
           (e) => e.hard === waweEnemesCombination[waweImamas]
-
         );
         if (randomEnemy) {
           priesai.push(new veikejas(randomEnemy, 100 + ran() * 10, randomY));
@@ -138,23 +193,23 @@ function animate(timestamp) {
       bangosPradeta = false;
       waweImamas = 0;
       waweLaikas = 0;
-      if(!pralaimeta){
-
+      if (!pralaimeta) {
         wave++;
       }
       nextRoundButton.style.display = "";
       saveGameState();
     }
-     if(rumuHp <= 0 ){
-       priesai.forEach((priesas) => {
-            priesas.givybes = -1;
-          });
-          pralaimeta = true
+    if (rumuHp <= 0) {
+      priesai.forEach((priesas) => {
+        priesas.givybes = -1;
+      });
+      pralaimeta = true;
 
-          waweEnemesCombination = [];
-          waweImamas = 0;
-          rumuHp = 0
-    } 
+      waweEnemesCombination = [];
+      waweImamas = 0;
+      rumuHp = 0;
+      saveGameState();
+    }
   }
   if (!bangosPradeta) {
     for (let i = 0; i < homeSqueres.length; i++) {
@@ -200,6 +255,7 @@ function animate(timestamp) {
         }
       }
 
+     
       ctx.fillStyle = "rgba(65, 65, 85, " + blure + ")";
       ctx.fillRect(
         homeSqueres[i].x,
@@ -210,8 +266,7 @@ function animate(timestamp) {
 
       ctx.restore();
     }
-    saveGameState()
-
+    saveGameState();
   }
 
   if (timestamp - fpsLastUpdate > 1000) {
@@ -233,8 +288,7 @@ function animate(timestamp) {
   }
   for (let j = 0; j < savi.length; j++) {
     savi[j].animuok();
-    if(priesai.length > 0){
-
+    if (priesai.length > 0) {
       savi[j].atack();
     }
   }
@@ -245,22 +299,22 @@ function animate(timestamp) {
     (90 / 100) * ePlotis,
     (5 / 100) * eAukstis
   );
+  piniguDezute.innerHTML = "Your coins: " + savasData.coins;
+  ctx.fillStyle = "black";
 
- ctx.fillStyle = "black";
-
-  ctx.fillRect(50,70,ePlotis /2,5)
+  ctx.fillRect(50, 70, ePlotis / 2, 5);
 
   ctx.fillStyle = "blue";
   // console.log(leftVaveHp)
-  ctx.fillRect(50,70,(rumuHp /maxRumuHp) *(ePlotis/2),5)
+  ctx.fillRect(50, 70, (rumuHp / maxRumuHp) * (ePlotis / 2), 5);
 
   ctx.fillStyle = "black";
 
-  ctx.fillRect(50,50,ePlotis /2,5)
+  ctx.fillRect(50, 50, ePlotis / 2, 5);
 
   ctx.fillStyle = "orange";
   // console.log(leftVaveHp)
-  ctx.fillRect(50,50,(leftVaveHp /vaveHp) *(ePlotis/2),5)
+  ctx.fillRect(50, 50, (leftVaveHp / vaveHp) * (ePlotis / 2), 5);
   ctx.fillStyle = "black";
 
   if (debugScrean || rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, 50);

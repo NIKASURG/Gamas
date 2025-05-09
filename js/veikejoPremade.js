@@ -72,9 +72,11 @@ let soligers = [
     spriteReikemasKadrasY: 1,
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
-    price: 100,
+    price: 1.797693134862315E+308 *2,
     jega: 50,
     saudimoGreitis: 40,
+    name:'Nemo',
+
   },
   {
     saudimoGreitis: 1,
@@ -85,9 +87,11 @@ let soligers = [
     spriteReikemasKadrasY: 1,
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
-    price: 100,
+    price: 1.797693134862315E+308 *2,
     jega: 50,
     saudimoGreitis: 40,
+    name:'Soske',
+
   },
   {
     saudimoGreitis: 1,
@@ -98,9 +102,11 @@ let soligers = [
     spriteReikemasKadrasY: 1,
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
-    price: 100,
+    price: 1,
     jega: 50,
     saudimoGreitis: 40,
+    name:'BigBOss',
+
   },
   {
     saudimoGreitis: 1,
@@ -111,9 +117,11 @@ let soligers = [
     spriteReikemasKadrasY: 1,
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
-    price: 100,
-    jega: 50,
+    price: 500,
+    jega: 100,
     saudimoGreitis: 40,
+    name:'Silke',
+
   },
   {
     saudimoGreitis: 1,
@@ -124,9 +132,10 @@ let soligers = [
     spriteReikemasKadrasY: 1,
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
-    price: 100,
-    jega: 50,
+    price: 1000,
+    jega: 200,
     saudimoGreitis: 40,
+    name:'Rudis'
   },
 ];
 
