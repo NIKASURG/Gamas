@@ -53,6 +53,7 @@ document.getElementById('nextRoundButton').addEventListener('click', function() 
     vaveHp = leftVaveHp;
     setRumuHp()
     nextRoundButton.style.display = 'none';
+    pralaimeta = false
 });
 canvas.addEventListener("mousemove", function(e) {
     pelesX = e.offsetX;

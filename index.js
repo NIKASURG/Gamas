@@ -8,6 +8,7 @@ let lock = true
 // ctx.translate(0, 0);
 let rumuHp
 let maxRumuHp
+let pralaimeta = false
 try {
  if(savasData){
   pass;
@@ -64,6 +65,7 @@ let pelesY = 0;
 let mouseDown = false;
 let vaveHp = 0;
 let leftVaveHp = 0;
+
 enemes.forEach((e) => {
   enemyCosts.push(e.hard);
 });
@@ -115,6 +117,7 @@ function animate(timestamp) {
     }
   }
   if (bangosPradeta && waweLaikas > ran() * 25 + 25) {
+   
     for (let i = 0; i < ran() * 10; i++) {
       if (waweImamas < waweEnemesCombination.length) {
         ran = createSeededRandom(seed + waweImamas + i);
@@ -135,10 +138,23 @@ function animate(timestamp) {
       bangosPradeta = false;
       waweImamas = 0;
       waweLaikas = 0;
-      wave++;
+      if(!pralaimeta){
+
+        wave++;
+      }
       nextRoundButton.style.display = "";
       saveGameState();
     }
+     if(rumuHp <= 0 ){
+       priesai.forEach((priesas) => {
+            priesas.givybes = -1;
+          });
+          pralaimeta = true
+
+          waweEnemesCombination = [];
+          waweImamas = 0;
+          rumuHp = 0
+    } 
   }
   if (!bangosPradeta) {
     for (let i = 0; i < homeSqueres.length; i++) {
