@@ -140,7 +140,6 @@ function animate(timestamp) {
       }
       nextRoundButton.style.display = "";
       saveGameState();
-      saveGameResult(100);
     }
     if (rumuHp <= 0) {
       priesai.forEach((priesas) => {
