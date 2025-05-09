@@ -38,8 +38,8 @@ function generateEnemyWave(
   waveNumber,
   enemyCosts,
   seed,
-  baseDifficulty = 20,
-  growth = 10
+  baseDifficulty = 10,
+  growth = 3
 ) {
   let random = createSeededRandom(seed + waveNumber); // skirtinga seed kiekvienai bangai
 
@@ -155,6 +155,7 @@ function removeCharacter(i) {
 }
 function sudeliokSavus() {
   savi = [];
+  console.log(savasData)
   for (let i = 0; i < savasData.ownedSoligers.length; i++) {
     vieta = savasData.ownedSoligers[i].homeSquere;
     if (vieta != null) {
@@ -201,13 +202,17 @@ function setRumuHp(){
   maxRumuHp = rumuHp
 }
 function apsipirkti() {
+  parduotuvesVidus = []
+  
   updateParduotuvesVidu()
+
+  document.getElementById("parduotuve").innerHTML = ''
   parduotuvesVidus.forEach((item) => {
     console.log("dasfadg");
     const itemDiv = document.createElement("konteineris");
     itemDiv.className = `shop-item ${item.rarity}`;
     itemDiv.dataset.category = item.category;
-    dissable = savasData.coins <= item.price
+    dissable = savasData.coins < item.price
     itemDiv.innerHTML = `
                  <div class="shop-item-icon">
                  <img src="${item.img}" alt="${item.alt}" width="40" height="40" />
@@ -220,7 +225,7 @@ function apsipirkti() {
                  </div>
                  
                  <div class="shop-item-price">${item.price}</div>
-                 <button   ${dissable   ? "disabled" : ""}  onclick="nupirkti(${dissable})" class="buy-button" data-item="${item.itemId}">Buy</button>
+                 <button   ${dissable   ? "disabled" : ""}  onclick="nupirkti(${dissable},${item.price},${item.nr})" class="buy-button" data-item="${item.itemId}">Buy</button>
                  `;
     
     document.getElementById("parduotuve").appendChild(itemDiv);
@@ -228,6 +233,7 @@ function apsipirkti() {
 }
 
 function updateParduotuvesVidu(){
+
   parduotuvesVidus = []
   // zinau jog tai durnas sprendimas, as tsg noriu jog tai viektu, mano pasiteisinimas, as be miego tai cia priminimas perasyti sita !!!!!!!
   // !!!!!butinai perasiti 
@@ -251,9 +257,18 @@ function updateParduotuvesVidu(){
     
   }
 }
-function nupirkti(lock){
+function nupirkti(lock,kaina,nr){
   if(lock){
     console.log("ka tu dirbi!!!")
     return;
   }
+  if(savasData.coins < kaina){
+    return;
+  }
+  savasData.coins -= kaina
+  savasData.ownedSoligers.push(
+    { nr: nr, homeSquere: null, extraData: { speedUp: 0 ,damigeUp:0} },
+    
+  )
+  apsipirkti()
 }

@@ -1,3 +1,4 @@
+
 window.addEventListener("resize", updateCanvas);
 window.addEventListener("orientationchange", updateCanvas);
 document.addEventListener("fullscreenchange", updateCanvas);
@@ -23,6 +24,8 @@ window.addEventListener("keydown", function (event) {
       document.getElementById("debugScrean").style.display = "none";
     }
   }
+  if(event.key.toUpperCase() === 'S'){
+  }
 });
 
 document.getElementById("playButton").addEventListener("click", function () {
@@ -30,7 +33,7 @@ document.getElementById("playButton").addEventListener("click", function () {
     nextRoundButton.style.display = "";
   }
 
-  if (window.screenTop && window.screenY && setings.autoFullScrean) {
+  if (setings.autoFullScrean) {
     openFullscreen();
   }
   if (lock) {

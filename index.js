@@ -10,93 +10,34 @@ let lock = true;
 //  rarity pasirinkimai "legendary", "rare",,"common"
 
 let parduotuvesVidus = [
-    // {
-    //   name: "Master Archer",
-    //   image: "img/archer.jpeg",
-    //   alt: "Master Archer",
-    //   description: "Damage: +15, Range: +20%",
-    //   price: 300,
-    //   rarity: "legendary",
-    //   category: "units",
-    //   itemId: "master-archer"
-    // },
-    // {
-    //   name: "Enchanted Arrows",
-    //   image: "img/arow.png",
-    //   alt: "Enchanted Arrows",
-    //   description: "Speed: +20%, Piercing: +2",
-    //   price: 150,
-    //   rarity: "rare",
-    //   category: "arrows",
-    //   itemId: "enchanted-arrows"
-    // },
-    // {
-    //   name: "Better Archer",
-    //   image: "img/archer.jpeg",
-    //   alt: "Better Archer",
-    //   description: "Damage: +5",
-    //   price: 100,
-    //   rarity: "common",
-    //   category: "units",
-    //   itemId: "archer"
-    // },
-    // {
-    //   name: "Improved Arrows",
-    //   image: "img/arow.png",
-    //   alt: "Improved Arrows",
-    //   description: "Speed: +10%",
-    //   price: 75,
-    //   rarity: "common",
-    //   category: "arrows",
-    //   itemId: "arrows"
-    // },
-    // {
-    //   name: "Reinforced Walls",
-    //   image: "img/kilaia.png",
-    //   alt: "Reinforced Walls",
-    //   description: "Defense: +15%, Durability: +20%",
-    //   price: 200,
-    //   rarity: "rare",
-    //   category: "castle",
-    //   itemId: "walls"
-    // },
-    // {
-    //   name: "Ancient Guardian",
-    //   image: "img/vaiduoklis.png",
-    //   alt: "Ancient Guardian",
-    //   description: "Summons a powerful spirit to defend your castle",
-    //   price: 500,
-    //   rarity: "legendary",
-    //   category: "castle",
-    //   itemId: "guardian"
-    // }
+  
   ];
 let rumuHp;
 let maxRumuHp;
 let pralaimeta = false;
-try {
-  console.log(savasData);
-} catch (e) {
-  savasData = {
+
+if(savasData ==undefined){
+ savasData = {
     coins: 0,
     rumuHp: 100,
     ownedSoligers: [
-      { nr: 0, homeSquere: 5, extraData: { upgrade: 0 } },
-      { nr: 1, homeSquere: 4, extraData: { upgrade: 0 } },
-      { nr: 2, homeSquere: null, extraData: { upgrade: 0 } },
+      { nr: 0, homeSquere: 5, extraData: { speedUp: 0,damigeUp:0,target: 'first' } },
+      { nr: 1, homeSquere: 4, extraData: { speedUp: 0 ,damigeUp:0,target: 'first'} },
     ],
   };
+
 }
 
+ 
+
 // console.log(savi);
-try {
-  console.log(wave);
-} catch (e) {
+if(wave == undefined){
+
   wave = 1;
 }
-try {
-  console.log(setings);
-} catch (e) {
+
+if(setings == undefined){
+
   setings = {
     autoFullScrean: true,
   };
@@ -195,9 +136,11 @@ function animate(timestamp) {
       waweLaikas = 0;
       if (!pralaimeta) {
         wave++;
+        
       }
       nextRoundButton.style.display = "";
       saveGameState();
+      saveGameResult(100);
     }
     if (rumuHp <= 0) {
       priesai.forEach((priesas) => {
@@ -215,11 +158,11 @@ function animate(timestamp) {
   if (!bangosPradeta) {
     for (let i = 0; i < homeSqueres.length; i++) {
       ctx.save();
-      blure = 0.5;
+      blure = 0.4;
       buttons = ``;
 
       if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
-        blure = 0.9;
+        blure = 0.7;
         if (mouseDown && !lock) {
           if (
             homeSqueres[i] &&
@@ -318,7 +261,7 @@ function animate(timestamp) {
   ctx.fillRect(50, 50, (leftVaveHp / vaveHp) * (ePlotis / 2), 5);
   ctx.fillStyle = "black";
 
-  if (debugScrean || rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, 50);
+  if (debugScrean || rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, eAukstis-50);
   if (debugScrean) {
     ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70);
     ctx.fillText(`Sukurta priesu: ${priesai.length}`, 20, 90);

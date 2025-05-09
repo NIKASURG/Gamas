@@ -20,7 +20,7 @@ class veikejas {
         Math.floor(Math.random() * this.reikemiKadrai) * this.kadroPlotis;
     };
     this.saudimoGreitis = data.saudimoGreitis;
-    this.saudimoLaukimas = 0;
+    this.saudimoLaukimas = Math.random()* data.saudimoGreitis;
     this.taikinys = "first";
     this.mires = false;
     this.linkMirties = false;
@@ -33,6 +33,8 @@ class veikejas {
     this.veikejoZiurejimoPuse = data.veikejoZiurejimoPuse;
     this.primasPoMirties = true;
     this.pasirinktas = true;
+    this.trankyk = false;
+    this.pradejauPulti = true
   }
 
   kadras() {
@@ -48,6 +50,16 @@ class veikejas {
           this.mires = true;
         } else {
           this.esamasKadrasX = 0;
+          if(this.trankyk){
+            rumuHp -= this.data.hard
+            this.spriteOffsetY =(this.data.trankymoY - 1) * this.kadroAukstis; 
+            this.reikemiKadrai = this.data.trankymoXilgis
+            if(this.pradejauPulti){
+              this.pradejauPulti=false
+               this.esamasKadrasX = 0;
+
+            }
+          }
         }
       }
     }
@@ -123,12 +135,12 @@ class veikejas {
   }
 
   judeti() {
-    if (this.x > 20) {
+    if (this.x > 25) {
 
       this.x += this.greitis * this.veikejoZiurejimoPuse;
     }
     else{
-      rumuHp -= 1
+      this.trankyk = true
     }
   }
 
@@ -155,7 +167,6 @@ class veikejas {
         atvaizdoX = -atvaizdoX - Dydis[this.dydis][0];
       }
 
-      const atvaizdoY = (this.y / 100) * eAukstis;
       
     // if (priesas && showAtack) {
     //   ctx.beginPath();

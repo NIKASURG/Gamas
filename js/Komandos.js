@@ -50,6 +50,9 @@ input.addEventListener("keydown", function (event) {
       case "sa":
         showAtack = !showAtack;
         break;
+      case "SetCoins":
+        savasData.coins = parseInt(komanda.split(" ")[1]);
+        break;
       default:
         console.log("Nežinoma komanda:", komanda);
     }

@@ -1,5 +1,8 @@
 let eAukstis = window.innerHeight;
 let ePlotis = window.innerWidth;
+let savasData
+let wave
+let setings
 let Dydis = [
   [ePlotis / 10, ePlotis / 10],
   [eAukstis / 10, eAukstis / 10],
@@ -18,6 +21,8 @@ let enemes = [
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
     hard: 1,
+    trankymoY:15,
+    trankymoXilgis:6,
   },
   {
     greitis: 0.1,
@@ -32,6 +37,8 @@ let enemes = [
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
     hard: 3,
+     trankymoY:15,
+    trankymoXilgis:6,
   },
   {
     greitis: 0.1,
@@ -46,6 +53,8 @@ let enemes = [
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
     hard: 5,
+     trankymoY:15,
+    trankymoXilgis:6,
   },
   {
     greitis: 0.1,
@@ -60,6 +69,8 @@ let enemes = [
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
     hard: 10,
+     trankymoY:15,
+    trankymoXilgis:6,
   },
 ];
 let soligers = [
@@ -76,6 +87,7 @@ let soligers = [
     jega: 80,
     saudimoGreitis: 40,
     name:'Nemo',
+    nr:0
 
   },
   {
@@ -91,6 +103,7 @@ let soligers = [
     jega: 80,
     saudimoGreitis: 40,
     name:'Soske',
+    nr:1
 
   },
   {
@@ -102,10 +115,11 @@ let soligers = [
     spriteReikemasKadrasY: 1,
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
-    price: 1,
+    price: 100,
     jega: 50,
     saudimoGreitis: 40,
     name:'BigBOss',
+    nr:2
 
   },
   {
@@ -121,6 +135,7 @@ let soligers = [
     jega: 100,
     saudimoGreitis: 40,
     name:'Silke',
+    nr:3
 
   },
   {
@@ -135,7 +150,8 @@ let soligers = [
     price: 1000,
     jega: 200,
     saudimoGreitis: 40,
-    name:'Rudis'
+    name:'Rudis',
+    nr:4
   },
 ];
 

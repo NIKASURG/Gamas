@@ -17,6 +17,12 @@
       rel="stylesheet"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+   <script type="module">
+  import { saveDataInFireStore, loadUserData } from "./js/fireBase.js";
+
+  window.saveDataInFireStore = saveDataInFireStore;
+  window.loadUserData = loadUserData;
+</script>
 
   </head>
   <body>
@@ -39,6 +45,10 @@
         </div>
         <div id="showLogout" style="display: none">
           <p>Logged in as: <span id="userEmail"></span></p>
+        <button id="laikinaiTEstuiNEpyk" onclick="saveDataInFireStore()">Save data</button>
+        <button id="laikinaiTEstuiNEpykGAl" onclick="loadUserData() ">load data</button>
+
+
           <button type="button" id="google-logout">Logout</button>
         </div>
       </div>
@@ -69,7 +79,6 @@
         </div>
       </div>
     </div>
-
     <!-- Credits -->
     <div id="creditsModal" class="modal">
       <div class="modal-content">
@@ -142,9 +151,9 @@
     <script src="./js/veikejoPremade.js"></script>
     <script src="./js/funkcijos.js"></script>
     <script src="./js/veikejai.js"></script>
+    <script type="module" src="./js/fireBase.js"></script>
     <script src="index.js"></script>
     <script src="./js/eventLiseners.js"></script>
     <script src="./js/Komandos.js"></script>
-    <script type="module" src="./js/fireBase.js"></script>
   </body>
 </html>
