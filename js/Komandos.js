@@ -45,7 +45,7 @@ input.addEventListener("keydown", function (event) {
         break;
       case "clear":
         localStorage.removeItem("gameState");
-
+        location.reload()
         break;
       case "sa":
         showAtack = !showAtack;

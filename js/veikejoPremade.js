@@ -73,7 +73,7 @@ let soligers = [
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
     price: 1.797693134862315E+308 *2,
-    jega: 50,
+    jega: 80,
     saudimoGreitis: 40,
     name:'Nemo',
 
@@ -88,7 +88,7 @@ let soligers = [
     reikemiKadrai: 4,
     veikejoZiurejimoPuse: 1,
     price: 1.797693134862315E+308 *2,
-    jega: 50,
+    jega: 80,
     saudimoGreitis: 40,
     name:'Soske',
 

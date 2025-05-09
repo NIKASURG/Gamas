@@ -106,7 +106,7 @@ sudeliokSavus();
 setTimeout(() => {
   document.getElementById("fullscreenToggle").checked = setings.autoFullScrean;
 }, 1);
-setInterval(saveGameState, 2000);
+setInterval(saveGameState, 256);
 updateCanvas();
 let backGrount = new Image();
 backGrount.src = "img/bg.png";
@@ -204,10 +204,11 @@ function animate(timestamp) {
         priesas.givybes = -1;
       });
       pralaimeta = true;
-
+      
       waweEnemesCombination = [];
       waweImamas = 0;
       rumuHp = 0;
+      console.log('dafa')
       saveGameState();
     }
   }
@@ -266,8 +267,8 @@ function animate(timestamp) {
 
       ctx.restore();
     }
-    saveGameState();
   }
+  // saveGameState();
 
   if (timestamp - fpsLastUpdate > 1000) {
     currentFps = fpsCounter;

@@ -81,21 +81,33 @@ function createSeededRandom(seed) {
   };
 }
 function saveGameState() {
+  // console.log('data saved')
   const gameState = {
     wave: wave,
     playerData: savasData,
     setings: setings,
   };
 
-  localStorage.setItem("gameState", JSON.stringify(gameState));
+  const encrypted = CryptoJS.AES.encrypt(JSON.stringify(gameState), secretKey).toString();
+  localStorage.setItem("gameState", encrypted);
 }
+
+const secretKey = CryptoJS.SHA256(atob("bGFiYWlTbGFwdGFzUmFrdGFz")).toString(); 
+
 function loadGameState() {
-  const savedGameState = localStorage.getItem("gameState");
-  if (savedGameState) {
-    const gameState = JSON.parse(savedGameState);
+  const encrypted = localStorage.getItem("gameState");
+  if (!encrypted) return;
+
+  try {
+    const bytes = CryptoJS.AES.decrypt(encrypted, secretKey);
+    const json = bytes.toString(CryptoJS.enc.Utf8);
+    const gameState = JSON.parse(json);
+
     wave = gameState.wave;
     savasData = gameState.playerData;
     setings = gameState.setings;
+  } catch (e) {
+    console.warn("Nepavyko dešifruoti žaidimo būsenos. Galbūt duomenys buvo pakeisti?");
   }
 }
 
@@ -195,7 +207,7 @@ function apsipirkti() {
     const itemDiv = document.createElement("konteineris");
     itemDiv.className = `shop-item ${item.rarity}`;
     itemDiv.dataset.category = item.category;
-    dissable = savasData.coins < item.price
+    dissable = savasData.coins <= item.price
     itemDiv.innerHTML = `
                  <div class="shop-item-icon">
                  <img src="${item.img}" alt="${item.alt}" width="40" height="40" />
@@ -208,12 +220,13 @@ function apsipirkti() {
                  </div>
                  
                  <div class="shop-item-price">${item.price}</div>
-                 <button   ${dissable   ? "disabled" : ""}  class="buy-button" data-item="${item.itemId}">Buy</button>
+                 <button   ${dissable   ? "disabled" : ""}  onclick="nupirkti(${dissable})" class="buy-button" data-item="${item.itemId}">Buy</button>
                  `;
-                
+    
     document.getElementById("parduotuve").appendChild(itemDiv);
   });
 }
+
 function updateParduotuvesVidu(){
   parduotuvesVidus = []
   // zinau jog tai durnas sprendimas, as tsg noriu jog tai viektu, mano pasiteisinimas, as be miego tai cia priminimas perasyti sita !!!!!!!
@@ -236,5 +249,11 @@ function updateParduotuvesVidu(){
   for (let i = 0; i < laikinas.length; i++) {
       parduotuvesVidus.push(soligers[laikinas[i]])
     
+  }
+}
+function nupirkti(lock){
+  if(lock){
+    console.log("ka tu dirbi!!!")
+    return;
   }
 }
