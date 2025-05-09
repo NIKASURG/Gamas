@@ -124,7 +124,11 @@ class veikejas {
 
   judeti() {
     if (this.x > 20) {
+
       this.x += this.greitis * this.veikejoZiurejimoPuse;
+    }
+    else{
+      rumuHp -= 1
     }
   }
 

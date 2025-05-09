@@ -183,3 +183,8 @@ function apskaiciokWaveHp(){
     leftVaveHp += priesas.givybes;;
 }
 }
+function setRumuHp(){
+
+  rumuHp = savasData.rumuHp
+  maxRumuHp = rumuHp
+}

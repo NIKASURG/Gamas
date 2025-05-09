@@ -6,12 +6,16 @@ let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
 let lock = true
 // ctx.translate(0, 0);
-
+let rumuHp
+let maxRumuHp
 try {
-  console.log(savasData);
+ if(savasData){
+  pass;
+ }
 } catch (e) {
   savasData = {
     coins: 0,
+    rumuHp:100,
     ownedSoligers: [
       { nr: 0, homeSquere: 5, extraData: { upgrade: 0 } },
       { nr: 1, homeSquere: 4, extraData: { upgrade: 0 } },
@@ -19,14 +23,19 @@ try {
     ],
   };
 }
+
 // console.log(savi);
 try {
-  console.log(wave);
+  if(wave){
+    pass
+  }
 } catch (e) {
   wave = 1;
 }
 try{
-  console.log(setings)
+  if(setings){
+    pass
+  }
 }
 catch(e){
   
@@ -185,6 +194,8 @@ function animate(timestamp) {
 
       ctx.restore();
     }
+    saveGameState()
+
   }
 
   if (timestamp - fpsLastUpdate > 1000) {
@@ -218,12 +229,21 @@ function animate(timestamp) {
     (90 / 100) * ePlotis,
     (5 / 100) * eAukstis
   );
+
+ ctx.fillStyle = "black";
+
+  ctx.fillRect(50,70,ePlotis /2,5)
+
+  ctx.fillStyle = "blue";
+  // console.log(leftVaveHp)
+  ctx.fillRect(50,70,(rumuHp /maxRumuHp) *(ePlotis/2),5)
+
   ctx.fillStyle = "black";
 
   ctx.fillRect(50,50,ePlotis /2,5)
 
-  ctx.fillStyle = "red";
-  console.log(leftVaveHp)
+  ctx.fillStyle = "orange";
+  // console.log(leftVaveHp)
   ctx.fillRect(50,50,(leftVaveHp /vaveHp) *(ePlotis/2),5)
   ctx.fillStyle = "black";
 

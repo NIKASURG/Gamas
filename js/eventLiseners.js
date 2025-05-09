@@ -14,7 +14,9 @@ document.addEventListener("menuButton",()=>{
     pause = true
 });
 window.addEventListener('load', function() {
-    nextRoundButton.style.display = 'none';});
+    nextRoundButton.style.display = 'none';
+    
+});
 window.addEventListener('keydown', function(event) {
     if (event.key === 'F2') {
         debugScrean = !debugScrean;
@@ -29,7 +31,7 @@ window.addEventListener('keydown', function(event) {
 
 document.getElementById('playButton').addEventListener('click', function() {
     if(!bangosPradeta){
-
+        
         nextRoundButton.style.display = '';
     }
     
@@ -49,7 +51,7 @@ document.getElementById('nextRoundButton').addEventListener('click', function() 
     waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed);
     apskaiciokWaveHp()
     vaveHp = leftVaveHp;
-    
+    setRumuHp()
     nextRoundButton.style.display = 'none';
 });
 canvas.addEventListener("mousemove", function(e) {
