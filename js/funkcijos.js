@@ -30,8 +30,8 @@ function preskaiciokDydi() {
   const bazinisPlotis = 1920;
   const mastelis = ePlotis / bazinisPlotis;
   Dydis = [
-    [mastelis * 100, mastelis * 100],
-    [mastelis * 100, mastelis * 100],
+    [mastelis * 150, mastelis * 150],
+    [mastelis * 150, mastelis * 150],
   ];
 }
 function generateEnemyWave(

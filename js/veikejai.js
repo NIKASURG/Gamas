@@ -52,9 +52,9 @@ class veikejas {
           this.esamasKadrasX = 0;
           if(this.trankyk){
             rumuHp -= this.data.hard
-            this.spriteOffsetY =(this.data.trankymoY - 1) * this.kadroAukstis; 
-            this.reikemiKadrai = this.data.trankymoXilgis
             if(this.pradejauPulti){
+              this.spriteOffsetY =(this.data.trankymoY - 1) * this.kadroAukstis; 
+              this.reikemiKadrai = this.data.trankymoXilgis
               this.pradejauPulti=false
                this.esamasKadrasX = 0;
 
@@ -106,7 +106,7 @@ class veikejas {
 
     if (this.givybes) {
       ctx.fillStyle = "red";
-      if (this.givybes >= 0) {
+      if (this.givybes >= 0&& this.givybes != this.givybesStart ) {
         ctx.fillRect(
           atvaizdoX + Dydis[this.dydis][0] / 5,
           atvaizdoY + 10,
@@ -234,7 +234,7 @@ class Sovinys {
       return;
     }else if(this.priesas.mires && this.x> this.priesas.x && this.y> this.priesas.y){
       this.img.src = 'img/ismigusiStrele.png'
-      this.nueita -= this.greitis;
+      this.greitis = 0
     }
     
     const x = this.pradziosX + this.kryptisX * this.nueita;

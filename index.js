@@ -49,7 +49,7 @@ sudeliokSavus();
 setTimeout(() => {
   document.getElementById("fullscreenToggle").checked = setings.autoFullScrean;
 }, 1);
-setInterval(saveGameState, 256);
+setInterval(saveGameState, 2000);
 updateCanvas();
 let backGrount = new Image();
 backGrount.src = "img/bg.png";
@@ -92,6 +92,7 @@ function animate(timestamp) {
 
     requestAnimationFrame(animate);
     return;
+
   }
   if (!lastTime) lastTime = timestamp;
   const deltaTime = timestamp - lastTime;
@@ -129,6 +130,7 @@ function animate(timestamp) {
         }
         waweLaikas = 0;
         waweImamas++;
+        priesai.sort((a, b) => a.y - b.y);
       }
     }
 
@@ -218,14 +220,7 @@ function animate(timestamp) {
   }
   // saveGameState();
 
-  if (timestamp - fpsLastUpdate > 1000) {
-    currentFps = fpsCounter;
-    fpsCounter = 0;
-    fpsLastUpdate = timestamp;
-    // ctx.fillStyle = "red";
-    //  ctx.fillStyle = "#333";
-  }
-
+  
   for (let i = 0; i < priesai.length; i++) {
     priesai[i].animuok();
     priesai[i].judeti();

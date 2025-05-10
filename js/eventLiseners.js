@@ -36,6 +36,8 @@ document.getElementById("playButton").addEventListener("click", function () {
   if (setings.autoFullScrean) {
     openFullscreen();
   }
+    pause =false
+
   if (lock) {
     lock = false;
   }
