@@ -9,7 +9,7 @@ let Dydis = [
 ];
 let enemes = [
   {
-    greitis: 0.2,
+    greitis: 0.1,
     img: "./img/Veikeju_sprite/Enemy/Character6.png",
     dydis: 1,
     spriteIlgis: 12,
@@ -25,7 +25,7 @@ let enemes = [
     trankymoXilgis: 6,
   },
   {
-    greitis: 0.2,
+    greitis: 0.1,
     img: "./img/Veikeju_sprite/Enemy/Character7.png",
     dydis: 1,
     spriteIlgis: 12,
@@ -41,7 +41,7 @@ let enemes = [
     trankymoXilgis: 6,
   },
   {
-    greitis: 0.2,
+    greitis: 0.1,
     img: "./img/Veikeju_sprite/Enemy/Character8.png",
     dydis: 1,
     spriteIlgis: 12,
@@ -57,7 +57,7 @@ let enemes = [
     trankymoXilgis: 6,
   },
   {
-    greitis: 0.2,
+    greitis: 0.1,
     img: "./img/Veikeju_sprite/Enemy/Character9.png",
     dydis: 1,
     spriteIlgis: 12,

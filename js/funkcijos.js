@@ -86,6 +86,7 @@ function saveGameState() {
     wave: wave,
     playerData: savasData,
     setings: setings,
+    speedUp: speedUp
   };
 
   const encrypted = CryptoJS.AES.encrypt(JSON.stringify(gameState), secretKey).toString();
@@ -106,6 +107,7 @@ function loadGameState() {
     wave = gameState.wave;
     savasData = gameState.playerData;
     setings = gameState.setings;
+    speedUp = gameState.speedUp;  
   } catch (e) {
     console.warn("Nepavyko dešifruoti žaidimo būsenos. Galbūt duomenys buvo pakeisti?");
   }

@@ -134,3 +134,15 @@ document.getElementById("menuButton").addEventListener("click", function () {
 document.getElementById("closeShop").addEventListener("click", function () {
   document.getElementById("shopModal").style.display = "none";
 });
+document.getElementById('speedUp').addEventListener('click',() =>{
+  if(speedUp ===1){
+    speedUp = 2
+    document.getElementById('speedUp').innerHTML = '2X'
+
+  }
+  else if(speedUp === 2){
+     speedUp = 1
+    document.getElementById('speedUp').innerHTML = '1X'
+
+  }
+})

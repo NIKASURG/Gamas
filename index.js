@@ -13,7 +13,7 @@ let lock = true;
 let rumuHp;
 let maxRumuHp;
 let pralaimeta = false;
-
+let speedUp
 if(savasData ==undefined){
  savasData = {
     coins: 0,
@@ -33,7 +33,10 @@ if(wave == undefined){
 
   wave = 1;
 }
+if(speedUp == undefined){
 
+  speedUp = 1;
+}
 if(setings == undefined){
 
   setings = {
@@ -81,18 +84,20 @@ let showAtack = false;
 const piniguDezute = document.getElementById("pinigai");
 
 ctx.font = "22px Arial";
-
+let deltaTime = 0
 function animate(timestamp) {
   if (pause) {
+    lastTime = 0
+    timestamp = 0
     requestAnimationFrame(animate);
     return;
 
   }
   if (!lastTime) lastTime = timestamp;
-  const deltaTime = timestamp - lastTime;
+  deltaTime = (timestamp - lastTime)*speedUp;
   lastTime = timestamp;
 
-  lastTime = timestamp;
+
 
   // FPS skaičiavimas
   fpsCounter++;
@@ -104,8 +109,10 @@ function animate(timestamp) {
    
   }
   streles = streles.filter(str => !(str.y > 100 || str.mirus));
-  if (bangosPradeta && waweLaikas > ran() * 25 + 25 &&waweImamas < waweEnemesCombination.length) {
+  if (bangosPradeta && waweLaikas > ran() * 25 + 25 ) {
     for (let i = 0; i < ran() * 10; i++) {
+      if(waweImamas < waweEnemesCombination.length){
+
         ran = createSeededRandom(seed + waweImamas + i);
         let randomY = Math.floor(ran() * 15) + 70;
         let randomEnemy = enemes.find(
@@ -117,6 +124,7 @@ function animate(timestamp) {
         waweLaikas = 0;
         waweImamas++;
         priesai.sort((a, b) => a.y - b.y);
+      }
     }
 
     if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
@@ -126,9 +134,9 @@ function animate(timestamp) {
       if (!pralaimeta) {
         wave++;
         
+        console.log('won')
       }
       nextRoundButton.style.display = "";
-      console.log('won')
       saveDataInFireStore();
 
     }
@@ -141,7 +149,6 @@ function animate(timestamp) {
       waweEnemesCombination = [];
       waweImamas = 0;
       rumuHp = 0;
-      saveDataInFireStore();
 
       console.log('lost')
     
@@ -261,5 +268,5 @@ priesai = priesai.filter(priesas => !(priesas.mires));
   }
   requestAnimationFrame(animate);
 }
-// animate()
-requestAnimationFrame(animate);
+animate()
+// requestAnimationFrame(animate);
