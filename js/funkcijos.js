@@ -80,36 +80,23 @@ function createSeededRandom(seed) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
+
 function saveGameState() {
-  // console.log('data saved')
   const gameState = {
     wave: wave,
     playerData: savasData,
     setings: setings,
-    speedUp: speedUp
   };
 
-  const encrypted = CryptoJS.AES.encrypt(JSON.stringify(gameState), secretKey).toString();
-  localStorage.setItem("gameState", encrypted);
+  localStorage.setItem("gameState", JSON.stringify(gameState));
 }
-
-const secretKey = CryptoJS.SHA256(atob("bGFiYWlTbGFwdGFzUmFrdGFz")).toString(); 
-
 function loadGameState() {
-  const encrypted = localStorage.getItem("gameState");
-  if (!encrypted) return;
-
-  try {
-    const bytes = CryptoJS.AES.decrypt(encrypted, secretKey);
-    const json = bytes.toString(CryptoJS.enc.Utf8);
-    const gameState = JSON.parse(json);
-
+  const savedGameState = localStorage.getItem("gameState");
+  if (savedGameState) {
+    const gameState = JSON.parse(savedGameState);
     wave = gameState.wave;
     savasData = gameState.playerData;
     setings = gameState.setings;
-    speedUp = gameState.speedUp;  
-  } catch (e) {
-    console.warn("Nepavyko dešifruoti žaidimo būsenos. Galbūt duomenys buvo pakeisti?");
   }
 }
 
@@ -168,11 +155,9 @@ function sudeliokSavus() {
           homeSqueres[vieta].yProc - homeSqueres[vieta].aukstis / 100
         )
       );
-
       homeSqueres[vieta].ocupied = savasData.ownedSoligers[i].nr;
     } else {
-      savi.push(new veikejas(soligers[savasData.ownedSoligers[i].nr]));
-      savi[savi.length - 1].pasirinktas = false;
+      // savi[savi.length - 1].pasirinktas = false;
     }
   }
 }
@@ -210,7 +195,6 @@ function apsipirkti() {
 
   document.getElementById("parduotuve").innerHTML = ''
   parduotuvesVidus.forEach((item) => {
-    console.log("dasfadg");
     const itemDiv = document.createElement("konteineris");
     itemDiv.className = `shop-item ${item.rarity}`;
     itemDiv.dataset.category = item.category;
@@ -259,7 +243,7 @@ function updateParduotuvesVidu(){
     
   }
 }
-function nupirkti(lock,kaina,nr){
+function nupirkti(lock,kaina,nmr){
   if(lock){
     console.log("ka tu dirbi!!!")
     return;
@@ -267,10 +251,10 @@ function nupirkti(lock,kaina,nr){
   if(savasData.coins < kaina){
     return;
   }
+  console.log("dasfadg");
   savasData.coins -= kaina
   savasData.ownedSoligers.push(
-    { nr: nr, homeSquere: null, extraData: { speedUp: 0 ,damigeUp:0} },
-    
+    { nr: nmr, homeSquere: null, extraData: { speedUp: 0 ,damigeUp:0} },
   )
   apsipirkti()
 }

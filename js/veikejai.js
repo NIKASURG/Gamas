@@ -4,7 +4,7 @@ class veikejas {
     this.y = y;
     this.data = data;
 
-    this.givybesStart = data.givybes;
+    this.givybesStart = data.givybes?? 100;
     this.dydis = data.dydis;
     this.greitis = data.greitis;
     this.spriteIlgisKadru = data.spriteIlgis;
@@ -28,6 +28,7 @@ class veikejas {
     this.reikemasKadrasY = data.spriteReikemasKadrasY;
     this.reikemiKadrai = data.reikemiKadrai;
     this.spriteGreitis = 1;
+
     this.mirtiesSpriteY = data.mirtiesSpriteY;
     this.mirtiesReikalingiX = data.mirtiesReikalingiX;
     this.veikejoZiurejimoPuse = data.veikejoZiurejimoPuse;
@@ -38,9 +39,14 @@ class veikejas {
   }
 
   kadras() {
+if(isNaN(deltaTime) ){
+  console.log('das')
+  return
+}
     this.spriteGreitis += deltaTime / 25;
     if (this.spriteGreitis > 10 - this.reikemiKadrai) {
       this.spriteGreitis = 0;
+      
       // console.log(this.kadroPlotis,this.reikemiKadrai)
       this.esamasKadrasX += this.kadroPlotis;
 

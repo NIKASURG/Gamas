@@ -48,7 +48,7 @@ sudeliokSavus();
 setTimeout(() => {
   document.getElementById("fullscreenToggle").checked = setings.autoFullScrean;
 }, 1);
-setInterval(saveGameState, 2000);
+setInterval(saveGameState, 5000);
 updateCanvas();
 let backGrount = new Image();
 backGrount.src = "img/bg.png";
@@ -84,7 +84,6 @@ let showAtack = false;
 const piniguDezute = document.getElementById("pinigai");
 
 ctx.font = "22px Arial";
-let deltaTime = 0
 function animate(timestamp) {
   if (pause) {
     lastTime = 0

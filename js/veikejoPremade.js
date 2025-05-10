@@ -3,6 +3,8 @@ let ePlotis = window.innerWidth;
 let savasData;
 let wave;
 let setings;
+let deltaTime = 0
+
 let Dydis = [
   [ePlotis / 10, ePlotis / 10],
   [eAukstis / 10, eAukstis / 10],
@@ -87,6 +89,7 @@ let soligers = [
     jega: 80,
     saudimoGreitis: 40,
     name: "Nemo",
+    nr:0
   },
   {
     saudimoGreitis: 2,
@@ -101,6 +104,8 @@ let soligers = [
     jega: 80,
     saudimoGreitis: 40,
     name: "Soske",
+    nr:2
+
   },
   {
     saudimoGreitis: 2,
@@ -115,6 +120,8 @@ let soligers = [
     jega: 50,
     saudimoGreitis: 40,
     name: "BigBOss",
+    nr:3
+
   },
   {
     saudimoGreitis: 2,
@@ -129,6 +136,8 @@ let soligers = [
     jega: 100,
     saudimoGreitis: 40,
     name: "Silke",
+    nr:4
+
   },
   {
     saudimoGreitis: 2,
@@ -143,6 +152,8 @@ let soligers = [
     jega: 200,
     saudimoGreitis: 40,
     name: "Rudis",
+    nr:4
+
   },
 ];
 
