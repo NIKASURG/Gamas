@@ -177,6 +177,10 @@ class veikejas {
   }    
   }
 }
+const strelesImg = new Image();
+strelesImg.src = 'img/arow.png';
+
+
 class Sovinys {
   constructor(x1, y1, jega, taikinis) {
     this.x1 = x1;
@@ -202,8 +206,7 @@ class Sovinys {
     this.bendrasKelias = dist;
     this.nueita = 0;
     this.greitis = 1.5; 
-    this.img = new Image();
-    this.img.src = 'img/arow.png'
+    this.img = strelesImg
 
   }
   animuok() {

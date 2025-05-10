@@ -98,13 +98,17 @@ export async function saveDataInFireStore(gameState) {
 export async function loadUserData() {
   const querySnapshot = await getDocs(collection(db, "users", user.uid, "results"));
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-    const data = (doc.id, " => ", doc.data()).gameState;
+   
+    const data = doc.data().gameState;
+
     wave = data.wave;
     savasData = data.savasData;
     console.log(wave,data)
   });
   
 }
-setInterval(saveDataInFireStore,5000*60)
+setInterval(() => {
+  if (user) saveDataInFireStore();
+}, 5 * 60 * 1000); 
+
 window.saveDataInFireStore = saveDataInFireStore;

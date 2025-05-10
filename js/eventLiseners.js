@@ -9,9 +9,7 @@ document.getElementById("fullscreenToggle").addEventListener("click", () => {
   setings.autoFullScrean = document.getElementById("fullscreenToggle").checked;
   saveGameState();
 });
-document.addEventListener("menuButton", () => {
-  pause = true;
-});
+
 window.addEventListener("load", function () {
   nextRoundButton.style.display = "none";
 });
@@ -23,9 +21,10 @@ window.addEventListener("keydown", function (event) {
     } else {
       document.getElementById("debugScrean").style.display = "none";
     }
+  input.focus();
+
   }
-  if(event.key.toUpperCase() === 'S'){
-  }
+  
 });
 
 document.getElementById("playButton").addEventListener("click", function () {
@@ -116,6 +115,8 @@ document.getElementById("playButton").addEventListener("click", function () {
 });
 
 document.getElementById("menuButton").addEventListener("click", function () {
+  pause = true;
+
   // Show the main menu
   document.getElementById("main").style.display = "flex";
   document.getElementById("main").style.opacity = "1";

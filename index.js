@@ -84,8 +84,6 @@ ctx.font = "22px Arial";
 
 function animate(timestamp) {
   if (pause) {
-    // ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
-
     requestAnimationFrame(animate);
     return;
 
@@ -102,14 +100,12 @@ function animate(timestamp) {
   waweLaikas++;
   let ran = createSeededRandom(seed + waweImamas);
   for (let i = 0; i < streles.length; i++) {
-    // console.log(streles);
     streles[i].animuok();
    
   }
-streles = streles.filter(str => !(str.y > 100 || str.mirus));
-  if (bangosPradeta && waweLaikas > ran() * 25 + 25) {
+  streles = streles.filter(str => !(str.y > 100 || str.mirus));
+  if (bangosPradeta && waweLaikas > ran() * 25 + 25 &&waweImamas < waweEnemesCombination.length) {
     for (let i = 0; i < ran() * 10; i++) {
-      if (waweImamas < waweEnemesCombination.length) {
         ran = createSeededRandom(seed + waweImamas + i);
         let randomY = Math.floor(ran() * 15) + 70;
         let randomEnemy = enemes.find(
@@ -121,7 +117,6 @@ streles = streles.filter(str => !(str.y > 100 || str.mirus));
         waweLaikas = 0;
         waweImamas++;
         priesai.sort((a, b) => a.y - b.y);
-      }
     }
 
     if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
@@ -257,9 +252,8 @@ priesai = priesai.filter(priesas => !(priesas.mires));
     fpsCounter = 0;
     fpsLastUpdate = timestamp;
 }
-    ctx.fillText(
-    
-    `FPS: ${currentFps}`, 20, eAukstis-50);}
+    ctx.fillText(`FPS: ${currentFps}`, 20, eAukstis-50);
+  }
 
   if (debugScrean) {
     ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70);

@@ -2,9 +2,7 @@ const nextRoundButton = document.getElementById("nextRoundButton");
 
 const input = document.getElementById("komandos");
 
-document.addEventListener("keydown", function () {
-  input.focus();
-});
+
 input.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     const komanda = input.value.trim();
