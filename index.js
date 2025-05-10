@@ -236,7 +236,13 @@ function animate(timestamp) {
       savi[j].atack();
     }
   }
-
+  if (timestamp - fpsLastUpdate > 1000) {
+    currentFps = fpsCounter;
+    fpsCounter = 0;
+    fpsLastUpdate = timestamp;
+    // ctx.fillStyle = "red";
+    //  ctx.fillStyle = "#333";
+  }
   ctx.fillText(`Wave: ${wave}`, (80 / 100) * ePlotis, (5 / 100) * eAukstis);
   ctx.fillText(
     `Coins: ${savasData.coins}`,
