@@ -1,3 +1,4 @@
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d", { alpha: false });
 let priesai = [];
@@ -5,6 +6,7 @@ let savi = [];
 let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
 let lock = true;
+
 // ctx.translate(0, 0);
 
 //  rarity pasirinkimai "legendary", "rare",,"common"
@@ -139,7 +141,9 @@ function animate(timestamp) {
         
       }
       nextRoundButton.style.display = "";
-      saveGameState();
+      console.log('won')
+      saveDataInFireStore();
+
     }
     if (rumuHp <= 0) {
       priesai.forEach((priesas) => {
@@ -150,8 +154,10 @@ function animate(timestamp) {
       waweEnemesCombination = [];
       waweImamas = 0;
       rumuHp = 0;
-      console.log('dafa')
-      saveGameState();
+      saveDataInFireStore();
+
+      console.log('lost')
+    
     }
   }
   if (!bangosPradeta) {

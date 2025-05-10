@@ -2,7 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
-// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCTSRn86V81fCLsgagpHXvEc0RIfcYMEPE",
   authDomain: "towerdefencegame-5a530.firebaseapp.com",
@@ -13,7 +12,6 @@ const firebaseConfig = {
   measurementId: "G-6EDLH1JKEX"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -21,7 +19,6 @@ const db = getFirestore(app);
 let user;
 const provider = new GoogleAuthProvider();
 
-// Check user authentication status on page load
 onAuthStateChanged(auth, (userCredential) => {
   if (userCredential) {
     user = userCredential;
@@ -30,7 +27,6 @@ onAuthStateChanged(auth, (userCredential) => {
     document.getElementById("showLogout").style.display = "block";
     document.getElementById("userEmail").textContent = user.email;
 
-    // Optionally, load user-specific data (e.g., results)
     loadUserData(user);
   } else {
     console.log("Naudotojas neprisijungęs");
@@ -40,14 +36,12 @@ onAuthStateChanged(auth, (userCredential) => {
   }
 });
 
-// Google Login
 document.getElementById("google-login").addEventListener("click", () => {
   signInWithPopup(auth, provider)
     .then(async (result) => {
       user = result.user;
       console.log("Prisijungė:", user.displayName);
 
-      // Save user data in Firestore
       await setDoc(doc(db, "users", user.uid), {
         name: user.displayName,
         email: user.email,
@@ -64,7 +58,6 @@ document.getElementById("google-login").addEventListener("click", () => {
     });
 });
 
-// Google Logout
 document.getElementById("google-logout").addEventListener("click", () => {
   auth.signOut()
     .then(() => {
@@ -78,10 +71,9 @@ document.getElementById("google-logout").addEventListener("click", () => {
     });
 });
 
-// Save game data in Firestore (subcollection under user)
 
-// Save game data in Firestore (perrašyti esamus duomenis)
 export async function saveDataInFireStore(gameState) {
+  console.log('data isaugotas')
   gameState = {
     wave: wave,
     savasData: savasData,
@@ -103,7 +95,6 @@ export async function saveDataInFireStore(gameState) {
 }
 
 
-// Example function to get data (you can customize it as needed)
 export async function loadUserData() {
   const querySnapshot = await getDocs(collection(db, "users", user.uid, "results"));
   querySnapshot.forEach((doc) => {
@@ -116,3 +107,4 @@ export async function loadUserData() {
   
 }
 setInterval(saveDataInFireStore,5000*60)
+window.saveDataInFireStore = saveDataInFireStore;
