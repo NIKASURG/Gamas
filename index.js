@@ -6,14 +6,10 @@ let savi = [];
 let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
 let lock = true;
-
 // ctx.translate(0, 0);
 
 //  rarity pasirinkimai "legendary", "rare",,"common"
 
-let parduotuvesVidus = [
-  
-  ];
 let rumuHp;
 let maxRumuHp;
 let pralaimeta = false;
@@ -88,7 +84,7 @@ ctx.font = "22px Arial";
 
 function animate(timestamp) {
   if (pause) {
-    ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
+    // ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
 
     requestAnimationFrame(animate);
     return;
@@ -96,11 +92,7 @@ function animate(timestamp) {
   }
   if (!lastTime) lastTime = timestamp;
   const deltaTime = timestamp - lastTime;
-
-  if (deltaTime < 1000 / fps) {
-    requestAnimationFrame(animate);
-    return;
-  }
+  lastTime = timestamp;
 
   lastTime = timestamp;
 
@@ -112,11 +104,9 @@ function animate(timestamp) {
   for (let i = 0; i < streles.length; i++) {
     // console.log(streles);
     streles[i].animuok();
-    if (streles[i].y > 100 || streles[i].mirus) {
-      streles.splice(i, 1);
-      i--;
-    }
+   
   }
+streles = streles.filter(str => !(str.y > 100 || str.mirus));
   if (bangosPradeta && waweLaikas > ran() * 25 + 25) {
     for (let i = 0; i < ran() * 10; i++) {
       if (waweImamas < waweEnemesCombination.length) {
@@ -225,24 +215,17 @@ function animate(timestamp) {
     priesai[i].animuok();
     priesai[i].judeti();
     // priesai[i].suzeiti(4);
-    if (priesai[i].mires) {
-      priesai.splice(i, 1);
-      i--;
-    }
+   
   }
+priesai = priesai.filter(priesas => !(priesas.mires));
+
   for (let j = 0; j < savi.length; j++) {
     savi[j].animuok();
     if (priesai.length > 0) {
       savi[j].atack();
     }
   }
-  if (timestamp - fpsLastUpdate > 1000) {
-    currentFps = fpsCounter;
-    fpsCounter = 0;
-    fpsLastUpdate = timestamp;
-    // ctx.fillStyle = "red";
-    //  ctx.fillStyle = "#333";
-  }
+
   ctx.fillText(`Wave: ${wave}`, (80 / 100) * ePlotis, (5 / 100) * eAukstis);
   ctx.fillText(
     `Coins: ${savasData.coins}`,
@@ -267,12 +250,22 @@ function animate(timestamp) {
   ctx.fillRect(50, 50, (leftVaveHp / vaveHp) * (ePlotis / 2), 5);
   ctx.fillStyle = "black";
 
-  if (debugScrean || rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, eAukstis-50);
+  if (debugScrean || rodytiFps){
+   
+      if (timestamp - fpsLastUpdate > 1000) {
+    currentFps = fpsCounter;
+    fpsCounter = 0;
+    fpsLastUpdate = timestamp;
+}
+    ctx.fillText(
+    
+    `FPS: ${currentFps}`, 20, eAukstis-50);}
+
   if (debugScrean) {
     ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70);
     ctx.fillText(`Sukurta priesu: ${priesai.length}`, 20, 90);
   }
   requestAnimationFrame(animate);
 }
-
+// animate()
 requestAnimationFrame(animate);
