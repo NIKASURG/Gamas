@@ -21,7 +21,7 @@ class veikejas {
     };
     this.saudimoGreitis = data.saudimoGreitis;
     this.saudimoLaukimas = Math.random() * data.saudimoGreitis;
-    this.taikinys = "first";
+    this.taikinys =   data.extraData?.target ??"first";
     this.mires = false;
     this.linkMirties = false;
     this.esamasKadrasY = 0;
@@ -113,7 +113,7 @@ if(isNaN(deltaTime) ){
     if (this.givybes) {
       ctx.fillStyle = "red";
       if (this.givybes >= 0 && this.givybes != this.givybesStart) {
-        showBar(this.x  * this.veikejoZiurejimoPuse+ (ePlotis / Dydis[this.dydis][0] / 2) * this.veikejoZiurejimoPuse ,this.y + 3,Dydis[this.dydis][0] / 2,  eAukstis / 300,this.givybes,this.givybesStart,"red")
+        showBar(this.x  * this.veikejoZiurejimoPuse+ (ePlotis / Dydis[this.dydis][0] / 2.3) * this.veikejoZiurejimoPuse ,this.y + 3,Dydis[this.dydis][0] / 3,  eAukstis / 300,this.givybes,this.givybesStart,"red")
       }
       if (rodytiGivybes) {
         ctx.fillStyle = "white";

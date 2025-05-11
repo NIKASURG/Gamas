@@ -19,8 +19,8 @@ if(savasData ==undefined){
     coins: 0,
     rumuHp: 100,
     ownedSoligers: [
-      { nr: 0, homeSquere: 5, extraData: { speedUp: 0,damigeUp:0,target: 'first' } },
-      { nr: 1, homeSquere: 4, extraData: { speedUp: 0 ,damigeUp:0,target: 'first'} },
+      { nr: 0, homeSquere: 5, extraData: { speedUp: 0,damigeUp:0,target: 'random' } },
+      { nr: 1, homeSquere: 4, extraData: { speedUp: 0 ,damigeUp:0,target: 'random'} },
     ],
   };
 
@@ -168,6 +168,7 @@ function animate(timestamp) {
             homeSqueres[i].ocupied !== undefined
           ) {
             buttons = `<button onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
+            buttons +=`<button>Target:</button>`
           }
           for (let j = 0; j < savasData.ownedSoligers.length; j++) {
             if (
@@ -240,7 +241,6 @@ priesai = priesai.filter(priesas => !(priesas.mires));
    showBar(15,5,ePlotis / 2,eAukstis / 100,rumuHp,maxRumuHp,'blue','brown')
 
    showBar(15,7,ePlotis / 2,eAukstis / 100,leftVaveHp,vaveHp,'orange','brown')
-
 
   if (debugScrean || rodytiFps){
    

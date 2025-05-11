@@ -150,9 +150,9 @@ function sudeliokSavus() {
     if (vieta != null) {
       savi.push(
         new veikejas(
-          soligers[savasData.ownedSoligers[i].nr],
+          {...soligers[savasData.ownedSoligers[i].nr] ,...savasData.ownedSoligers[i]},
           homeSqueres[vieta].xProc - homeSqueres[vieta].plotis / 100,
-          homeSqueres[vieta].yProc - homeSqueres[vieta].aukstis / 100
+          homeSqueres[vieta].yProc - homeSqueres[vieta].aukstis / 100,
         )
       );
       homeSqueres[vieta].ocupied = savasData.ownedSoligers[i].nr;
@@ -255,7 +255,7 @@ function nupirkti(lock,kaina,nmr){
   )
   apsipirkti()
 }
-function showBar(x = 100,y=100,i=100,a=5,hp=100,maxHp=100,collor = 'red',collorBack ='black'){
+function showBar(x = 10,y=10,i=100,a=5,hp=100,maxHp=100,collor = 'red',collorBack ='black'){
   ctx.save()
   ctx.fillStyle = collorBack
   ctx.fillRect((x/100)*ePlotis,(y/100)*eAukstis , i+2,a+2)

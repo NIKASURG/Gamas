@@ -89,7 +89,6 @@ let soligers = [
     jega: 80,
     saudimoGreitis: 40,
     name: "Nemo",
-    nr:0
   },
   {
     saudimoGreitis: 2,
@@ -104,7 +103,6 @@ let soligers = [
     jega: 80,
     saudimoGreitis: 40,
     name: "Soske",
-    nr:1
 
   },
   {
@@ -120,7 +118,6 @@ let soligers = [
     jega: 50,
     saudimoGreitis: 40,
     name: "BigBOss",
-    nr:2
 
   },
   {
@@ -136,7 +133,6 @@ let soligers = [
     jega: 100,
     saudimoGreitis: 40,
     name: "Silke",
-    nr:3
 
   },
   {
@@ -152,10 +148,12 @@ let soligers = [
     jega: 200,
     saudimoGreitis: 40,
     name: "Rudis",
-    nr:4
 
   },
 ];
+soligers.forEach((soldier, index) => {
+  soldier.nr = index;
+});
 
 pi = 3;
 ji = 5;
