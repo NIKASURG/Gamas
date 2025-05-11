@@ -189,16 +189,15 @@ function setRumuHp(){
   maxRumuHp = rumuHp
 }
 function apsipirkti() {
-  parduotuvesVidus = []
   
   updateParduotuvesVidu()
 
   document.getElementById("parduotuve").innerHTML = ''
   parduotuvesVidus.forEach((item) => {
-    const itemDiv = document.createElement("konteineris");
+    const itemDiv = document.createElement("div");
     itemDiv.className = `shop-item ${item.rarity}`;
     itemDiv.dataset.category = item.category;
-    dissable = savasData.coins < item.price
+    const dissable = savasData.coins < item.price
     itemDiv.innerHTML = `
                  <div class="shop-item-icon">
                  <img src="${item.img}" alt="${item.alt}" width="40" height="40" />
@@ -221,7 +220,7 @@ function apsipirkti() {
 function updateParduotuvesVidu(){
 
   parduotuvesVidus = []
-  // zinau jog tai durnas sprendimas, as tsg noriu jog tai viektu, mano pasiteisinimas, as be miego tai cia priminimas perasyti sita !!!!!!!
+  // TODO: zinau jog tai durnas sprendimas, as tsg noriu jog tai viektu, mano pasiteisinimas, as be miego tai cia priminimas perasyti sita !!!!!!!
   // !!!!!butinai perasiti 
   let laikinas = []
   for (let i = 0; i < soligers.length; i++) {
@@ -234,7 +233,7 @@ function updateParduotuvesVidu(){
       laikinas.includes(savasData.ownedSoligers[i].nr)
     ){
       
-      indexOf =laikinas.indexOf(savasData.ownedSoligers[i].nr)
+      const indexOf =laikinas.indexOf(savasData.ownedSoligers[i].nr)
       laikinas.splice(indexOf, 1)
     }
   }
@@ -248,13 +247,19 @@ function nupirkti(lock,kaina,nmr){
     console.log("ka tu dirbi!!!")
     return;
   }
-  if(savasData.coins < kaina){
-    return;
-  }
+
   console.log("dasfadg");
   savasData.coins -= kaina
   savasData.ownedSoligers.push(
     { nr: nmr, homeSquere: null, extraData: { speedUp: 0 ,damigeUp:0} },
   )
   apsipirkti()
+}
+function showBar(x = 100,y=100,i=100,a=5,hp=100,maxHp=100,collor = 'red',collorBack ='black'){
+  ctx.save()
+  ctx.fillStyle = collorBack
+  ctx.fillRect((x/100)*ePlotis,(y/100)*eAukstis , i+2,a+2)
+  ctx.fillStyle = collor
+  ctx.fillRect((x/100)*ePlotis +1,(y/100)*eAukstis+1,(hp/maxHp)* i,a)
+  ctx.restore()
 }

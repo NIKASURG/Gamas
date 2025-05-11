@@ -236,20 +236,11 @@ priesai = priesai.filter(priesas => !(priesas.mires));
   piniguDezute.innerHTML = "Your coins: " + savasData.coins;
   ctx.fillStyle = "black";
 
-  ctx.fillRect(50, 70, ePlotis / 2, 5);
+  
+   showBar(15,5,ePlotis / 2,eAukstis / 100,rumuHp,maxRumuHp,'blue','brown')
 
-  ctx.fillStyle = "blue";
-  // console.log(leftVaveHp)
-  ctx.fillRect(50, 70, (rumuHp / maxRumuHp) * (ePlotis / 2), 5);
+   showBar(15,7,ePlotis / 2,eAukstis / 100,leftVaveHp,vaveHp,'orange','brown')
 
-  ctx.fillStyle = "black";
-
-  ctx.fillRect(50, 50, ePlotis / 2, 5);
-
-  ctx.fillStyle = "orange";
-  // console.log(leftVaveHp)
-  ctx.fillRect(50, 50, (leftVaveHp / vaveHp) * (ePlotis / 2), 5);
-  ctx.fillStyle = "black";
 
   if (debugScrean || rodytiFps){
    

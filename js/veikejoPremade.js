@@ -104,7 +104,7 @@ let soligers = [
     jega: 80,
     saudimoGreitis: 40,
     name: "Soske",
-    nr:2
+    nr:1
 
   },
   {
@@ -120,7 +120,7 @@ let soligers = [
     jega: 50,
     saudimoGreitis: 40,
     name: "BigBOss",
-    nr:3
+    nr:2
 
   },
   {
@@ -136,7 +136,7 @@ let soligers = [
     jega: 100,
     saudimoGreitis: 40,
     name: "Silke",
-    nr:4
+    nr:3
 
   },
   {
@@ -158,7 +158,7 @@ let soligers = [
 ];
 
 pi = 3;
-ji = 3;
+ji = 5;
 
 class langeliaiNamu {
   constructor(i, j) {
