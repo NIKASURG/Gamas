@@ -123,10 +123,10 @@ function suzeikPriesa( taikinys) {
       priesas = priesai[Math.floor(Math.random() * priesai.length)];
       break;
     case "strongest":
-      priesas = priesai.reduce((max, p) => (p.hp > max.hp ? p : max));
+      priesas = priesai.reduce((max, p) => (p.givybes > max.givybes ? p : max));
       break;
     case "weakest":
-      priesas = priesai.reduce((min, p) => (p.hp < min.hp ? p : min));
+      priesas = priesai.reduce((min, p) => (p.givybes < min.givybes ? p : min));
       break;
     default:
       return;
@@ -248,7 +248,6 @@ function nupirkti(lock,kaina,nmr){
     return;
   }
 
-  console.log("dasfadg");
   savasData.coins -= kaina
   savasData.ownedSoligers.push(
     { nr: nmr, homeSquere: null, extraData: { speedUp: 0 ,damigeUp:0} },
@@ -262,4 +261,51 @@ function showBar(x = 10,y=10,i=100,a=5,hp=100,maxHp=100,collor = 'red',collorBac
   ctx.fillStyle = collor
   ctx.fillRect((x/100)*ePlotis +1,(y/100)*eAukstis+1,(hp/maxHp)* i,a)
   ctx.restore()
+}
+function changeTarget(index,i){
+  const kelintas = targetOptions.indexOf(savasData.ownedSoligers[index].extraData.target)
+  if(targetOptions.length - 1> kelintas){
+    savasData.ownedSoligers[index].extraData.target= targetOptions[kelintas +1]
+  }else{
+    savasData.ownedSoligers[index].extraData.target= targetOptions[0]
+  }
+updateLangeliuVidu(i)
+}
+function updateLangeliuVidu(i){
+      if (
+            homeSqueres[i] &&
+            homeSqueres[i].ocupied !== null &&
+            homeSqueres[i].ocupied !== undefined
+          ) {
+            buttons = `<button onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
+            buttons +=`<button onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${savasData.ownedSoligers[homeSqueres[i].ocupied].extraData.target}</button>`
+          }
+          for (let j = 0; j < savasData.ownedSoligers.length; j++) {
+            if (
+              homeSqueres[i].ocupied === null &&
+              savasData.ownedSoligers[j].homeSquere === null
+            ) {
+              buttons += `<button onclick="savasData.ownedSoligers[${j}].homeSquere = ${i}; homeSqueres[${i}].ocupied = ${j}; sudeliokSavus(); selectCharacter.style.display = 'none';">
+                        ${savasData.ownedSoligers[j].nr}
+                        </button>`;
+            }
+          }
+
+          mouseDown = false;
+          selectCharacter.style.display = "block";
+          selectCharacter.innerHTML =
+            `
+                    
+                    <button onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
+                    <p>selected characher</p>
+                   ` +
+            `${buttons}` +
+            `
+
+                    <p>Ur characters</p>
+                    <p></p>
+                    <p></p>
+
+                    
+                    `;
 }

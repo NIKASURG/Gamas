@@ -7,7 +7,7 @@ let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
 let lock = true;
 // ctx.translate(0, 0);
-
+let targetOptions = ['first','strongest','weakest','random','last']
 //  rarity pasirinkimai "legendary", "rare",,"common"
 
 let rumuHp;
@@ -19,8 +19,8 @@ if(savasData ==undefined){
     coins: 0,
     rumuHp: 100,
     ownedSoligers: [
-      { nr: 0, homeSquere: 5, extraData: { speedUp: 0,damigeUp:0,target: 'random' } },
-      { nr: 1, homeSquere: 4, extraData: { speedUp: 0 ,damigeUp:0,target: 'random'} },
+      { nr: 0, homeSquere: 5, extraData: { speedUp: 0,damigeUp:0,target: 'first' } },
+      { nr: 1, homeSquere: 4, extraData: { speedUp: 0 ,damigeUp:0,target: 'first'} },
     ],
   };
 
@@ -162,39 +162,8 @@ function animate(timestamp) {
       if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
         blure = 0.7;
         if (mouseDown && !lock) {
-          if (
-            homeSqueres[i] &&
-            homeSqueres[i].ocupied !== null &&
-            homeSqueres[i].ocupied !== undefined
-          ) {
-            buttons = `<button onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
-            buttons +=`<button>Target:</button>`
-          }
-          for (let j = 0; j < savasData.ownedSoligers.length; j++) {
-            if (
-              homeSqueres[i].ocupied === null &&
-              savasData.ownedSoligers[j].homeSquere === null
-            ) {
-              buttons += `<button onclick="savasData.ownedSoligers[${j}].homeSquere = ${i}; homeSqueres[${i}].ocupied = ${j}; sudeliokSavus(); selectCharacter.style.display = 'none';">
-                        ${savasData.ownedSoligers[j].nr}
-                        </button>`;
-            }
-          }
 
-          mouseDown = false;
-          selectCharacter.style.display = "block";
-          selectCharacter.innerHTML =
-            `
-                    
-                    <button onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
-                    <p>selected characher</p>
-                   ` +
-            `${buttons}` +
-            `
-
-                    <p>Ur characters</p>
-                    
-                    `;
+            updateLangeliuVidu(i)
         }
       }
 

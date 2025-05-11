@@ -3,7 +3,7 @@ class veikejas {
     this.x = x;
     this.y = y;
     this.data = data;
-
+    this.jega = this.data.jega
     this.givybesStart = data.givybes?? 100;
     this.dydis = data.dydis;
     this.greitis = data.greitis;
@@ -157,7 +157,7 @@ if(isNaN(deltaTime) ){
     }
     if (this.saudimoGreitis < this.saudimoLaukimas) {
       this.saudimoLaukimas = 0;
-      streles.push(new Sovinys(this.x, this.y, this.data.jega, this.taikinys));
+      streles.push(new Sovinys(this.x, this.y, this.jega , this.taikinys));
       // console.log(priesas)
       let atvaizdoX = (this.x / 100) * ePlotis;
       if (this.veikejoZiurejimoPuse == -1) {
