@@ -3,7 +3,7 @@ class veikejas {
     this.x = x;
     this.y = y;
     this.data = data;
-    this.jega = this.data.jega
+    this.jega = this.data.extraData.damigeUp?? this.data.jega 
     this.givybesStart = data.givybes?? 100;
     this.dydis = data.dydis;
     this.greitis = data.greitis;

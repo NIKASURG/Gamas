@@ -289,7 +289,8 @@ function updateLangeliuVidu(i){
           ) {
             buttons = `<button onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
             buttons +=`<button onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${savasData.ownedSoligers[homeSqueres[i].ocupied].extraData.target}</button>`
-            buttons += `<button onclick="upgrade(${i})" >Ubgrade</button>`
+            buttons += `<p>Upgrade</p>`
+            buttons += `<button onclick="upgrade(${i})" >Price: ${Math.round(savi[homeSqueres[i].ocupied].jega + savi[homeSqueres[i].ocupied].jega /3)}</button>`
           }
           for (let j = 0; j < savasData.ownedSoligers.length; j++) {
             if (
@@ -313,8 +314,11 @@ function updateLangeliuVidu(i){
             `${buttons}`;
 }
 function upgrade(i){
-  console.log(soligers[homeSqueres[i].ocupied])
+
+  console.log(soligers[homeSqueres[i].ocupied].jega)
   console.log(savasData.ownedSoligers[homeSqueres[i].ocupied].extraData.damigeUp)
   console.log(Math.round(savi[homeSqueres[i].ocupied].jega + savi[homeSqueres[i].ocupied].jega /3) )
+  savasData.ownedSoligers[homeSqueres[i].ocupied].extraData.damigeUp = Math.round(savi[homeSqueres[i].ocupied].jega + savi[homeSqueres[i].ocupied].jega /5)
 
+  
 }

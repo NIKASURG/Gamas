@@ -1,4 +1,3 @@
-
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d", { alpha: false });
 let priesai = [];
@@ -7,40 +6,40 @@ let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
 let lock = true;
 // ctx.translate(0, 0);
-let targetOptions = ['first','strongest','weakest','random','last']
+let targetOptions = ["first", "strongest", "weakest", "random", "last"];
 //  rarity pasirinkimai "legendary", "rare",,"common"
 
 let rumuHp;
 let maxRumuHp;
 let pralaimeta = false;
-let speedUp
-if(savasData ==undefined){
- savasData = {
+let speedUp;
+if (savasData == undefined) {
+  savasData = {
     coins: 0,
     rumuHp: 100,
     ownedSoligers: [
-      { nr: 0, homeSquere: 8, extraData: { speedUp: 0,damigeUp:0,target: 'first' } },
-      { nr: 1, homeSquere: 9, extraData: { speedUp: 0 ,damigeUp:0,target: 'first'} },
-     
-
+      {
+        nr: 0,
+        homeSquere: 8,
+        extraData: { speedUp: 0, damigeUp: 0, target: "first" },
+      },
+      {
+        nr: 1,
+        homeSquere: 9,
+        extraData: { speedUp: 0, damigeUp: 0, target: "first" },
+      },
     ],
   };
-
 }
-
- 
 
 // console.log(savi);
-if(wave == undefined){
-
+if (wave == undefined) {
   wave = 1;
 }
-if(speedUp == undefined){
-
+if (speedUp == undefined) {
   speedUp = 1;
 }
-if(setings == undefined){
-
+if (setings == undefined) {
   setings = {
     autoFullScrean: true,
   };
@@ -88,17 +87,14 @@ const piniguDezute = document.getElementById("pinigai");
 ctx.font = "22px Arial";
 function animate(timestamp) {
   if (pause) {
-    lastTime = 0
-    timestamp = 0
+    lastTime = 0;
+    timestamp = 0;
     requestAnimationFrame(animate);
     return;
-
   }
   if (!lastTime) lastTime = timestamp;
-  deltaTime = (timestamp - lastTime)*speedUp;
+  deltaTime = (timestamp - lastTime) * speedUp;
   lastTime = timestamp;
-
-
 
   // FPS skaičiavimas
   fpsCounter++;
@@ -107,13 +103,11 @@ function animate(timestamp) {
   let ran = createSeededRandom(seed + waweImamas);
   for (let i = 0; i < streles.length; i++) {
     streles[i].animuok();
-   
   }
-  streles = streles.filter(str => !(str.y > 100 || str.mirus));
-  if (bangosPradeta && waweLaikas > ran() * 25 + 25 ) {
+  streles = streles.filter((str) => !(str.y > 100 || str.mirus));
+  if (bangosPradeta && waweLaikas > ran() * 25 + 25) {
     for (let i = 0; i < ran() * 10; i++) {
-      if(waweImamas < waweEnemesCombination.length){
-
+      if (waweImamas < waweEnemesCombination.length) {
         ran = createSeededRandom(seed + waweImamas + i);
         let randomY = Math.floor(ran() * 15) + 70;
         let randomEnemy = enemes.find(
@@ -134,25 +128,23 @@ function animate(timestamp) {
       waweLaikas = 0;
       if (!pralaimeta) {
         wave++;
-        
-        console.log('won')
+
+        console.log("won");
       }
       nextRoundButton.style.display = "";
       saveDataInFireStore();
-
     }
     if (rumuHp <= 0) {
       priesai.forEach((priesas) => {
         priesas.givybes = -1;
       });
       pralaimeta = true;
-      
+
       waweEnemesCombination = [];
       waweImamas = 0;
       rumuHp = 0;
 
-      console.log('lost')
-    
+      console.log("lost");
     }
   }
   if (!bangosPradeta) {
@@ -167,34 +159,33 @@ function animate(timestamp) {
         canvas.style.cursor = "pointer";
 
         if (mouseDown && !lock) {
-
-            updateLangeliuVidu(i)
+          updateLangeliuVidu(i);
         }
       }
-      
 
-     
+      ctx.strokeStyle = "gray";
       ctx.fillStyle = "rgba(65, 65, 85, " + blure + ")";
-      ctx.fillRect(
+      ctx.beginPath();
+      ctx.roundRect(
         homeSqueres[i].x,
         homeSqueres[i].y,
         homeSqueres[i].plotis,
-        homeSqueres[i].aukstis
+        homeSqueres[i].aukstis,
+        [10, 10, 10, 10]
       );
-
+      ctx.stroke();
+      ctx.fill();
       ctx.restore();
     }
   }
   // saveGameState();
 
-  
   for (let i = 0; i < priesai.length; i++) {
     priesai[i].animuok();
     priesai[i].judeti();
     // priesai[i].suzeiti(4);
-   
   }
-priesai = priesai.filter(priesas => !(priesas.mires));
+  priesai = priesai.filter((priesas) => !priesas.mires);
 
   for (let j = 0; j < savi.length; j++) {
     savi[j].animuok();
@@ -212,19 +203,35 @@ priesai = priesai.filter(priesas => !(priesas.mires));
   piniguDezute.innerHTML = "Your coins: " + savasData.coins;
   ctx.fillStyle = "black";
 
-  
-   showBar(15,5,ePlotis / 2,eAukstis / 100,rumuHp,maxRumuHp,'blue','brown')
+  showBar(
+    15,
+    5,
+    ePlotis / 2,
+    eAukstis / 100,
+    rumuHp,
+    maxRumuHp,
+    "blue",
+    "brown"
+  );
 
-   showBar(15,7,ePlotis / 2,eAukstis / 100,leftVaveHp,vaveHp,'orange','brown')
+  showBar(
+    15,
+    7,
+    ePlotis / 2,
+    eAukstis / 100,
+    leftVaveHp,
+    vaveHp,
+    "orange",
+    "brown"
+  );
 
-  if (debugScrean || rodytiFps){
-   
-      if (timestamp - fpsLastUpdate > 1000) {
-    currentFps = fpsCounter;
-    fpsCounter = 0;
-    fpsLastUpdate = timestamp;
-}
-    ctx.fillText(`FPS: ${currentFps}`, 20, eAukstis-50);
+  if (debugScrean || rodytiFps) {
+    if (timestamp - fpsLastUpdate > 1000) {
+      currentFps = fpsCounter;
+      fpsCounter = 0;
+      fpsLastUpdate = timestamp;
+    }
+    ctx.fillText(`FPS: ${currentFps}`, 20, eAukstis - 50);
   }
 
   if (debugScrean) {
@@ -233,5 +240,4 @@ priesai = priesai.filter(priesas => !(priesas.mires));
   }
   requestAnimationFrame(animate);
 }
-animate()
-// requestAnimationFrame(animate);
+animate();
