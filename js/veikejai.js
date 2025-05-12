@@ -3,7 +3,7 @@ class veikejas {
     this.x = x;
     this.y = y;
     this.data = data;
-    this.jega = this.data.extraData?.damigeUp?? this.data.jega 
+    this.jega = this.data.extraData?.damigeUp + this.data.jega?? this.data.jega 
     this.givybesStart = data.givybes?? 100;
     this.dydis = data.dydis;
     this.greitis = data.greitis;
@@ -192,8 +192,8 @@ class Sovinys {
     this.g = 0.1;
     this.priesas = suzeikPriesa(taikinis);
 
-    const dx = this.priesas.x - x1;
-    const dy = this.priesas.y - y1;
+    const dx = this.priesas?.x - x1?? 50;
+    const dy = this.priesas?.y - y1??70;
     const dist = Math.sqrt(dx * dx + dy * dy) || 1;
 
     this.kryptisX = dx / dist;
