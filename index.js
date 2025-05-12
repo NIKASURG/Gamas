@@ -171,7 +171,7 @@ function animate(timestamp) {
         homeSqueres[i].y,
         homeSqueres[i].plotis,
         homeSqueres[i].aukstis,
-        [10, 10, 10, 10]
+        [5, 5, 5, 5]
       );
       ctx.stroke();
       ctx.fill();

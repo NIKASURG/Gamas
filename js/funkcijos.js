@@ -319,6 +319,8 @@ function upgrade(i){
   console.log(savasData.ownedSoligers[homeSqueres[i].ocupied].extraData.damigeUp)
   console.log(Math.round(savi[homeSqueres[i].ocupied].jega + savi[homeSqueres[i].ocupied].jega /3) )
   savasData.ownedSoligers[homeSqueres[i].ocupied].extraData.damigeUp = Math.round(savi[homeSqueres[i].ocupied].jega + savi[homeSqueres[i].ocupied].jega /5)
+  updateLangeliuVidu(i)
+  sudeliokSavus() 
 
   
 }
