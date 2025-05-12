@@ -21,6 +21,8 @@ if(savasData ==undefined){
     ownedSoligers: [
       { nr: 0, homeSquere: 8, extraData: { speedUp: 0,damigeUp:0,target: 'first' } },
       { nr: 1, homeSquere: 9, extraData: { speedUp: 0 ,damigeUp:0,target: 'first'} },
+     
+
     ],
   };
 
@@ -154,6 +156,7 @@ function animate(timestamp) {
     }
   }
   if (!bangosPradeta) {
+    canvas.style.cursor = "default";
     for (let i = 0; i < homeSqueres.length; i++) {
       ctx.save();
       blure = 0.4;
@@ -161,11 +164,14 @@ function animate(timestamp) {
 
       if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
         blure = 0.7;
+        canvas.style.cursor = "pointer";
+
         if (mouseDown && !lock) {
 
             updateLangeliuVidu(i)
         }
       }
+      
 
      
       ctx.fillStyle = "rgba(65, 65, 85, " + blure + ")";

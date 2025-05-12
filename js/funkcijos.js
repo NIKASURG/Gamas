@@ -32,6 +32,8 @@ function preskaiciokDydi() {
   Dydis = [
     [mastelis * 150, mastelis * 150],
     [mastelis * 150, mastelis * 150],
+    [mastelis * 450, mastelis * 450],
+
   ];
 }
 function generateEnemyWave(
@@ -123,7 +125,7 @@ function suzeikPriesa( taikinys) {
       priesas = priesai[Math.floor(Math.random() * priesai.length)];
       break;
     case "strongest":
-      priesas = priesai.reduce((max, p) => (p.givybes > max.givybes ? p : max));
+      priesas = priesai.reduce((max, p) => (p.givybesStart > max.givybesStart ? p : max));
       break;
     case "weakest":
       priesas = priesai.reduce((min, p) => (p.givybes < min.givybes ? p : min));

@@ -73,6 +73,21 @@ let enemes = [
     hard: 10,
     trankymoY: 15,
     trankymoXilgis: 6,
+  },{
+    greitis: 0.1,
+    img: "./img/Veikeju_sprite/Enemy/Character6.png",
+    dydis: 2,
+    spriteIlgis: 12,
+    spriteAukstis: 22,
+    spriteReikemasKadrasY: 3,
+    reikemiKadrai: 6,
+    veikejoZiurejimoPuse: -1,
+    givybes: 3000,
+    mirtiesSpriteY: 9,
+    mirtiesReikalingiX: 11,
+    hard: 400,
+    trankymoY: 15,
+    trankymoXilgis: 6,
   },
 ];
 let soligers = [
