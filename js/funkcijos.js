@@ -99,7 +99,7 @@ function loadGameState() {
     setings = gameState.setings;
   }
 }
-
+   
 loadGameState();
 function arPeleViduje(pelesX, pelesY, box) {
   return (
@@ -156,8 +156,6 @@ function sudeliokSavus() {
         )
       );
       homeSqueres[vieta].ocupied = savasData.ownedSoligers[i].nr;
-    } else {
-      // savi[savi.length - 1].pasirinktas = false;
     }
   }
 }
@@ -260,12 +258,16 @@ function nupirkti(lock,kaina,nmr){
   )
   apsipirkti()
 }
-function showBar(x = 10,y=10,i=100,a=5,hp=100,maxHp=100,collor = 'red',collorBack ='black'){
+function showBar(x = 10,y=10,i=100,a=5,hp=100,maxHp=100,collor = 'red',collorBack ='black',puse = 1){
   ctx.save()
   ctx.fillStyle = collorBack
   ctx.fillRect((x/100)*ePlotis,(y/100)*eAukstis , i+2,a+2)
   ctx.fillStyle = collor
-  ctx.fillRect((x/100)*ePlotis +1,(y/100)*eAukstis+1,(hp/maxHp)* i,a)
+  let atimtis = 0
+  if(puse == -1){
+    atimtis = i
+  }
+  ctx.fillRect((x/100)*ePlotis +1 +atimtis,(y/100)*eAukstis+1,(hp/maxHp *puse)* i ,a)
   ctx.restore()
 }
 function changeTarget(index,i){
@@ -285,6 +287,7 @@ function updateLangeliuVidu(i){
           ) {
             buttons = `<button onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
             buttons +=`<button onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${savasData.ownedSoligers[homeSqueres[i].ocupied].extraData.target}</button>`
+            buttons += `<button onclick="upgrade(${i})" >Ubgrade</button>`
           }
           for (let j = 0; j < savasData.ownedSoligers.length; j++) {
             if (
@@ -305,13 +308,11 @@ function updateLangeliuVidu(i){
                     <button onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
                     <p>selected characher</p>
                    ` +
-            `${buttons}` +
-            `
+            `${buttons}`;
+}
+function upgrade(i){
+  console.log(soligers[homeSqueres[i].ocupied])
+  console.log(savasData.ownedSoligers[homeSqueres[i].ocupied].extraData.damigeUp)
+  console.log(Math.round(savi[homeSqueres[i].ocupied].jega + savi[homeSqueres[i].ocupied].jega /3) )
 
-                    <p>Ur characters</p>
-                    <p></p>
-                    <p></p>
-
-                    
-                    `;
 }

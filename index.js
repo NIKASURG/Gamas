@@ -19,8 +19,8 @@ if(savasData ==undefined){
     coins: 0,
     rumuHp: 100,
     ownedSoligers: [
-      { nr: 0, homeSquere: 5, extraData: { speedUp: 0,damigeUp:0,target: 'first' } },
-      { nr: 1, homeSquere: 4, extraData: { speedUp: 0 ,damigeUp:0,target: 'first'} },
+      { nr: 0, homeSquere: 8, extraData: { speedUp: 0,damigeUp:0,target: 'first' } },
+      { nr: 1, homeSquere: 9, extraData: { speedUp: 0 ,damigeUp:0,target: 'first'} },
     ],
   };
 

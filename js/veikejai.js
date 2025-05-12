@@ -113,7 +113,7 @@ if(isNaN(deltaTime) ){
     if (this.givybes) {
       ctx.fillStyle = "red";
       if (this.givybes >= 0 && this.givybes != this.givybesStart) {
-        showBar(this.x  * this.veikejoZiurejimoPuse+ (ePlotis / Dydis[this.dydis][0] / 2.3) * this.veikejoZiurejimoPuse ,this.y + 3,Dydis[this.dydis][0] / 3,  eAukstis / 300,this.givybes,this.givybesStart,"red")
+        showBar(this.x  * this.veikejoZiurejimoPuse+ (ePlotis / Dydis[this.dydis][0] / 2.3) * this.veikejoZiurejimoPuse ,this.y + 3,Dydis[this.dydis][0] / 3,  eAukstis / 300,this.givybes,this.givybesStart,"red",'black',-1)
       }
       if (rodytiGivybes) {
         ctx.fillStyle = "white";
