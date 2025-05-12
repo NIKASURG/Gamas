@@ -200,7 +200,13 @@ function apsipirkti() {
     const dissable = savasData.coins < item.price
     itemDiv.innerHTML = `
                  <div class="shop-item-icon">
-                 <img src="${item.img}" alt="${item.alt}" width="40" height="40" />
+                 <img
+  src="${item.img}"
+  alt="${item.alt}"
+  width="650"
+  height="850"
+  style="position: absolute; top: 0px; left: -10px;"
+/>
                  </div>
                  <div class="shop-item-info">
                    <h3>${item.name}</h3>
