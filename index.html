@@ -16,21 +16,22 @@
       href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Poppins:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
-   <script type="module">
-  import { saveDataInFireStore, loadUserData } from "./js/fireBase.js";
+    <script type="module">
+      import { saveDataInFireStore, loadUserData } from "./js/fireBase.js";
 
-  window.saveDataInFireStore = saveDataInFireStore;
-  window.loadUserData = loadUserData;
-</script>
-
+      window.saveDataInFireStore = saveDataInFireStore;
+      window.loadUserData = loadUserData;
+    </script>
   </head>
   <body>
     <button id="nextRoundButton" class="menu-button">Next Round</button>
-    
+
     <div id="turnDeviceNotification"></div>
-    
+
     <div id="main">
-      <button id="speedUp" style="z-index: 9999999000;" class="menu-button">1X</button>
+      <button id="speedUp" style="z-index: 9999999000" class="menu-button">
+        1X
+      </button>
       <div class="scroll-container">
         <h1 class="game-title">Castle Defender</h1>
         <h2>Pre-Alpha</h2>
@@ -46,9 +47,12 @@
         </div>
         <div id="showLogout" style="display: none">
           <p>Logged in as: <span id="userEmail"></span></p>
-        <button id="laikinaiTEstuiNEpyk" onclick="saveDataInFireStore()">Save data</button>
-        <button id="laikinaiTEstuiNEpykGAl" onclick="loadUserData() ">load data</button>
-
+          <button id="laikinaiTEstuiNEpyk" onclick="saveDataInFireStore()">
+            Save data
+          </button>
+          <button id="laikinaiTEstuiNEpykGAl" onclick="loadUserData() ">
+            load data
+          </button>
 
           <button type="button" id="google-logout">Logout</button>
         </div>
@@ -72,10 +76,10 @@
             <label for="sfxVolume">SFX Volume</label>
             <input type="range" id="sfxVolume" min="0" max="100" value="80" />
           </div>
-          
+
           <div class="settings-option">
             <label for="fullscreenToggle">Auto fullscrean</label>
-            <input type="checkbox"  id="fullscreenToggle" />
+            <input type="checkbox" id="fullscreenToggle" />
           </div>
         </div>
       </div>
@@ -99,15 +103,14 @@
     </div>
 
     <!-- Shop -->
-    <div id="shopModal" class="modal" >
-      <div  class="modal-content shop-container">
+    <div id="shopModal" class="modal">
+      <div class="modal-content shop-container">
         <p id="pinigai"></p>
         <div class="shop-header-top">
           <h2 class="shop-title">Shop</h2>
           <span class="close-button shop-close" id="closeShop">&times;</span>
         </div>
-        <div id='parduotuve'></div>
-      
+        <div id="parduotuve"></div>
       </div>
     </div>
 
@@ -122,7 +125,6 @@
       </div>
     </div>
     <script>
-      
       // Shop filter functionality
       const filterButtons = document.querySelectorAll(".filter-button");
       const shopItems = document.querySelectorAll(".shop-item");
