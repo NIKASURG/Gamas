@@ -347,3 +347,6 @@ function upgrade(i) {
   sudeliokSavus(i);
   updateLangeliuVidu(i);
 }
+function arTelefonas() {
+  return /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+}

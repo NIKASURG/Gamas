@@ -147,6 +147,7 @@ function animate(timestamp) {
       console.log("lost");
     }
   }
+
   if (!bangosPradeta) {
     canvas.style.cursor = "default";
     for (let i = 0; i < homeSqueres.length; i++) {
@@ -156,8 +157,10 @@ function animate(timestamp) {
 
       if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
         blure = 0.7;
-        canvas.style.cursor = "pointer";
+        if(!arTelefonas()){
 
+          canvas.style.cursor = "pointer";
+        }
         if (mouseDown && !lock) {
           updateLangeliuVidu(i);
         }
