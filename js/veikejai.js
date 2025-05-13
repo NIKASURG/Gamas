@@ -3,7 +3,7 @@ class veikejas {
     this.x = x;
     this.y = y;
     this.data = data;
-    this.jega = this.data.jega
+    this.jega = this.data.extraData?.damigeUp + this.data.jega?? this.data.jega 
     this.givybesStart = data.givybes?? 100;
     this.dydis = data.dydis;
     this.greitis = data.greitis;
@@ -113,7 +113,7 @@ if(isNaN(deltaTime) ){
     if (this.givybes) {
       ctx.fillStyle = "red";
       if (this.givybes >= 0 && this.givybes != this.givybesStart) {
-        showBar(this.x  * this.veikejoZiurejimoPuse+ (ePlotis / Dydis[this.dydis][0] / 2.3) * this.veikejoZiurejimoPuse ,this.y + 3,Dydis[this.dydis][0] / 3,  eAukstis / 300,this.givybes,this.givybesStart,"red")
+        showBar(this.x  * this.veikejoZiurejimoPuse+ (ePlotis / Dydis[this.dydis][0] / 2.3) * this.veikejoZiurejimoPuse ,this.y + 3,Dydis[this.dydis][0] / 3,  eAukstis / 300,this.givybes,this.givybesStart,"red",'black',-1)
       }
       if (rodytiGivybes) {
         ctx.fillStyle = "white";
@@ -192,8 +192,8 @@ class Sovinys {
     this.g = 0.1;
     this.priesas = suzeikPriesa(taikinis);
 
-    const dx = this.priesas.x - x1;
-    const dy = this.priesas.y - y1;
+    const dx = this.priesas?.x - x1?? 50;
+    const dy = this.priesas?.y - y1??70;
     const dist = Math.sqrt(dx * dx + dy * dy) || 1;
 
     this.kryptisX = dx / dist;

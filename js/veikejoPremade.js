@@ -73,7 +73,7 @@ let enemes = [
     hard: 10,
     trankymoY: 15,
     trankymoXilgis: 6,
-  },
+  }
 ];
 let soligers = [
   {
@@ -159,7 +159,7 @@ pi = 3;
 ji = 5;
 
 class langeliaiNamu {
-  constructor(i, j) {
+  constructor() {
     this.x = 0;
     this.y = 0;
     this.xProc = 0;

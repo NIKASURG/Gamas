@@ -32,6 +32,8 @@ function preskaiciokDydi() {
   Dydis = [
     [mastelis * 150, mastelis * 150],
     [mastelis * 150, mastelis * 150],
+    [mastelis * 450, mastelis * 450],
+
   ];
 }
 function generateEnemyWave(
@@ -99,7 +101,7 @@ function loadGameState() {
     setings = gameState.setings;
   }
 }
-
+   
 loadGameState();
 function arPeleViduje(pelesX, pelesY, box) {
   return (
@@ -109,31 +111,34 @@ function arPeleViduje(pelesX, pelesY, box) {
     pelesY <= box.y + box.aukstis
   );
 }
-function suzeikPriesa( taikinys) {
-  if (!priesai.length) return;
+function suzeikPriesa(taikinys) {
+  const gyviPriesai = priesai.filter(p => !p.linkMirties);
+  if (!gyviPriesai.length) return;
+
   let priesas;
   switch (taikinys) {
     case "first":
-      priesas = priesai.reduce((a, b) => (a.x < b.x ? a : b));
+      priesas = gyviPriesai.reduce((a, b) => (a.x < b.x ? a : b));
       break;
     case "last":
-      priesas = priesai.reduce((a, b) => (a.x > b.x ? a : b));
+      priesas = gyviPriesai.reduce((a, b) => (a.x > b.x ? a : b));
       break;
     case "random":
-      priesas = priesai[Math.floor(Math.random() * priesai.length)];
+      priesas = gyviPriesai[Math.floor(Math.random() * gyviPriesai.length)];
       break;
     case "strongest":
-      priesas = priesai.reduce((max, p) => (p.givybes > max.givybes ? p : max));
+      priesas = gyviPriesai.reduce((max, p) => (p.givybesStart > max.givybesStart ? p : max));
       break;
     case "weakest":
-      priesas = priesai.reduce((min, p) => (p.givybes < min.givybes ? p : min));
+      priesas = gyviPriesai.reduce((min, p) => (p.givybes < min.givybes ? p : min));
       break;
     default:
       return;
   }
-  // console.log(priesas);
+
   return priesas;
 }
+
 function removeCharacter(i) {
   const nr = homeSqueres[i].ocupied;
   if (nr !== null) {
@@ -156,8 +161,6 @@ function sudeliokSavus() {
         )
       );
       homeSqueres[vieta].ocupied = savasData.ownedSoligers[i].nr;
-    } else {
-      // savi[savi.length - 1].pasirinktas = false;
     }
   }
 }
@@ -200,7 +203,13 @@ function apsipirkti() {
     const dissable = savasData.coins < item.price
     itemDiv.innerHTML = `
                  <div class="shop-item-icon">
-                 <img src="${item.img}" alt="${item.alt}" width="40" height="40" />
+                 <img
+  src="${item.img}"
+  alt="${item.alt}"
+  width="650"
+  height="850"
+  style="position: absolute; top: 0px; left: -10px;"
+/>
                  </div>
                  <div class="shop-item-info">
                    <h3>${item.name}</h3>
@@ -254,12 +263,16 @@ function nupirkti(lock,kaina,nmr){
   )
   apsipirkti()
 }
-function showBar(x = 10,y=10,i=100,a=5,hp=100,maxHp=100,collor = 'red',collorBack ='black'){
+function showBar(x = 10,y=10,i=100,a=5,hp=100,maxHp=100,collor = 'red',collorBack ='black',puse = 1){
   ctx.save()
   ctx.fillStyle = collorBack
   ctx.fillRect((x/100)*ePlotis,(y/100)*eAukstis , i+2,a+2)
   ctx.fillStyle = collor
-  ctx.fillRect((x/100)*ePlotis +1,(y/100)*eAukstis+1,(hp/maxHp)* i,a)
+  let atimtis = 0
+  if(puse == -1){
+    atimtis = i
+  }
+  ctx.fillRect((x/100)*ePlotis +1 +atimtis,(y/100)*eAukstis+1,(hp/maxHp *puse)* i ,a)
   ctx.restore()
 }
 function changeTarget(index,i){
@@ -277,8 +290,15 @@ function updateLangeliuVidu(i){
             homeSqueres[i].ocupied !== null &&
             homeSqueres[i].ocupied !== undefined
           ) {
+            const elementas = savi[savi.findIndex(itm => itm.data.nr ===homeSqueres[i].ocupied)]
+         
+            const locked = Math.round(elementas.jega + elementas.jega /3) > savasData.coins
+            const elementasPagalSavus = savasData.ownedSoligers[savasData.ownedSoligers.findIndex(itm =>itm.nr ===homeSqueres[i].ocupied)]
             buttons = `<button onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
-            buttons +=`<button onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${savasData.ownedSoligers[homeSqueres[i].ocupied].extraData.target}</button>`
+            buttons +=`<button onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${elementasPagalSavus.extraData.target}</button>`
+            buttons += `<p>Upgrade</p>`
+            buttons += `<button  ${locked   ? "disabled" : ""} onclick="upgrade(${i})" >Price: ${Math.round(elementas.jega + elementas.jega /3)}</button>`
+            buttons += `<p>Power: ${elementas.jega} <p style="color: green;">+5</p></p>`
           }
           for (let j = 0; j < savasData.ownedSoligers.length; j++) {
             if (
@@ -299,13 +319,31 @@ function updateLangeliuVidu(i){
                     <button onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
                     <p>selected characher</p>
                    ` +
-            `${buttons}` +
-            `
+            `${buttons}`;
+}
+function upgrade(i) {
+  if (typeof i !== "number" || i < 0 || i >= homeSqueres.length) return;
 
-                    <p>Ur characters</p>
-                    <p></p>
-                    <p></p>
+  const unitIndex = homeSqueres[i].ocupied;
 
-                    
-                    `;
+  if (typeof unitIndex !== "number" || unitIndex < 0 || unitIndex >= savasData.ownedSoligers.length) return;
+
+  if (savasData.ownedSoligers[unitIndex].homeSquere !== i) {
+    console.warn("Bandymas prieiti prie ne savo langelio!");
+    return;
+  }
+
+  const unit = savi[unitIndex];
+  const price = Math.round(unit.jega + unit.jega / 3);
+
+  if (price > savasData.coins) {
+    console.log("Nepakanka coinų");
+    return;
+  }
+
+  savasData.ownedSoligers[unitIndex].extraData.damigeUp += 5;
+  savasData.coins -= price;
+
+  sudeliokSavus(i);
+  updateLangeliuVidu(i);
 }
