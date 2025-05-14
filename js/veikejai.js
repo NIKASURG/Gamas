@@ -136,7 +136,7 @@ if(isNaN(deltaTime) ){
   }
 
   judeti() {
-    if (this.x > 25) {
+    if (this.x > 31.2) {
       this.x += (this.greitis * this.veikejoZiurejimoPuse * deltaTime) / 20;
     } else {
       this.trankyk = true;
