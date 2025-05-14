@@ -569,19 +569,19 @@ button {
   z-index: 9999;
   pointer-events: none;
 }
-#container {
+/* #container {
   background-color: rgb(58, 41, 33);
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  /* width: 80%; */
-  /* height: 80%; */
-  /* background-color: white; */
+  transform: translate(-50%, -53.5%);
+  width: 80%;
+  height: 80%;
+  background-color: white;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
-}
+} */
 .komanduKonteineris {
   display: flex;
   align-items: center;
@@ -677,9 +677,9 @@ button:disabled {
   background: #b9935d;
   transform: translateX(-50%) scale(1.07);
 }
-#container {
+/* #container {
   position: relative;
-}
+} */
 button:disabled {
   background-color: #aaa;
   cursor: not-allowed;
