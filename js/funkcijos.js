@@ -212,8 +212,8 @@ function apsipirkti() {
 />
                  </div>
                  <div class="shop-item-info">
-                   <h3>${item.name}</h3>
-                   <p>Power:${item.jega}</p>
+                 <h3>${item.name}</h3>
+                 <p>Power:${item.jega}</p>
                    <p>Shoting speed:${item.saudimoGreitis}</p>
 
                  </div>
