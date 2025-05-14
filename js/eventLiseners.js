@@ -146,3 +146,7 @@ document.getElementById('speedUp').addEventListener('click',() =>{
 
   }
 })
+document.getElementById('upgradeCastleButton').addEventListener('click' ,()=>{
+  savasData.rumuHp +=savasData.rumuHp /10
+  console.log('llllll')
+})
