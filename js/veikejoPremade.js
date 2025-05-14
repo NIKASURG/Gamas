@@ -157,7 +157,7 @@ soligers.forEach((soldier, index) => {
 
 pi = 3;
 ji = 5;
-
+const langeliuKordinates = []
 class langeliaiNamu {
   constructor() {
     this.x = 0;

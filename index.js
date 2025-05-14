@@ -5,6 +5,8 @@ let savi = [];
 let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
 let lock = true;
+let pilisImg = new Image();
+pilisImg.src = 'img/castle_no_background.png'
 // ctx.translate(0, 0);
 let targetOptions = ["first", "strongest", "weakest", "random", "last"];
 //  rarity pasirinkimai "legendary", "rare",,"common"
@@ -105,6 +107,7 @@ function animate(timestamp) {
     streles[i].animuok();
   }
   streles = streles.filter((str) => !(str.y > 100 || str.mirus));
+  ctx.drawImage(pilisImg,(2/100)*ePlotis,(10.3/100)*ePlotis,ePlotis/3,ePlotis/2);
   if (bangosPradeta && waweLaikas > ran() * 25 + 25) {
     for (let i = 0; i < ran() * 10; i++) {
       if (waweImamas < waweEnemesCombination.length) {
@@ -205,7 +208,6 @@ function animate(timestamp) {
   );
   piniguDezute.innerHTML = "Your coins: " + savasData.coins;
   ctx.fillStyle = "black";
-
   showBar(
     15,
     5,
