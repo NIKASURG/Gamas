@@ -7,6 +7,8 @@ let selectCharacter = document.getElementById("selectCharacter");
 let lock = true;
 let pilisImg = new Image();
 pilisImg.src = 'img/castle_no_background.png'
+let zolesImg = new Image();
+zolesImg.src = 'img/atsisiųsti.png'
 // ctx.translate(0, 0);
 let targetOptions = ["first", "strongest", "weakest", "random", "last"];
 //  rarity pasirinkimai "legendary", "rare",,"common"
@@ -229,7 +231,11 @@ function animate(timestamp) {
     "orange",
     "brown"
   );
+  ctx.drawImage(zolesImg  ,ePlotis/3*2,(90/100) *eAukstis,ePlotis/2.7,eAukstis/18)
 
+  ctx.drawImage(zolesImg  ,ePlotis/3,(90/100) *eAukstis,ePlotis/2.7,eAukstis/18)
+
+  ctx.drawImage(zolesImg  ,-10,(90/100) *eAukstis,ePlotis/2.7,eAukstis/18)
   if (debugScrean || rodytiFps) {
     if (timestamp - fpsLastUpdate > 1000) {
       currentFps = fpsCounter;

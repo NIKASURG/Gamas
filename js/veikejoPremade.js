@@ -156,8 +156,11 @@ soligers.forEach((soldier, index) => {
 });
 
 pi = 3;
-ji = 5;
-const langeliuKordinates = []
+ji = 6;
+
+
+
+const langeliuCords =[[4,84],[10,84],[16,84],[22,84],[28 ,84],[7,72],[13,72],[19,72],[25,72],[8,60],[16,62],[24,60],[11,50],[21,50],[16,40]]
 class langeliaiNamu {
   constructor() {
     this.x = 0;
@@ -169,29 +172,30 @@ class langeliaiNamu {
     this.ocupied = null;
   }
   update(i, j) {
-    this.x = ((i * 6 + 10) / 100) * ePlotis;
-    this.y = ((100 - j * 10 - 18) / 100) * eAukstis;
-    this.xProc = i * 6 + 9.3;
-    this.yProc = 100 - j * 10 - 20;
+    this.x = (i/100) * ePlotis;
+    this.y = (j/100) * eAukstis;
+    this.xProc = i -0.7;
+    this.yProc = j -1.5;
     this.plotis = (5 / 100) * ePlotis;
     this.aukstis = (5 / 100) * ePlotis;
   }
 }
 let homeSqueres = [];
 
-for (let i = 0; i < pi; i++) {
-  for (let j = 0; j < ji; j++) {
-    homeSqueres.push(new langeliaiNamu(i, j));
-  }
-}
+langeliuCords.forEach(e => {
+  
+  homeSqueres.push(new langeliaiNamu());
+});
+  
+
 
 function setHomeSqueres() {
-  laik = 0;
-  for (let i = 0; i < pi; i++) {
-    for (let j = 0; j < ji; j++) {
-      homeSqueres[laik].update(i, j);
-      laik++;
-    }
+  // let  laik = 0;
+  for (let i = 0; i < homeSqueres.length; i++) {
+    const element = homeSqueres[i];
+    element.update(langeliuCords[i][0],langeliuCords[i][1])
   }
+  
+ 
 }
 setHomeSqueres();
