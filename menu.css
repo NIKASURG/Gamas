@@ -1,0 +1,160 @@
+/* Menu button in game */
+#menuButton {
+  position: fixed;
+  top: 3%;
+  left: 3%;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  z-index: 30;
+  background-color: #8b4513;
+  color: #ffd700;
+  border: 2px solid #d4a76a;
+  border-radius: 0;
+  font-weight: bold;
+}
+
+.menu-button {
+  background: #d4a76a;
+  border: 2px solid #8b4513;
+  color: #3a2921;
+  padding: 8px 16px;
+  margin: 8px 0;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  width: 30%;
+  max-width: 160px;
+  text-align: center;
+  font-family: "MedievalSharp", cursive;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu-button:hover {
+  background: #c69c6d;
+  transform: scale(1.05);
+}
+
+.menu-button:active {
+  transform: scale(0.98);
+}
+
+/* Character selection modal styles */
+#selectCharacter {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  max-width: 420px;
+  min-width: 220px;
+  max-height: 60vh;
+  min-height: 120px;
+  overflow-y: auto;
+  background: #fff8e1;
+  border: 3px solid #8b4513;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  z-index: 1001;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 18px 12px 18px;
+  font-family: "Poppins", "MedievalSharp", cursive;
+}
+
+#selectCharacter .char-photo {
+  width: 38px;
+  height: 38px;
+  background: #e8d3b1;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
+}
+#selectCharacter .char-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+#selectCharacter p {
+  margin: 2px 0 0 0;
+  font-size: 0.92rem;
+  color: #3a2921;
+  font-family: "Poppins", "MedievalSharp", cursive;
+}
+
+#selectCharacter .power {
+  font-size: 0.93rem;
+  color: #2e7d32;
+  margin-top: 0;
+  font-weight: 600;
+}
+
+#selectCharacter button,
+#selectCharacter .remove_char,
+#selectCharacter .change_targ,
+#selectCharacter .upgrade {
+  background: #d4a76a;
+  border: 2px solid #8b4513;
+  color: #3a2921;
+  padding: 4px 6px;
+  margin: 2px 1px;
+  font-size: 0.89rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "MedievalSharp", cursive;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
+  transition: all 0.18s;
+}
+#selectCharacter button:hover,
+#selectCharacter .remove_char:hover,
+#selectCharacter .change_targ:hover,
+#selectCharacter .upgrade:hover {
+  background: #c69c6d;
+  transform: scale(1.03);
+}
+#selectCharacter button:active,
+#selectCharacter .remove_char:active,
+#selectCharacter .change_targ:active,
+#selectCharacter .upgrade:active {
+  transform: scale(0.97);
+}
+
+#selectCharacter .upgrade {
+  background: #ffd700;
+  color: #8b4513;
+  border: 2px solid #8b4513;
+  font-weight: bold;
+}
+#selectCharacter .upgrade:disabled {
+  background: #e0c97a;
+  color: #b1a05a;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  #selectCharacter {
+    max-width: 98vw;
+    width: 97vw;
+    min-width: 0;
+    max-height: 55vh;
+    padding: 8px 2vw 8px 2vw;
+  }
+  #selectCharacter .char-photo {
+    width: 28px;
+    height: 28px;
+  }
+  #selectCharacter button {
+    font-size: 0.78rem;
+    padding: 2px 3px;
+  }
+}
