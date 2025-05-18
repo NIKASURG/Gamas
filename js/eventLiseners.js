@@ -1,4 +1,3 @@
-
 window.addEventListener("resize", updateCanvas);
 window.addEventListener("orientationchange", updateCanvas);
 document.addEventListener("fullscreenchange", updateCanvas);
@@ -21,10 +20,8 @@ window.addEventListener("keydown", function (event) {
     } else {
       document.getElementById("debugScrean").style.display = "none";
     }
-  input.focus();
-
+    input.focus();
   }
-  
 });
 
 document.getElementById("playButton").addEventListener("click", function () {
@@ -35,7 +32,7 @@ document.getElementById("playButton").addEventListener("click", function () {
   if (setings.autoFullScrean) {
     openFullscreen();
   }
-    pause =false
+  pause = false;
 
   if (lock) {
     lock = false;
@@ -70,11 +67,10 @@ canvas.addEventListener("mousedown", function (e) {
   }
 });
 
-document.getElementById("shopButton").addEventListener("click", ()=>{
-
+document.getElementById("shopButton").addEventListener("click", () => {
   document.getElementById("shopModal").style.display = "flex";
-  document.getElementById("parduotuve").innerHTML = ''
-    apsipirkti()
+  document.getElementById("parduotuve").innerHTML = "";
+  apsipirkti();
 });
 document
   .getElementById("settingsButton")
@@ -125,6 +121,7 @@ document.getElementById("menuButton").addEventListener("click", function () {
   document.getElementById("container").style.opacity = "0";
 
   // Hide the Next Round button specifically
+  nextRoundButton.style.display = "none";
 
   setTimeout(function () {
     document.getElementById("container").style.zIndex = "5";
@@ -134,19 +131,16 @@ document.getElementById("menuButton").addEventListener("click", function () {
 document.getElementById("closeShop").addEventListener("click", function () {
   document.getElementById("shopModal").style.display = "none";
 });
-document.getElementById('speedUp').addEventListener('click',() =>{
-  if(speedUp ===1){
-    speedUp = 2
-    document.getElementById('speedUp').innerHTML = '2X'
-
+document.getElementById("speedUp").addEventListener("click", () => {
+  if (speedUp === 1) {
+    speedUp = 2;
+    document.getElementById("speedUp").innerHTML = "2X";
+  } else if (speedUp === 2) {
+    speedUp = 1;
+    document.getElementById("speedUp").innerHTML = "1X";
   }
-  else if(speedUp === 2){
-     speedUp = 1
-    document.getElementById('speedUp').innerHTML = '1X'
-
-  }
-})
-document.getElementById('upgradeCastleButton').addEventListener('click' ,()=>{
-  savasData.rumuHp +=savasData.rumuHp /10
-  console.log('llllll')
-})
+});
+document.getElementById("upgradeCastleButton").addEventListener("click", () => {
+  savasData.rumuHp += savasData.rumuHp / 10;
+  console.log("llllll");
+});

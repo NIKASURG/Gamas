@@ -40,42 +40,42 @@
   transform: scale(0.98);
 }
 
-/* Character selection modal styles */
 #selectCharacter {
   position: fixed;
-  top: 10%;
-  left: 50%;
+  top: 15%;
+  left: 25%;
   transform: translateX(-50%);
-  width: 80vw;
-  max-width: 420px;
+  width: 70%;
+  max-width: 380px;
   min-width: 220px;
-  max-height: 60vh;
+  max-height: 55vh;
   min-height: 120px;
   overflow-y: auto;
-  background: #fff8e1;
-  border: 3px solid #8b4513;
-  border-radius: 14px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  background: #6b5a51
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="50" height="50" fill="%23584a43" /><rect x="50" y="50" width="50" height="50" fill="%23584a43" /></svg>');
+  border: 6px solid #3a2921;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.3);
   z-index: 1001;
   display: none;
   flex-direction: column;
   align-items: center;
-  padding: 12px 18px 12px 18px;
+  padding: 15px 20px;
   font-family: "Poppins", "MedievalSharp", cursive;
 }
 
 #selectCharacter .char-photo {
   width: 38px;
   height: 38px;
-  background: #e8d3b1;
-  border: 2px solid #8b4513;
-  border-radius: 8px;
-  margin-bottom: 2px;
+  background: #3a2921;
+  border: 3px solid #d4a76a;
+  border-radius: 6px;
+  margin-bottom: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 0 3px rgba(0, 0, 0, 0.5);
 }
 #selectCharacter .char-photo img {
   width: 100%;
@@ -87,15 +87,17 @@
 #selectCharacter p {
   margin: 2px 0 0 0;
   font-size: 0.92rem;
-  color: #3a2921;
+  color: #d4a76a;
   font-family: "Poppins", "MedievalSharp", cursive;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 #selectCharacter .power {
   font-size: 0.93rem;
-  color: #2e7d32;
+  color: #ffd700;
   margin-top: 0;
   font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 #selectCharacter button,
@@ -103,58 +105,92 @@
 #selectCharacter .change_targ,
 #selectCharacter .upgrade {
   background: #d4a76a;
-  border: 2px solid #8b4513;
+  border: 2px solid #3a2921;
   color: #3a2921;
-  padding: 4px 6px;
-  margin: 2px 1px;
+  padding: 4px 8px;
+  margin: 3px 2px;
   font-size: 0.89rem;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
   font-family: "MedievalSharp", cursive;
   font-weight: 600;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
-  transition: all 0.18s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
 }
 #selectCharacter button:hover,
 #selectCharacter .remove_char:hover,
 #selectCharacter .change_targ:hover,
 #selectCharacter .upgrade:hover {
   background: #c69c6d;
-  transform: scale(1.03);
+  transform: scale(1.05);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  border-color: #2a1a12;
 }
 #selectCharacter button:active,
 #selectCharacter .remove_char:active,
 #selectCharacter .change_targ:active,
 #selectCharacter .upgrade:active {
-  transform: scale(0.97);
+  transform: scale(0.95);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 #selectCharacter .upgrade {
   background: #ffd700;
-  color: #8b4513;
-  border: 2px solid #8b4513;
+  color: #3a2921;
+  border: 2px solid #3a2921;
   font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 4px rgba(255, 215, 0, 0.5);
 }
 #selectCharacter .upgrade:disabled {
-  background: #e0c97a;
-  color: #b1a05a;
+  background: #a89a68;
+  color: #6a5c3d;
+  border-color: #3a2921;
   cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Responsive design for different screen sizes */
+@media (max-width: 1200px) {
+  #selectCharacter {
+    left: 20%;
+  }
+}
+
+@media (max-width: 900px) {
+  #selectCharacter {
+    left: 30%;
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 768px) {
+  #selectCharacter {
+    left: 40%;
+    max-width: 350px;
+  }
 }
 
 @media (max-width: 600px) {
   #selectCharacter {
-    max-width: 98vw;
-    width: 97vw;
+    left: 50%;
+    max-width: 85vw;
+    width: 85vw;
     min-width: 0;
-    max-height: 55vh;
-    padding: 8px 2vw 8px 2vw;
+    max-height: 50vh;
+    padding: 12px 3vw;
+    border-width: 4px;
   }
   #selectCharacter .char-photo {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
+    border-width: 2px;
   }
-  #selectCharacter button {
-    font-size: 0.78rem;
-    padding: 2px 3px;
+  #selectCharacter button,
+  #selectCharacter .remove_char,
+  #selectCharacter .change_targ,
+  #selectCharacter .upgrade {
+    font-size: 0.8rem;
+    padding: 4px 6px;
+    margin: 2px 1px;
   }
 }

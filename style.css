@@ -1,4 +1,3 @@
-/* Reset and base styles */
 * {
   margin: 0;
   padding: 0;
@@ -8,8 +7,8 @@
 html,
 body {
   font-family: "Poppins", sans-serif;
-  background: #2c1b0e; /* Dark brown background */
-  color: #3a2921; /* Dark text color for scroll */
+  background: #2c1b0e;
+  color: #3a2921;
   height: 100%;
   width: 100%;
   margin: 0;
@@ -21,7 +20,7 @@ body {
   bottom: 2%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000; /* Use a high value to ensure it's on top */
+  z-index: 1000;
 }
 /* Main intro screen */
 #main {
@@ -36,15 +35,15 @@ body {
   top: 0;
   left: 0;
   z-index: 10;
-  background: #2c1b0e; /* Dark brown background */
+  background: #2c1b0e;
   transition: opacity 0.5s ease-in-out;
 }
 
 .scroll-container {
   max-width: 600px;
   width: 90%;
-  background: #d4a76a; /* Light brown background as fallback */
-  border: 8px solid #8b4513; /* Brown border */
+  background: #d4a76a;
+  border: 8px solid #8b4513;
   border-radius: 10px;
   position: relative;
   padding: 8% 5%;
@@ -54,42 +53,15 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  margin: 0 auto; /* Center horizontally */
+  margin: 0 auto;
 }
 
 .game-title {
   font-family: "MedievalSharp", cursive;
   font-size: 3.5rem;
   margin-bottom: 2rem;
-  color: #8b0000; /* Dark red */
+  color: #8b0000;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.menu-button {
-  background: #d4a76a; /* Light brown */
-  border: 2px solid #8b4513; /* Saddle brown border */
-  color: #3a2921;
-  padding: 8px 16px;
-  margin: 8px 0;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  width: 30%;
-  max-width: 160px;
-  text-align: center;
-  font-family: "MedievalSharp", cursive;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.menu-button:hover {
-  background: #c69c6d;
-  transform: scale(1.05);
-}
-
-.menu-button:active {
-  transform: scale(0.98);
 }
 
 /* Game container */
@@ -105,7 +77,7 @@ body {
   /* opacity: 0; */
   transition: opacity 0.5s ease-in-out;
   z-index: 5;
-  background: transparent; /* Change from brown to transparent */
+  background: transparent;
 }
 
 /* canvas {
@@ -135,20 +107,7 @@ button {
   z-index: 20;
 }
 
-/* Menu button in game */
-#menuButton {
-  position: fixed;
-  top: 3%;
-  left: 3%;
-  padding: 6px 12px;
-  font-size: 0.9rem;
-  z-index: 30;
-  background-color: #8b4513;
-  color: #ffd700;
-  border: 2px solid #d4a76a;
-  border-radius: 0;
-  font-weight: bold;
-}
+/* Menu button styles are defined in menu.css */
 
 /* Style for the Next Round button specifically */
 #nextRound {
@@ -175,14 +134,7 @@ button {
   transform: translateX(-50%) scale(0.98);
 }
 
-.menu-button:hover {
-  background: #c69c6d;
-  transform: scale(1.05);
-}
-
-.menu-button:active {
-  transform: scale(0.98);
-}
+/* Menu button hover/active styles are defined in menu.css */
 /* Device rotation notification */
 #turnDeviceNotification {
   position: fixed;
@@ -211,8 +163,8 @@ button {
 }
 
 .modal-content {
-  background: #d4a76a; /* Light brown background as fallback */
-  border: 8px solid #8b4513; /* Brown border */
+  background: #d4a76a;
+  border: 8px solid #8b4513;
   border-radius: 10px;
   padding: 5% 4%;
   width: 80%;
@@ -221,17 +173,33 @@ button {
   overflow-y: auto;
   position: relative;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  color: #3a2921; /* Dark text color */
+  color: #3a2921;
 }
 
 .close-button {
   position: absolute;
   top: 5%;
   right: 5%;
-  font-size: 1.5rem;
+  background-color: #8b4513;
+  border: 2px solid #d4a76a;
+  color: #ffd700;
+  font-size: 1.8rem;
   cursor: pointer;
-  color: #8b0000;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   font-weight: bold;
+}
+
+.close-button:hover {
+  background-color: #5d2906;
+  transform: scale(1.05);
 }
 
 #debugScrean {
@@ -319,10 +287,17 @@ body {
   width: 90%;
   max-width: 800px;
   height: 80%;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: #2a1708;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a76a' fill-opacity='0.3'%3E%3Cpath d='M0 0h15v15H0V0zm15 0h15v15H15V0zm30 0h15v15H45V0zm15 15h15v15H60V15zM0 15h15v15H0V15zm30 0h15v15H30V15zm15 0h15v15H45V15zM0 30h15v15H0V30zm15 0h15v15H15V30zm15 0h15v15H30V30zm30 0h15v15H60V30zM0 45h15v15H0V45zm30 0h15v15H30V45zm15 0h15v15H45V45zm15 0h15v15H60V45zM15 15h15v15H15V15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  border: 10px solid #8b4513;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.4);
   overflow-y: auto;
+  padding: 20px;
+  color: #f0c088;
+  font-family: "MedievalSharp", cursive;
+  scrollbar-width: thin;
+  scrollbar-color: #8b4513 #2a1708;
 }
 button:disabled {
   background-color: #aaa;
@@ -348,9 +323,7 @@ button:disabled {
   background: #b9935d;
   transform: translateX(-50%) scale(1.07);
 }
-/* #container {
-  position: relative;
-} */
+
 button:disabled {
   background-color: #aaa;
   cursor: not-allowed;
@@ -359,6 +332,12 @@ button:disabled {
 
 .char_selection {
   background-color: #3a1f0d;
+  background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23d4a76a' fill-opacity='0.4'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  border: 4px solid #8b4513;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 #upgradeCastle {
   background-color: #c9682875;
