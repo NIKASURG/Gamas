@@ -1,34 +1,17 @@
-/* Menu button in game */
 #menuButton {
   position: fixed;
   top: 3%;
   left: 3%;
-  padding: 6px 12px;
-  font-size: 0.9rem;
   z-index: 30;
-  background-color: #8b4513;
-  color: #ffd700;
-  border: 2px solid #d4a76a;
-  border-radius: 0;
-  font-weight: bold;
-}
-
-.menu-button {
-  background: #d4a76a;
+  width: 90px;
+  max-width: 120px;
+  background-color: #d4a76a;
+  color: #463828;
   border: 2px solid #8b4513;
-  color: #3a2921;
-  padding: 8px 16px;
-  margin: 8px 0;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  width: 30%;
-  max-width: 160px;
-  text-align: center;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 1.1rem;
   font-family: "MedievalSharp", cursive;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .menu-button:hover {
@@ -38,30 +21,6 @@
 
 .menu-button:active {
   transform: scale(0.98);
-}
-
-#selectCharacter {
-  position: fixed;
-  top: 15%;
-  left: 25%;
-  transform: translateX(-50%);
-  width: 70%;
-  max-width: 380px;
-  min-width: 220px;
-  max-height: 55vh;
-  min-height: 120px;
-  overflow-y: auto;
-  background: #6b5a51
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="50" height="50" fill="%23584a43" /><rect x="50" y="50" width="50" height="50" fill="%23584a43" /></svg>');
-  border: 6px solid #3a2921;
-  border-radius: 8px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.3);
-  z-index: 1001;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  padding: 15px 20px;
-  font-family: "Poppins", "MedievalSharp", cursive;
 }
 
 #selectCharacter .char-photo {

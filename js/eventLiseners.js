@@ -34,6 +34,14 @@ document.getElementById("playButton").addEventListener("click", function () {
   }
   pause = false;
 
+  // Hide the main menu and show the game container
+  document.getElementById("main").style.opacity = "0";
+  setTimeout(() => {
+    document.getElementById("main").style.display = "none";
+    document.body.classList.add("game-active");
+    document.getElementById("container").style.display = "flex";
+  }, 500);
+
   if (lock) {
     lock = false;
   }

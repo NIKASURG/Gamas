@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="shop.css" />
     <link rel="stylesheet" href="menu.css" />
     <link rel="stylesheet" href="settings.css" />
-
-    <!-- <link rel="manifest" href="manifest.json" /> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -31,7 +29,7 @@
     <button id="nextRoundButton" class="menu-button">Next Round</button>
 
     <div id="turnDeviceNotification"></div>
-   
+
     <div id="main">
       <div class="scroll-container">
         <h1 class="game-title">Castle Defender</h1>
@@ -62,9 +60,6 @@
 
     <!-- Character Selection -->
     <div class="char_selection" id="selectCharacter"></div>
-
-    <!-- Game Over -->
-    <div class="game_over" id="gameOver"></div>
 
     <!-- Settings -->
     <div id="settingsModal" class="modal">
@@ -122,11 +117,11 @@
       <button id="menuButton">Menu</button>
       <button id="shopButton">Shop</button>
       <button id="speedUp" class="menu-button">1X</button>
-       <div  id="upgradeCastle">
+      <div id="upgradeCastle">
         <p>Upgrade Castle</p>
         <p>Price: IDK</p>
-      <button id="upgradeCastleButton" ></button>
-    </div>
+        <button id="upgradeCastleButton"></button>
+      </div>
       <canvas id="canvas"> </canvas>
     </div>
     <div id="debugScrean" style="display: none">
@@ -134,7 +129,6 @@
         <input type="text" id="komandos" placeholder="Komandos" />
       </div>
     </div>
-    <div></div>
     <script>
       // Shop filter functionality
       const filterButtons = document.querySelectorAll(".filter-button");
