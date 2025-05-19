@@ -33,7 +33,6 @@ function preskaiciokDydi() {
     [mastelis * 150, mastelis * 150],
     [mastelis * 150, mastelis * 150],
     [mastelis * 450, mastelis * 450],
-
   ];
 }
 function generateEnemyWave(
@@ -101,7 +100,7 @@ function loadGameState() {
     setings = gameState.setings;
   }
 }
-   
+
 loadGameState();
 function arPeleViduje(pelesX, pelesY, box) {
   return (
@@ -112,7 +111,7 @@ function arPeleViduje(pelesX, pelesY, box) {
   );
 }
 function suzeikPriesa(taikinys) {
-  const gyviPriesai = priesai.filter(p => !p.linkMirties);
+  const gyviPriesai = priesai.filter((p) => !p.linkMirties);
   if (!gyviPriesai.length) return;
 
   let priesas;
@@ -127,10 +126,14 @@ function suzeikPriesa(taikinys) {
       priesas = gyviPriesai[Math.floor(Math.random() * gyviPriesai.length)];
       break;
     case "strongest":
-      priesas = gyviPriesai.reduce((max, p) => (p.givybesStart > max.givybesStart ? p : max));
+      priesas = gyviPriesai.reduce((max, p) =>
+        p.givybesStart > max.givybesStart ? p : max
+      );
       break;
     case "weakest":
-      priesas = gyviPriesai.reduce((min, p) => (p.givybes < min.givybes ? p : min));
+      priesas = gyviPriesai.reduce((min, p) =>
+        p.givybes < min.givybes ? p : min
+      );
       break;
     default:
       return;
@@ -149,15 +152,18 @@ function removeCharacter(i) {
 }
 function sudeliokSavus() {
   savi = [];
-  console.log(savasData)
+  console.log(savasData);
   for (let i = 0; i < savasData.ownedSoligers.length; i++) {
     vieta = savasData.ownedSoligers[i].homeSquere;
     if (vieta != null) {
       savi.push(
         new veikejas(
-          {...soligers[savasData.ownedSoligers[i].nr] ,...savasData.ownedSoligers[i]},
+          {
+            ...soligers[savasData.ownedSoligers[i].nr],
+            ...savasData.ownedSoligers[i],
+          },
           homeSqueres[vieta].xProc - homeSqueres[vieta].plotis / 100,
-          homeSqueres[vieta].yProc - homeSqueres[vieta].aukstis / 100,
+          homeSqueres[vieta].yProc - homeSqueres[vieta].aukstis / 100
         )
       );
       homeSqueres[vieta].ocupied = savasData.ownedSoligers[i].nr;
@@ -166,7 +172,7 @@ function sudeliokSavus() {
 }
 
 function openFullscreen() {
-  console.log('test')
+  console.log("test");
   if (document.documentElement.requestFullscreen) {
     document.documentElement.requestFullscreen();
   } else if (document.documentElement.webkitRequestFullscreen) {
@@ -177,30 +183,28 @@ function openFullscreen() {
     document.documentElement.msRequestFullscreen();
   }
 }
-function apskaiciokWaveHp(){
-  leftVaveHp = 0
+function apskaiciokWaveHp() {
+  leftVaveHp = 0;
   for (let i = 0; i < waweEnemesCombination.length; i++) {
     let hardReiksme = waweEnemesCombination[i];
-    let priesas = enemes.find(e => e.hard === hardReiksme);
+    let priesas = enemes.find((e) => e.hard === hardReiksme);
 
-    leftVaveHp += priesas.givybes;;
+    leftVaveHp += priesas.givybes;
+  }
 }
-}
-function setRumuHp(){
-
-  rumuHp = savasData.rumuHp
-  maxRumuHp = rumuHp
+function setRumuHp() {
+  rumuHp = savasData.rumuHp;
+  maxRumuHp = rumuHp;
 }
 function apsipirkti() {
-  
-  updateParduotuvesVidu()
+  updateParduotuvesVidu();
 
-  document.getElementById("parduotuve").innerHTML = ''
+  document.getElementById("parduotuve").innerHTML = "";
   parduotuvesVidus.forEach((item) => {
     const itemDiv = document.createElement("div");
     itemDiv.className = `shop-item ${item.rarity}`;
     itemDiv.dataset.category = item.category;
-    const dissable = savasData.coins < item.price
+    const dissable = savasData.coins < item.price;
     itemDiv.innerHTML = `
                  <div class="shop-item-icon">
                  <img
@@ -219,114 +223,147 @@ function apsipirkti() {
                  </div>
                  
                  <div class="shop-item-price">${item.price}</div>
-                 <button   ${dissable   ? "disabled" : ""}  onclick="nupirkti(${dissable},${item.price},${item.nr})" class="buy-button" data-item="${item.itemId}">Buy</button>
+                 <button   ${
+                   dissable ? "disabled" : ""
+                 }  onclick="nupirkti(${dissable},${item.price},${
+      item.nr
+    })" class="buy-button" data-item="${item.itemId}">Buy</button>
                  `;
-    
+
     document.getElementById("parduotuve").appendChild(itemDiv);
   });
 }
 
-function updateParduotuvesVidu(){
-
-  parduotuvesVidus = []
+function updateParduotuvesVidu() {
+  parduotuvesVidus = [];
   // TODO: zinau jog tai durnas sprendimas, as tsg noriu jog tai viektu, mano pasiteisinimas, as be miego tai cia priminimas perasyti sita !!!!!!!
-  // !!!!!butinai perasiti 
-  let laikinas = []
+  // !!!!!butinai perasiti
+  let laikinas = [];
   for (let i = 0; i < soligers.length; i++) {
-    laikinas.push(i)
-    
+    laikinas.push(i);
   }
   for (let i = 0; i < savasData.ownedSoligers.length; i++) {
-    
-    if(
-      laikinas.includes(savasData.ownedSoligers[i].nr)
-    ){
-      
-      const indexOf =laikinas.indexOf(savasData.ownedSoligers[i].nr)
-      laikinas.splice(indexOf, 1)
+    if (laikinas.includes(savasData.ownedSoligers[i].nr)) {
+      const indexOf = laikinas.indexOf(savasData.ownedSoligers[i].nr);
+      laikinas.splice(indexOf, 1);
     }
   }
   for (let i = 0; i < laikinas.length; i++) {
-      parduotuvesVidus.push(soligers[laikinas[i]])
-    
+    parduotuvesVidus.push(soligers[laikinas[i]]);
   }
 }
-function nupirkti(lock,kaina,nmr){
-  if(lock){
-    console.log("ka tu dirbi!!!")
+function nupirkti(lock, kaina, nmr) {
+  if (lock) {
+    console.log("ka tu dirbi!!!");
     return;
   }
 
-  savasData.coins -= kaina
-  savasData.ownedSoligers.push(
-    { nr: nmr, homeSquere: null, extraData: { speedUp: 0 ,damigeUp:0} },
-  )
-  apsipirkti()
+  savasData.coins -= kaina;
+  savasData.ownedSoligers.push({
+    nr: nmr,
+    homeSquere: null,
+    extraData: { speedUp: 0, damigeUp: 0 },
+  });
+  apsipirkti();
 }
-function showBar(x = 10,y=10,i=100,a=5,hp=100,maxHp=100,collor = 'red',collorBack ='black',puse = 1){
-  ctx.save()
-  ctx.fillStyle = collorBack
-  ctx.fillRect((x/100)*ePlotis,(y/100)*eAukstis , i+2,a+2)
-  ctx.fillStyle = collor
-  let atimtis = 0
-  if(puse == -1){
-    atimtis = i
+function showBar(
+  x = 10,
+  y = 10,
+  i = 100,
+  a = 5,
+  hp = 100,
+  maxHp = 100,
+  collor = "red",
+  collorBack = "black",
+  puse = 1
+) {
+  ctx.save();
+  ctx.fillStyle = collorBack;
+  ctx.fillRect((x / 100) * ePlotis, (y / 100) * eAukstis, i + 2, a + 2);
+  ctx.fillStyle = collor;
+  let atimtis = 0;
+  if (puse == -1) {
+    atimtis = i;
   }
-  ctx.fillRect((x/100)*ePlotis +1 +atimtis,(y/100)*eAukstis+1,(hp/maxHp *puse)* i ,a)
-  ctx.restore()
+  ctx.fillRect(
+    (x / 100) * ePlotis + 1 + atimtis,
+    (y / 100) * eAukstis + 1,
+    (hp / maxHp) * puse * i,
+    a
+  );
+  ctx.restore();
 }
-function changeTarget(index,i){
-  const kelintas = targetOptions.indexOf(savasData.ownedSoligers[index].extraData.target)
-  if(targetOptions.length - 1> kelintas){
-    savasData.ownedSoligers[index].extraData.target= targetOptions[kelintas +1]
-  }else{
-    savasData.ownedSoligers[index].extraData.target= targetOptions[0]
+function changeTarget(index, i) {
+  const kelintas = targetOptions.indexOf(
+    savasData.ownedSoligers[index].extraData.target
+  );
+  if (targetOptions.length - 1 > kelintas) {
+    savasData.ownedSoligers[index].extraData.target =
+      targetOptions[kelintas + 1];
+  } else {
+    savasData.ownedSoligers[index].extraData.target = targetOptions[0];
   }
-updateLangeliuVidu(i)
+  updateLangeliuVidu(i);
 }
-function updateLangeliuVidu(i){
-      if (
-            homeSqueres[i] &&
-            homeSqueres[i].ocupied !== null &&
-            homeSqueres[i].ocupied !== undefined
-          ) {
-            const elementas = savi[savi.findIndex(itm => itm.data.nr ===homeSqueres[i].ocupied)]
-         
-            const locked = Math.round(elementas.jega + elementas.jega /3) > savasData.coins
-            const elementasPagalSavus = savasData.ownedSoligers[savasData.ownedSoligers.findIndex(itm =>itm.nr ===homeSqueres[i].ocupied)]
-            buttons = `<button onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
-            buttons +=`<button onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${elementasPagalSavus.extraData.target}</button>`
-            buttons += `<p>Upgrade</p>`
-            buttons += `<button  ${locked   ? "disabled" : ""} onclick="upgrade(${i})" >Price: ${Math.round(elementas.jega + elementas.jega /3)}</button>`
-            buttons += `<p>Power: ${elementas.jega} <p style="color: green;">+5</p></p>`
-          }
-          for (let j = 0; j < savasData.ownedSoligers.length; j++) {
-            if (
-              homeSqueres[i].ocupied === null &&
-              savasData.ownedSoligers[j].homeSquere === null
-            ) {
-              buttons += `<button onclick="savasData.ownedSoligers[${j}].homeSquere = ${i}; homeSqueres[${i}].ocupied = ${j}; sudeliokSavus(); selectCharacter.style.display = 'none';">
+function updateLangeliuVidu(i) {
+  if (
+    homeSqueres[i] &&
+    homeSqueres[i].ocupied !== null &&
+    homeSqueres[i].ocupied !== undefined
+  ) {
+    const elementas =
+      savi[savi.findIndex((itm) => itm.data.nr === homeSqueres[i].ocupied)];
+
+    const locked =
+      Math.round(elementas.jega + elementas.jega / 3) > savasData.coins;
+    const elementasPagalSavus =
+      savasData.ownedSoligers[
+        savasData.ownedSoligers.findIndex(
+          (itm) => itm.nr === homeSqueres[i].ocupied
+        )
+      ];
+    buttons = `<button class="remove_char" onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
+    buttons += `<button class="change_targ" onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${elementasPagalSavus.extraData.target}</button>`;
+    buttons += `<p>Upgrade</p>`;
+    buttons += `<button class="upgrade"  ${
+      locked ? "disabled" : ""
+    } onclick="upgrade(${i})" >Price: ${Math.round(
+      elementas.jega + elementas.jega / 3
+    )}</button>`;
+    buttons += `<p>Power: ${elementas.jega} <p style="color: green;">+5</p></p>`;
+  }
+  for (let j = 0; j < savasData.ownedSoligers.length; j++) {
+    if (
+      homeSqueres[i].ocupied === null &&
+      savasData.ownedSoligers[j].homeSquere === null
+    ) {
+      buttons += `<button onclick="savasData.ownedSoligers[${j}].homeSquere = ${i}; homeSqueres[${i}].ocupied = ${j}; sudeliokSavus(); selectCharacter.style.display = 'none';">
                         ${savasData.ownedSoligers[j].nr}
                         </button>`;
-            }
-          }
+    }
+  }
 
-          mouseDown = false;
-          selectCharacter.style.display = "block";
-          selectCharacter.innerHTML =
-            `
-                    
-                    <button onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
-                    <p>selected characher</p>
-                   ` +
-            `${buttons}`;
+  mouseDown = false;
+  selectCharacter.style.display = "block";
+  selectCharacter.innerHTML =
+    `
+                    <div style="width: 100%; display: flex; justify-content: flex-end;">
+                      <button style="background: #d4a76a; padding: 5px 10px; margin: 0; font-weight: bold;" onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
+                    </div>
+                    <p>Selected Character</p>
+                   ` + `${buttons}`;
 }
 function upgrade(i) {
   if (typeof i !== "number" || i < 0 || i >= homeSqueres.length) return;
 
   const unitIndex = homeSqueres[i].ocupied;
 
-  if (typeof unitIndex !== "number" || unitIndex < 0 || unitIndex >= savasData.ownedSoligers.length) return;
+  if (
+    typeof unitIndex !== "number" ||
+    unitIndex < 0 ||
+    unitIndex >= savasData.ownedSoligers.length
+  )
+    return;
 
   if (savasData.ownedSoligers[unitIndex].homeSquere !== i) {
     console.warn("Bandymas prieiti prie ne savo langelio!");
