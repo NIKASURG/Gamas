@@ -1,8 +1,4 @@
 .shop-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background: #6b5a51
     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="50" height="50" fill="%23584a43" /><rect x="50" y="50" width="50" height="50" fill="%23584a43" /></svg>');
   border: 6px solid #3a2921;
@@ -12,23 +8,12 @@
   max-height: 70vh;
   min-height: 120px;
   overflow-y: auto;
-  z-index: 9999;
+  z-index: 2001;
   padding-bottom: 20px;
   padding-top: 65px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 9998;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.6);
+  position: relative;
 }
 
 .shop-header {
@@ -87,21 +72,19 @@
   top: 3%;
   right: 3%;
   z-index: 30;
-  width: 90px;
-  max-width: 120px;
-  background-color: #d4a76a;
-  color: #463828;
-  border: 2px solid #8b4513;
-  border-radius: 8px;
+  background-color: #8b4513;
+  color: #5c2e0b;
+  border: 2px solid #d4a76a;
+  border-radius: 0;
   padding: 6px 12px;
-  font-size: 1.1rem;
   font-family: "MedievalSharp", cursive;
   cursor: pointer;
+  font-weight: bold;
   transition: all 0.3s ease;
 }
 
 #shopButton:hover {
-  background-color: #b9935d;
+  background-color: #5d2906;
   transform: scale(1.05);
 }
 
@@ -218,7 +201,63 @@
   transform: scale(1.05);
 }
 
+@media (max-width: 1200px) {
+  .shop-container {
+    width: 80%;
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 900px) {
+  .shop-container {
+    width: 85%;
+    max-width: 400px;
+  }
+}
+
 @media (max-width: 768px) {
+  .game-title {
+    font-size: 2.5rem;
+  }
+
+  .shop-container {
+    width: 90%;
+    max-width: 380px;
+  }
+
+  .menu-button {
+    padding: 3% 6%;
+    font-size: 1rem;
+    width: 60%;
+    max-width: 180px;
+  }
+
+  .scroll-container {
+    padding: 6% 4%;
+    min-height: 40vh;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 2% 4%;
+  }
+
+  .filter-button {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    max-width: 80px;
+  }
+
+  .shop-filters {
+    gap: 5px;
+  }
+
+  #menuButton,
+  #shopButton {
+    padding: 1.5% 3%;
+    font-size: 0.9rem;
+  }
+
   .shop-container {
     width: 95%;
     max-height: 85vh;
@@ -255,11 +294,8 @@
 
 @media (max-width: 600px) {
   .shop-container {
-    width: 90vw;
-    max-width: 90vw;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    width: 95%;
+    max-width: 95%;
     padding: 12px 3vw;
     border-width: 4px;
   }

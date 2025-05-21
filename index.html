@@ -1,11 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-        />
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
 
     <title>Castle Defender</title>
     <link rel="stylesheet" href="style.css" />
@@ -21,15 +21,15 @@
     <script type="module">
       import { saveDataInFireStore, loadUserData } from "./js/fireBase.js";
 
-            window.saveDataInFireStore = saveDataInFireStore;
-            window.loadUserData = loadUserData;
-        </script>
-    </head>
-    <body>
-        <button id="nextRoundButton" class="menu-button">Next Round</button>
+      window.saveDataInFireStore = saveDataInFireStore;
+      window.loadUserData = loadUserData;
+    </script>
+  </head>
+  <body>
+    <button id="nextRoundButton" class="menu-button">Next Round</button>
 
     <div id="turnDeviceNotification"></div>
-   
+
     <div id="main">
       <div class="scroll-container">
         <h1 class="game-title">Castle Defender</h1>
@@ -40,118 +40,93 @@
         <div id="showLogin">
           <p>Save game progres by authedintaining with</p>
 
-                    <button
-                        type="button"
-                        id="google-login"
-                        class="login-with-google-btn"
-                    >
-                        Google
-                    </button>
-                </div>
-                <div id="showLogout" style="display: none">
-                    <p>Logged in as: <span id="userEmail"></span></p>
-                    <button
-                        id="laikinaiTEstuiNEpyk"
-                        onclick="saveDataInFireStore()"
-                    >
-                        Save data
-                    </button>
-                    <button
-                        id="laikinaiTEstuiNEpykGAl"
-                        onclick="loadUserData() "
-                    >
-                        load data
-                    </button>
-
-                    <button type="button" id="google-logout">Logout</button>
-                </div>
-            </div>
+          <button
+            type="button"
+            id="google-login"
+            class="login-with-google-btn"
+            draggable="false"
+          >
+            Google
+          </button>
         </div>
+        <div id="showLogout" style="display: none">
+          <p>Logged in as: <span id="userEmail"></span></p>
+          <button id="laikinaiTEstuiNEpyk" onclick="saveDataInFireStore()">
+            Save data
+          </button>
+          <button id="laikinaiTEstuiNEpykGAl" onclick="loadUserData() ">
+            load data
+          </button>
+
+          <button type="button" id="google-logout">Logout</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Character Selection -->
     <div id="selectCharacter"></div>
 
-        <!-- Settings -->
-        <div id="settingsModal" class="modal">
-            <div class="modal-content">
-                <span class="close-button" id="closeSettings">&times;</span>
-                <h2 class="game-title" style="font-size: 2rem">Settings</h2>
-                <div class="settings-panel">
-                    <div class="settings-option">
-                        <label for="musicVolume">Music Volume</label>
-                        <input
-                            type="range"
-                            id="musicVolume"
-                            min="0"
-                            max="100"
-                            value="70"
-                        />
-                    </div>
-                    <div class="settings-option">
-                        <label for="sfxVolume">SFX Volume</label>
-                        <input
-                            type="range"
-                            id="sfxVolume"
-                            min="0"
-                            max="100"
-                            value="80"
-                        />
-                    </div>
+    <!-- Settings -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" id="closeSettings">&times;</span>
+        <h2 class="game-title" style="font-size: 2rem">Settings</h2>
+        <div class="settings-panel">
+          <div class="settings-option">
+            <label for="musicVolume">Music Volume</label>
+            <input type="range" id="musicVolume" min="0" max="100" value="70" />
+          </div>
+          <div class="settings-option">
+            <label for="sfxVolume">SFX Volume</label>
+            <input type="range" id="sfxVolume" min="0" max="100" value="80" />
+          </div>
 
-                    <div class="settings-option">
-                        <label for="fullscreenToggle">Auto fullscrean</label>
-                        <input type="checkbox" id="fullscreenToggle" />
-                    </div>
-                </div>
-            </div>
+          <div class="settings-option">
+            <label for="fullscreenToggle">Auto fullscrean</label>
+            <input type="checkbox" id="fullscreenToggle" />
+          </div>
         </div>
-        <!-- Credits -->
-        <div id="creditsModal" class="modal">
-            <div class="modal-content">
-                <span class="close-button" id="closeCredits">&times;</span>
-                <h2 class="game-title" style="font-size: 2rem">Credits</h2>
-                <div style="text-align: center; margin-top: 20px">
-                    <p>
-                        <strong>Game Design & Development</strong><br />Your
-                        Name
-                    </p>
-                    <p><strong>Artwork</strong><br />Your Artist</p>
-                    <p>
-                        <strong>Music & Sound Effects</strong><br />Your Sound
-                        Designer
-                    </p>
-                    <p>
-                        <strong>Special Thanks</strong><br />To everyone who
-                        supported this project
-                    </p>
-                    <p style="margin-top: 30px">© 2025 Castle Defender</p>
-                </div>
-            </div>
+      </div>
+    </div>
+    <!-- Credits -->
+    <div id="creditsModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" id="closeCredits">&times;</span>
+        <h2 class="game-title" style="font-size: 2rem">Credits</h2>
+        <div style="text-align: center; margin-top: 20px">
+          <p><strong>Game Design & Development</strong><br />Your Name</p>
+          <p><strong>Artwork</strong><br />Your Artist</p>
+          <p><strong>Music & Sound Effects</strong><br />Your Sound Designer</p>
+          <p>
+            <strong>Special Thanks</strong><br />To everyone who supported this
+            project
+          </p>
+          <p style="margin-top: 30px">© 2025 Castle Defender</p>
         </div>
+      </div>
+    </div>
 
-        <!-- Shop -->
-        <div id="shopModal" class="modal">
-            <div class="modal-content shop-container">
-                <p id="pinigai"></p>
-                <div class="shop-header-top">
-                    <h2 class="shop-title">Shop</h2>
-                    <span class="close-button shop-close" id="closeShop"
-                        >&times;</span
-                    >
-                </div>
-                <div id="parduotuve"></div>
-            </div>
+    <!-- Shop -->
+    <div id="shopModal" class="modal">
+      <div class="modal-content shop-container">
+        <p id="pinigai"></p>
+        <div class="shop-header-top">
+          <h2 class="shop-title">Shop</h2>
+          <span class="close-button shop-close" id="closeShop">&times;</span>
         </div>
+        <div id="parduotuve"></div>
+      </div>
+    </div>
 
     <div id="container" class="container">
       <button id="menuButton">Menu</button>
       <button id="shopButton">Shop</button>
       <button id="speedUp" class="menu-button">1X</button>
-       <div  id="upgradeCastle">
+      <div id="upgradeCastle">
         <p>Upgrade Castle</p>
         <p>Price: IDK</p>
-      <button id="upgradeCastleButton" ></button>
-    </div>
+        <button id="upgradeCastleButton"></button>
+      </div>
       <canvas id="canvas"> </canvas>
     </div>
     <div id="debugScrean" style="display: none">
@@ -165,36 +140,34 @@
       const filterButtons = document.querySelectorAll(".filter-button");
       const shopItems = document.querySelectorAll(".shop-item");
 
-            filterButtons.forEach((button) => {
-                button.addEventListener("click", () => {
-                    // Remove active class from all buttons
-                    filterButtons.forEach((btn) =>
-                        btn.classList.remove("active"),
-                    );
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Remove active class from all buttons
+          filterButtons.forEach((btn) => btn.classList.remove("active"));
 
-                    // Add active class to clicked button
-                    button.classList.add("active");
+          // Add active class to clicked button
+          button.classList.add("active");
 
-                    const filter = button.getAttribute("data-filter");
+          const filter = button.getAttribute("data-filter");
 
-                    // Show/hide items based on filter
-                    shopItems.forEach((item) => {
-                        const category = item.getAttribute("data-category");
-                        if (category === filter) {
-                            item.style.display = "flex";
-                        } else {
-                            item.style.display = "none";
-                        }
-                    });
-                });
-            });
-        </script>
-        <script src="./js/veikejoPremade.js"></script>
-        <script src="./js/funkcijos.js"></script>
-        <script src="./js/veikejai.js"></script>
-        <script type="module" src="./js/fireBase.js"></script>
-        <script src="index.js"></script>
-        <script src="./js/eventLiseners.js"></script>
-        <script src="./js/Komandos.js"></script>
-    </body>
+          // Show/hide items based on filter
+          shopItems.forEach((item) => {
+            const category = item.getAttribute("data-category");
+            if (category === filter) {
+              item.style.display = "flex";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        });
+      });
+    </script>
+    <script src="./js/veikejoPremade.js"></script>
+    <script src="./js/funkcijos.js"></script>
+    <script src="./js/veikejai.js"></script>
+    <script type="module" src="./js/fireBase.js"></script>
+    <script src="index.js"></script>
+    <script src="./js/eventLiseners.js"></script>
+    <script src="./js/Komandos.js"></script>
+  </body>
 </html>
