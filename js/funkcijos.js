@@ -387,3 +387,15 @@ function upgrade(i) {
 function arTelefonas() {
   return /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 }
+
+function updateShopText(addHp = Math.round(savasData.rumuHp / 50)){
+    document.getElementById("upgradeCastleButton").innerHTML ='+' +addHp 
+    document.getElementById("castleHp").innerHTML = savasData.rumuHp +"Hp"
+    document.getElementById("castleUpPrice").innerHTML = "Price: "+ Math.round( (savasData.rumuHp - addHp)/2)
+    document.getElementById("upgradeCastleButton").disabled = savasData.coins < Math.round( (savasData.rumuHp - addHp)/2)
+
+}
+
+
+
+

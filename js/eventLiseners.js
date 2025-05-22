@@ -149,6 +149,12 @@ document.getElementById("speedUp").addEventListener("click", () => {
   }
 });
 document.getElementById("upgradeCastleButton").addEventListener("click", () => {
-  savasData.rumuHp += savasData.rumuHp / 10;
-  console.log("llllll");
+  if( savasData.coins >= Math.round( (savasData.rumuHp - addHp)/2)){
+    addHp =  Math.round(savasData.rumuHp / 50);
+    savasData.rumuHp += addHp
+    savasData.coins -= Math.round( (savasData.rumuHp - addHp)/2)
+    updateShopText( addHp)
+
+  }
 });
+

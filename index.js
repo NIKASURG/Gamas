@@ -48,6 +48,10 @@ if (setings == undefined) {
     autoFullScrean: true,
   };
 }
+if (rumuHp == undefined) {
+  rumuHp = 100
+}
+updateShopText( Math.round(savasData.rumuHp / 50) ); 
 sudeliokSavus();
 
 setTimeout(() => {
@@ -87,7 +91,7 @@ let rodytiFps = false;
 let rodytiGivybes = false;
 let showAtack = false;
 const piniguDezute = document.getElementById("pinigai");
-
+let optiTikrint = savasData.coins;
 ctx.font = "22px Arial";
 function animate(timestamp) {
   if (pause) {
@@ -105,13 +109,14 @@ function animate(timestamp) {
   ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
   waweLaikas++;
   let ran = createSeededRandom(seed + waweImamas);
-  for (let i = 0; i < streles.length; i++) {
-    streles[i].animuok();
-  }
+  
   streles = streles.filter((str) => !(str.y > 100 || str.mirus));
   ctx.drawImage(pilisImg,(2/100)*ePlotis,(10.3/100)*ePlotis,ePlotis/3,ePlotis/2);
-  if (bangosPradeta && waweLaikas > ran() * 25 + 25) {
-    for (let i = 0; i < ran() * 10; i++) {
+   for (let i = 0; i < streles.length; i++) {
+    streles[i].animuok();
+  }
+  if (bangosPradeta && waweLaikas> ran()   * 45 +25) {
+    for (let i = 0; i < ran() * 4; i++) {
       if (waweImamas < waweEnemesCombination.length) {
         ran = createSeededRandom(seed + waweImamas + i);
         let randomY = Math.floor(ran() * 15) + 70;
@@ -245,6 +250,12 @@ function animate(timestamp) {
     ctx.fillText(`FPS: ${currentFps}`, 20, eAukstis - 50);
   }
 
+
+  if (optiTikrint != savasData.coins) {
+    optiTikrint = savasData.coins;
+    addHp=  Math.round(savasData.rumuHp / 50) 
+    document.getElementById("upgradeCastleButton").disabled = savasData.coins < Math.round( (savasData.rumuHp - addHp)/2)
+  }
   if (debugScrean) {
     ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70);
     ctx.fillText(`Sukurta priesu: ${priesai.length}`, 20, 90);
