@@ -297,12 +297,14 @@ function changeTarget(index, i) {
   const kelintas = targetOptions.indexOf(
     savasData.ownedSoligers[index].extraData.target
   );
+  
   if (targetOptions.length - 1 > kelintas) {
     savasData.ownedSoligers[index].extraData.target =
-      targetOptions[kelintas + 1];
+    targetOptions[kelintas + 1];
   } else {
     savasData.ownedSoligers[index].extraData.target = targetOptions[0];
   }
+  sudeliokSavus();
   updateLangeliuVidu(i);
 }
 function updateLangeliuVidu(i) {

@@ -143,7 +143,7 @@ function animate(timestamp) {
           setTimeout(() => {
             document.getElementById("won").style.display = "none";
           }
-          , 2000);
+          , 1300);
         console.log("won");
       }
       nextRoundButton.style.display = "";
@@ -164,7 +164,7 @@ function animate(timestamp) {
           setTimeout(() => {
             document.getElementById("lost").style.display = "none";
           }
-          , 2000);
+          , 1300);
       waweEnemesCombination = [];
       waweImamas = 0;
       rumuHp = 0;

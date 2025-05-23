@@ -6,7 +6,7 @@ class veikejas {
     this.jega = this.data.extraData?.damigeUp + this.data.jega?? this.data.jega 
     this.givybesStart = data.givybes?? 100;
     this.dydis = data.dydis;
-    this.greitis = data.greitis;
+    this.greitis = data.greitis ?? 1;
     this.spriteIlgisKadru = data.spriteIlgis;
     this.spriteAukstisKadru = data.spriteAukstis;
     this.img = new Image();
@@ -36,15 +36,22 @@ class veikejas {
     this.pasirinktas = true;
     this.trankyk = false;
     this.pradejauPulti = true;
+    this.greitisSpriteSukimui = 9
   }
-
   kadras() {
 if(isNaN(deltaTime) ){
   console.log('das')
   return
 }
-    this.spriteGreitis += deltaTime / 25;
-    if (this.spriteGreitis > 10 - this.reikemiKadrai) {
+  let daug
+    if(this.greitis == 1|| this.greitis == 0){
+       daug = 1
+    }else{
+       daug = 10* this.greitis  ;
+    }
+
+    this.spriteGreitis += deltaTime / 22 *daug;
+    if (this.spriteGreitis > this.greitisSpriteSukimui - this.reikemiKadrai) {
       this.spriteGreitis = 0;
       
       // console.log(this.kadroPlotis,this.reikemiKadrai)
@@ -76,12 +83,14 @@ if(isNaN(deltaTime) ){
     }
     // console.log(this.data)
     this.kadras();
+   
     ctx.save();
     ctx.scale(this.veikejoZiurejimoPuse, 1);
 
     if (this.givybes <= 0) {
       this.greitis = 0;
       if (this.primasPoMirties) {
+        this.greitisSpriteSukimui = 13
         this.esamasKadrasX = 0;
         this.primasPoMirties = false;
       }
