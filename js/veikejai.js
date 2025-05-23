@@ -21,7 +21,7 @@ class veikejas {
     };
     this.saudimoGreitis = data.saudimoGreitis;
     this.saudimoLaukimas = Math.random() * data.saudimoGreitis;
-    this.taikinys =   data.extraData?.target ??"first";
+    this.taikinys =   data.extraData?.target ?? "first";
     this.mires = false;
     this.linkMirties = false;
     this.esamasKadrasY = 0;
@@ -151,7 +151,7 @@ if(isNaN(deltaTime) ){
   }
 
   atack() {
-    this.saudimoLaukimas += (1 * deltaTime) / 20;
+    this.saudimoLaukimas += (1 * deltaTime) / 15;
     if (!this.pasirinktas) {
       return;
     }
@@ -193,22 +193,22 @@ class Sovinys {
     this.priesas = suzeikPriesa(taikinis);
 
     const dx = this.priesas?.x - x1?? 50;
-    const dy = this.priesas?.y - y1??70;
+    const dy = this.priesas?.y - y1?? 70;
     const dist = Math.sqrt(dx * dx + dy * dy) || 1;
 
     this.kryptisX = dx / dist;
     this.kryptisY = dy / dist;
     this.bendrasKelias = dist;
     this.nueita = 0;
-    this.greitis = 1.5;
+    this.greitis = 1.1;
     this.img = new Image();
     this.img.src = "img/arow.png";
   }
   animuok() {
     if (!this.priesas) return;
 
-    this.givenimoLaikas += 1;
-    if (this.givenimoLaikas > 300) {
+    this.givenimoLaikas +=  deltaTime;
+    if (this.givenimoLaikas > 5000) {
       this.mirus = true;
       return;
     }
@@ -226,7 +226,7 @@ class Sovinys {
         leftVaveHp -= this.priesas.givybes;
       }
 
-      this.priesas.givybes -= this.jega;
+      this.priesas.suzeiti(this.jega);
 
       return;
     } else if (

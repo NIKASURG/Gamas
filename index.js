@@ -147,7 +147,10 @@ function animate(timestamp) {
         console.log("won");
       }
       nextRoundButton.style.display = "";
+      document.getElementById("shopButton").style.display = "block";
     document.getElementById("upgradeCastle").style.display = "block";
+    document.getElementById("speedUp").style.display = "none";
+
 
       saveDataInFireStore();
     }

@@ -262,7 +262,7 @@ function nupirkti(lock, kaina, nmr) {
   savasData.ownedSoligers.push({
     nr: nmr,
     homeSquere: null,
-    extraData: { speedUp: 0, damigeUp: 0 },
+    extraData: { speedUp: 0, damigeUp: 0  ,target: "first"},
   });
   apsipirkti();
 }

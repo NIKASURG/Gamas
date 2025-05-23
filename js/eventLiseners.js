@@ -58,6 +58,9 @@ document
     setRumuHp();
     nextRoundButton.style.display = "none";
     document.getElementById("upgradeCastle").style.display = "none";
+      document.getElementById("shopButton").style.display = "none";
+    document.getElementById("speedUp").style.display = "block";
+
 
     pralaimeta = false;
   });
