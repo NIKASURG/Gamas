@@ -138,10 +138,17 @@ function animate(timestamp) {
       waweLaikas = 0;
       if (!pralaimeta) {
         wave++;
-
+        document.getElementById("won").style.display = "block";
+       
+          setTimeout(() => {
+            document.getElementById("won").style.display = "none";
+          }
+          , 2000);
         console.log("won");
       }
       nextRoundButton.style.display = "";
+    document.getElementById("upgradeCastle").style.display = "block";
+
       saveDataInFireStore();
     }
     if (rumuHp <= 0) {
@@ -149,7 +156,12 @@ function animate(timestamp) {
         priesas.givybes = -1;
       });
       pralaimeta = true;
-
+        document.getElementById("lost").style.display = "block";
+        
+          setTimeout(() => {
+            document.getElementById("lost").style.display = "none";
+          }
+          , 2000);
       waweEnemesCombination = [];
       waweImamas = 0;
       rumuHp = 0;

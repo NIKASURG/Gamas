@@ -433,3 +433,31 @@ button:disabled {
   position: absolute;
   right: 2%;
 }
+.lost {
+  background: url("/img/lost.png") no-repeat center top;
+  background-size: 30vw 20vh;
+  position: absolute;
+  left: 50%;
+  width: 30vw;
+  height: auto;
+  z-index: 3000;
+height: 30%; /* Or another appropriate height */
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+  display: none;
+}
+.won {
+  background: url("/img/won.png") no-repeat center top;
+  background-size: 30vw 20vh;
+  position: absolute;
+  left: 50%;
+  width: 30vw;
+  height: auto;
+  z-index: 3000;
+height: 30%; /* Or another appropriate height */
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+  display: none;
+}

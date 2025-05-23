@@ -47,7 +47,7 @@ document.getElementById("playButton").addEventListener("click", function () {
   }
 });
 document
-  .getElementById("nextRoundButton")
+  .getElementById("nextRoundButton")  
   .addEventListener("click", function () {
     leftVaveHp = 0;
     pause = false;
@@ -57,6 +57,8 @@ document
     vaveHp = leftVaveHp;
     setRumuHp();
     nextRoundButton.style.display = "none";
+    document.getElementById("upgradeCastle").style.display = "none";
+
     pralaimeta = false;
   });
 canvas.addEventListener("mousemove", function (e) {
