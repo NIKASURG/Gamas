@@ -42,19 +42,21 @@ function generateEnemyWave(
   baseDifficulty = 10,
   growth = 3
 ) {
-  let random = createSeededRandom(seed + waveNumber); // skirtinga seed kiekvienai bangai
+  let random = createSeededRandom(seed + waveNumber);
 
-  let totalDifficulty = baseDifficulty + waveNumber * growth;
+  let difficultyMultiplier = 1.5 + waveNumber * 0.05; 
+  let totalDifficulty = (baseDifficulty + waveNumber * growth) * difficultyMultiplier;
+
   let remaining = totalDifficulty;
   let result = [];
 
   while (remaining > 0) {
     let progress = 1 - remaining / totalDifficulty;
 
-    let dynamicRatio = 0.1 + progress * 0.4;
+    let dynamicRatio = 0.05 + progress * 0.3; 
     let maxAllowed = remaining * dynamicRatio;
 
-    let allowOverpowered = random() < 0.05;
+    let allowOverpowered = random() < (0.02 + waveNumber * 0.005); 
 
     let validChoices = enemyCosts.filter(
       (cost) => cost <= remaining && (allowOverpowered || cost <= maxAllowed)
@@ -72,6 +74,7 @@ function generateEnemyWave(
 
   return result;
 }
+
 
 function createSeededRandom(seed) {
   return function () {
@@ -401,3 +404,8 @@ function updateShopText(addHp = Math.round(savasData.rumuHp / 50)){
 
 
 
+function spawnDelayByProgress(current, total, base = 2000) {
+  let progress = current / total; // 0.0..1.0
+  let factor = 1 - Math.abs(progress - 0.5) * 2; // 1 → lėčiausias kai per vidurį
+  return base * factor;
+}

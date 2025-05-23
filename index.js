@@ -107,7 +107,10 @@ function animate(timestamp) {
   // FPS skaičiavimas
   fpsCounter++;
   ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
-  waweLaikas++;
+  if(isNaN(deltaTime)){
+    deltaTime = 0;
+  }
+    waweLaikas+= deltaTime;
   let ran = createSeededRandom(seed + waweImamas);
   
   streles = streles.filter((str) => !(str.y > 100 || str.mirus));
@@ -115,7 +118,10 @@ function animate(timestamp) {
    for (let i = 0; i < streles.length; i++) {
     streles[i].animuok();
   }
-  if (bangosPradeta && waweLaikas> ran()   * 45 +25) {
+ if (bangosPradeta && waweLaikas > spawnDelayByProgress(waweImamas, waweEnemesCombination.length)) {
+
+        waweLaikas = 0;
+
     for (let i = 0; i < ran() * 4; i++) {
       if (waweImamas < waweEnemesCombination.length) {
         ran = createSeededRandom(seed + waweImamas + i);
@@ -126,7 +132,6 @@ function animate(timestamp) {
         if (randomEnemy) {
           priesai.push(new veikejas(randomEnemy, 100 + ran() * 10, randomY));
         }
-        waweLaikas = 0;
         waweImamas++;
         priesai.sort((a, b) => a.y - b.y);
       }

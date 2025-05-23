@@ -118,6 +118,7 @@ let soligers = [
     jega: 50,
     saudimoGreitis: 40,
     name: "BigBOss",
+    aura: 'cold'
 
   },
   {
