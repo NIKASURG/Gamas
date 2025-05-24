@@ -2,9 +2,7 @@ const nextRoundButton = document.getElementById("nextRoundButton");
 
 const input = document.getElementById("komandos");
 
-document.addEventListener("keydown", function () {
-  input.focus();
-});
+
 input.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     const komanda = input.value.trim();
@@ -45,10 +43,13 @@ input.addEventListener("keydown", function (event) {
         break;
       case "clear":
         localStorage.removeItem("gameState");
-
+        location.reload()
         break;
       case "sa":
         showAtack = !showAtack;
+        break;
+      case "SetCoins":
+        savasData.coins = parseInt(komanda.split(" ")[1]);
         break;
       default:
         console.log("Nežinoma komanda:", komanda);

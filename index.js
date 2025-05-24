@@ -1,41 +1,68 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d", { alpha: false });
-let homeSqueres = [];
 let priesai = [];
 let savi = [];
 let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
+let lock = true;
+let pilisImg = new Image();
+pilisImg.src = 'img/castle_no_background.png'
+let zolesImg = new Image();
+zolesImg.src = 'img/grass.png'
 // ctx.translate(0, 0);
+let targetOptions = ["first", "strongest", "weakest", "random", "last"];
+//  rarity pasirinkimai "legendary", "rare",,"common"
 
-try {
-  console.log(savasData);
-} catch (e) {
+let rumuHp;
+let maxRumuHp;
+let pralaimeta = false;
+let speedUp;
+if (savasData == undefined) {
   savasData = {
     coins: 0,
+    rumuHp: 100,
     ownedSoligers: [
-      { nr: 0, homeSquere: 5, extraData: { upgrade: 0 } },
-      { nr: 1, homeSquere: 4, extraData: { upgrade: 0 } },
-      { nr: 2, homeSquere: null, extraData: { upgrade: 0 } },
+      {
+        nr: 0,
+        homeSquere: 8,
+        extraData: { speedUp: 0, damigeUp: 0, target: "first" },
+      },
+      {
+        nr: 1,
+        homeSquere: 9,
+        extraData: { speedUp: 0, damigeUp: 0, target: "first" },
+      },
     ],
   };
 }
-setTimeout(() => {
-  sudeliokSavus();
-});
+
 // console.log(savi);
-try {
-  console.log(wave);
-} catch (e) {
+if (wave == undefined) {
   wave = 1;
+}
+if (speedUp == undefined) {
+  speedUp = 1;
+}
+if (setings == undefined) {
   setings = {
-    autoFullScren: true,
+    autoFullScrean: true,
   };
 }
-setInterval(saveGameState, 10000);
+if (rumuHp == undefined) {
+  rumuHp = 100
+}
+updateShopText( Math.round(savasData.rumuHp / 50) ); 
+sudeliokSavus();
 
+setTimeout(() => {
+  document.getElementById("fullscreenToggle").checked = setings.autoFullScrean;
+}, 1);
+setInterval(saveGameState, 5000);
 updateCanvas();
 let backGrount = new Image();
-backGrount.src = "img/bg.png";
+backGrount.src = "img/thePlot.png";
+let tekelisImg = new Image();
+tekelisImg.src = "img/takelis.png";
 let lastTime = 0;
 const fps = 60;
 let pause = false;
@@ -47,7 +74,7 @@ let pelesY = 0;
 let mouseDown = false;
 let vaveHp = 0;
 let leftVaveHp = 0;
-let laikinasGlobalusI = 0;
+
 enemes.forEach((e) => {
   enemyCosts.push(e.hard);
 });
@@ -65,34 +92,40 @@ let debugScrean = false;
 let rodytiFps = false;
 let rodytiGivybes = false;
 let showAtack = false;
-
+const piniguDezute = document.getElementById("pinigai");
+let optiTikrint = savasData.coins;
 ctx.font = "22px Arial";
-
 function animate(timestamp) {
   if (pause) {
-    ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
-
+    lastTime = 0;
+    timestamp = 0;
     requestAnimationFrame(animate);
     return;
   }
   if (!lastTime) lastTime = timestamp;
-  const deltaTime = timestamp - lastTime;
-
-  if (deltaTime < 1000 / fps) {
-    requestAnimationFrame(animate);
-    return;
-  }
-
+  deltaTime = (timestamp - lastTime) * speedUp;
   lastTime = timestamp;
 
   // FPS skaičiavimas
   fpsCounter++;
   ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
-  waweLaikas++;
+  if(isNaN(deltaTime)){
+    deltaTime = 0;
+  }
+    waweLaikas+= deltaTime;
   let ran = createSeededRandom(seed + waweImamas);
+  ctx.drawImage(tekelisImg  ,0,0,ePlotis,eAukstis)
+  
+  streles = streles.filter((str) => !(str.y > 100 || str.mirus));
+  ctx.drawImage(pilisImg,(2/100)*ePlotis,(10.3/100)*ePlotis,ePlotis/3,ePlotis/2);
+   for (let i = 0; i < streles.length; i++) {
+    streles[i].animuok();
+  }
+  if (bangosPradeta && waweLaikas > spawnDelayByProgress(waweImamas, waweEnemesCombination.length)) {
 
-  if (bangosPradeta && waweLaikas > ran() * 25 + 25) {
-    for (let i = 0; i < ran() * 10; i++) {
+        waweLaikas = 0;
+
+    for (let i = 0; i < ran() * 4; i++) {
       if (waweImamas < waweEnemesCombination.length) {
         ran = createSeededRandom(seed + waweImamas + i);
         let randomY = Math.floor(ran() * 15) + 70;
@@ -102,120 +135,159 @@ function animate(timestamp) {
         if (randomEnemy) {
           priesai.push(new veikejas(randomEnemy, 100 + ran() * 10, randomY));
         }
-        waweLaikas = 0;
         waweImamas++;
+        priesai.sort((a, b) => a.y - b.y);
       }
     }
-
+    
     if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
+      console.log("Wave baigta");
       bangosPradeta = false;
       waweImamas = 0;
       waweLaikas = 0;
-      wave++;
+      if (!pralaimeta) {
+        wave++;
+        document.getElementById("won").style.display = "block";
+       
+          setTimeout(() => {
+            document.getElementById("won").style.display = "none";
+          }
+          , 1300);
+        console.log("won");
+      }
       nextRoundButton.style.display = "";
-      saveGameState();
+      document.getElementById("shopButton").style.display = "block";
+      document.getElementById("upgradeCastle").style.display = "block";
+      document.getElementById("speedUp").style.display = "none";
+
+
+      saveDataInFireStore();
+    }
+    if (rumuHp <= 0) {
+      priesai.forEach((priesas) => {
+        priesas.givybes = -1;
+        priesas.lost = true;
+      });
+      pralaimeta = true;
+        document.getElementById("lost").style.display = "block";
+        
+        setTimeout(() => {
+            document.getElementById("lost").style.display = "none";
+        }
+        , 1300);
+      waweEnemesCombination = [];
+      waweImamas = 0;
+      rumuHp = 0;
+      nextRoundButton.style.display = "";
+      document.getElementById("shopButton").style.display = "block";
+      document.getElementById("upgradeCastle").style.display = "block";
+      document.getElementById("speedUp").style.display = "none";
+      bangosPradeta = false;
+
+      console.log("lost");
     }
   }
+
   if (!bangosPradeta) {
+    canvas.style.cursor = "default";
     for (let i = 0; i < homeSqueres.length; i++) {
       ctx.save();
-      blure = 0.5;
-      laikinasGlobalusI = i;
+      blure = 0.4;
       buttons = ``;
 
       if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
-        blure = 0.9;
-        if (mouseDown) {
-          if (
-            homeSqueres[i] &&
-            homeSqueres[i].ocupied !== null &&
-            homeSqueres[i].ocupied !== undefined
-          ) {
-            buttons = `<button onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
-          }
-          for (let j = 0; j < savasData.ownedSoligers.length; j++) {
-            if (
-              homeSqueres[i].ocupied === null &&
-              savasData.ownedSoligers[j].homeSquere === null
-            ) {
-              buttons += `<button onclick="savasData.ownedSoligers[${j}].homeSquere = ${i}; homeSqueres[${i}].ocupied = ${j}; sudeliokSavus(); selectCharacter.style.display = 'none';">
-                        ${savasData.ownedSoligers[j].nr}
-                        </button>`;
-            }
-          }
+        blure = 0.7;
+        if(!arTelefonas()){
 
-          mouseDown = false;
-          selectCharacter.style.display = "block";
-          selectCharacter.innerHTML =
-            `
-                    
-                    <button onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
-                    <p>selected characher</p>
-                   ` +
-            `${buttons}` +
-            `
-
-                    <p>Ur characters</p>
-                    
-                    `;
+          canvas.style.cursor = "pointer";
+        }
+        if (mouseDown && !lock) {
+          updateLangeliuVidu(i);
         }
       }
 
+      ctx.strokeStyle = "gray";
       ctx.fillStyle = "rgba(65, 65, 85, " + blure + ")";
-
-      ctx.fillRect(
+      ctx.beginPath();
+      ctx.roundRect(
         homeSqueres[i].x,
         homeSqueres[i].y,
         homeSqueres[i].plotis,
-        homeSqueres[i].aukstis
+        homeSqueres[i].aukstis,
+        [5, 5, 5, 5]
       );
-
+      ctx.stroke();
+      ctx.fill();
       ctx.restore();
     }
   }
-
-  if (timestamp - fpsLastUpdate > 1000) {
-    currentFps = fpsCounter;
-    fpsCounter = 0;
-    fpsLastUpdate = timestamp;
-    // ctx.fillStyle = "red";
-    //  ctx.fillStyle = "#333";
-  }
+  // saveGameState();
 
   for (let i = 0; i < priesai.length; i++) {
     priesai[i].animuok();
     priesai[i].judeti();
     // priesai[i].suzeiti(4);
-    if (priesai[i].mires) {
-      priesai.splice(i, 1);
-      i--;
-    }
   }
+  priesai = priesai.filter((priesas) => !priesas.mires);
+
   for (let j = 0; j < savi.length; j++) {
     savi[j].animuok();
-    savi[j].atack();
-  }
-  for (let i = 0; i < streles.length; i++) {
-    console.log(streles);
-    streles[i].animuok();
-    if (streles[i].y > 100) {
-      streles.splice(i, 1);
-      i--;
+    if (priesai.length > 0) {
+      savi[j].atack();
     }
   }
+
   ctx.fillText(`Wave: ${wave}`, (80 / 100) * ePlotis, (5 / 100) * eAukstis);
   ctx.fillText(
     `Coins: ${savasData.coins}`,
     (90 / 100) * ePlotis,
     (5 / 100) * eAukstis
   );
+  piniguDezute.innerHTML = "Your coins: " + savasData.coins;
+  ctx.fillStyle = "black";
+  showBar(
+    15,
+    5,
+    ePlotis / 2,
+    eAukstis / 100,
+    rumuHp,
+    maxRumuHp,
+    "blue",
+    "brown"
+  );
 
-  if (debugScrean || rodytiFps) ctx.fillText(`FPS: ${currentFps}`, 20, 50);
+  showBar(
+    15,
+    7,
+    ePlotis / 2,
+    eAukstis / 100,
+    leftVaveHp,
+    vaveHp,
+    "orange",
+    "brown"
+  );
+ 
+
+  ctx.drawImage(zolesImg  ,0,0,ePlotis,eAukstis)
+  if (debugScrean || rodytiFps) {
+    if (timestamp - fpsLastUpdate > 1000) {
+      currentFps = fpsCounter;
+      fpsCounter = 0;
+      fpsLastUpdate = timestamp;
+    }
+    ctx.fillText(`FPS: ${currentFps}`, 20, eAukstis - 50);
+  }
+
+
+  if (optiTikrint != savasData.coins) {
+    optiTikrint = savasData.coins;
+    addHp=  Math.round(savasData.rumuHp / 50) 
+    document.getElementById("upgradeCastleButton").disabled = savasData.coins < Math.round( (savasData.rumuHp - addHp)/2)
+  }
   if (debugScrean) {
     ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70);
     ctx.fillText(`Sukurta priesu: ${priesai.length}`, 20, 90);
   }
   requestAnimationFrame(animate);
 }
-
-requestAnimationFrame(animate);
+animate();

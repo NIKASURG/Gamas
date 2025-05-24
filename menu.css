@@ -1,0 +1,176 @@
+/* Menu button in game */
+#menuButton {
+  position: fixed;
+  top: 3%;
+  left: 3%;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  z-index: 30;
+  background-color: #8b4513;
+  color: #5c2e0b;
+  border: 2px solid #d4a76a;
+  border-radius: 0;
+  font-weight: bold;
+}
+
+.menu-button {
+  background: #d4a76a;
+  border: 2px solid #8b4513;
+  color: #5c2e0b;
+  padding: 8px 16px;
+  margin: 8px 0;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  width: 30%;
+  max-width: 160px;
+  text-align: center;
+  font-family: "MedievalSharp", cursive;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu-button:hover {
+  background: #c69c6d;
+  transform: scale(1.05);
+}
+
+.menu-button:active {
+  transform: scale(0.98);
+}
+
+/* Character selection panel - using the styling from style.css */
+/* Removing duplicate #selectCharacter styles as they're defined in style.css */
+/* Only keeping the responsive media queries for #selectCharacter */
+
+#selectCharacter .char-photo {
+  width: 38px;
+  height: 38px;
+  background: #3a2921;
+  border: 3px solid #d4a76a;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 0 3px rgba(0, 0, 0, 0.5);
+}
+#selectCharacter .char-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+#selectCharacter p {
+  margin: 2px 0 0 0;
+  font-size: 0.92rem;
+  color: #d4a76a;
+  font-family: "Poppins", "MedievalSharp", cursive;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+#selectCharacter .power {
+  font-size: 0.93rem;
+  color: #ffd700;
+  margin-top: 0;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+#selectCharacter button,
+#selectCharacter .remove_char,
+#selectCharacter .change_targ,
+#selectCharacter .upgrade {
+  background: #d4a76a;
+  border: 2px solid #3a2921;
+  color: #3a2921;
+  padding: 4px 8px;
+  margin: 3px 2px;
+  font-size: 0.89rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "MedievalSharp", cursive;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
+}
+#selectCharacter button:hover,
+#selectCharacter .remove_char:hover,
+#selectCharacter .change_targ:hover,
+#selectCharacter .upgrade:hover {
+  background: #c69c6d;
+  transform: scale(1.05);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  border-color: #2a1a12;
+}
+#selectCharacter button:active,
+#selectCharacter .remove_char:active,
+#selectCharacter .change_targ:active,
+#selectCharacter .upgrade:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#selectCharacter .upgrade {
+  background: #ffd700;
+  color: #3a2921;
+  border: 2px solid #3a2921;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 4px rgba(255, 215, 0, 0.5);
+}
+#selectCharacter .upgrade:disabled {
+  background: #a89a68;
+  color: #6a5c3d;
+  border-color: #3a2921;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Responsive design for different screen sizes */
+@media (max-width: 1200px) {
+  #selectCharacter {
+    left: 20%;
+  }
+}
+
+@media (max-width: 900px) {
+  #selectCharacter {
+    left: 30%;
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 768px) {
+  #selectCharacter {
+    left: 40%;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 600px) {
+  #selectCharacter {
+    left: 50%;
+    max-width: 85vw;
+    width: 85vw;
+    min-width: 0;
+    max-height: 50vh;
+    padding: 12px 3vw;
+    border-width: 4px;
+  }
+  #selectCharacter .char-photo {
+    width: 32px;
+    height: 32px;
+    border-width: 2px;
+  }
+  #selectCharacter button,
+  #selectCharacter .remove_char,
+  #selectCharacter .change_targ,
+  #selectCharacter .upgrade {
+    font-size: 0.8rem;
+    padding: 4px 6px;
+    margin: 2px 1px;
+  }
+}
