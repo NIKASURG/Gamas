@@ -8,7 +8,7 @@ let lock = true;
 let pilisImg = new Image();
 pilisImg.src = 'img/castle_no_background.png'
 let zolesImg = new Image();
-zolesImg.src = 'img/atsisiųsti.png'
+zolesImg.src = 'img/grass.png'
 // ctx.translate(0, 0);
 let targetOptions = ["first", "strongest", "weakest", "random", "last"];
 //  rarity pasirinkimai "legendary", "rare",,"common"
@@ -60,7 +60,9 @@ setTimeout(() => {
 setInterval(saveGameState, 5000);
 updateCanvas();
 let backGrount = new Image();
-backGrount.src = "img/bg.png";
+backGrount.src = "img/thePlot.png";
+let tekelisImg = new Image();
+tekelisImg.src = "img/takelis.png";
 let lastTime = 0;
 const fps = 60;
 let pause = false;
@@ -112,13 +114,14 @@ function animate(timestamp) {
   }
     waweLaikas+= deltaTime;
   let ran = createSeededRandom(seed + waweImamas);
+  ctx.drawImage(tekelisImg  ,0,0,ePlotis,eAukstis)
   
   streles = streles.filter((str) => !(str.y > 100 || str.mirus));
   ctx.drawImage(pilisImg,(2/100)*ePlotis,(10.3/100)*ePlotis,ePlotis/3,ePlotis/2);
    for (let i = 0; i < streles.length; i++) {
     streles[i].animuok();
   }
- if (bangosPradeta && waweLaikas > spawnDelayByProgress(waweImamas, waweEnemesCombination.length)) {
+  if (bangosPradeta && waweLaikas > spawnDelayByProgress(waweImamas, waweEnemesCombination.length)) {
 
         waweLaikas = 0;
 
@@ -136,8 +139,9 @@ function animate(timestamp) {
         priesai.sort((a, b) => a.y - b.y);
       }
     }
-
+    
     if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
+      console.log("Wave baigta");
       bangosPradeta = false;
       waweImamas = 0;
       waweLaikas = 0;
@@ -153,8 +157,8 @@ function animate(timestamp) {
       }
       nextRoundButton.style.display = "";
       document.getElementById("shopButton").style.display = "block";
-    document.getElementById("upgradeCastle").style.display = "block";
-    document.getElementById("speedUp").style.display = "none";
+      document.getElementById("upgradeCastle").style.display = "block";
+      document.getElementById("speedUp").style.display = "none";
 
 
       saveDataInFireStore();
@@ -162,17 +166,23 @@ function animate(timestamp) {
     if (rumuHp <= 0) {
       priesai.forEach((priesas) => {
         priesas.givybes = -1;
+        priesas.lost = true;
       });
       pralaimeta = true;
         document.getElementById("lost").style.display = "block";
         
-          setTimeout(() => {
+        setTimeout(() => {
             document.getElementById("lost").style.display = "none";
-          }
-          , 1300);
+        }
+        , 1300);
       waweEnemesCombination = [];
       waweImamas = 0;
       rumuHp = 0;
+      nextRoundButton.style.display = "";
+      document.getElementById("shopButton").style.display = "block";
+      document.getElementById("upgradeCastle").style.display = "block";
+      document.getElementById("speedUp").style.display = "none";
+      bangosPradeta = false;
 
       console.log("lost");
     }
@@ -256,11 +266,9 @@ function animate(timestamp) {
     "orange",
     "brown"
   );
-  ctx.drawImage(zolesImg  ,ePlotis/3*2,(90/100) *eAukstis,ePlotis/2.7,eAukstis/18)
+ 
 
-  ctx.drawImage(zolesImg  ,ePlotis/3,(90/100) *eAukstis,ePlotis/2.7,eAukstis/18)
-
-  ctx.drawImage(zolesImg  ,-10,(90/100) *eAukstis,ePlotis/2.7,eAukstis/18)
+  ctx.drawImage(zolesImg  ,0,0,ePlotis,eAukstis)
   if (debugScrean || rodytiFps) {
     if (timestamp - fpsLastUpdate > 1000) {
       currentFps = fpsCounter;

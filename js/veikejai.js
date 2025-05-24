@@ -37,6 +37,7 @@ class veikejas {
     this.trankyk = false;
     this.pradejauPulti = true;
     this.greitisSpriteSukimui = 9
+    this.lost = false;
   }
   kadras() {
 if(isNaN(deltaTime) ){
@@ -58,9 +59,11 @@ if(isNaN(deltaTime) ){
       this.esamasKadrasX += this.kadroPlotis;
 
       if (this.esamasKadrasX > this.kadroPlotis * this.reikemiKadrai - 1) {
-        if (this.linkMirties) {
-          savasData.coins += this.data.hard;
+        if (this.linkMirties ) {
           this.mires = true;
+          if(!this.lost){
+          savasData.coins += this.data.hard;
+          }
         } else {
           this.esamasKadrasX = 0;
           if (this.trankyk) {
@@ -86,7 +89,7 @@ if(isNaN(deltaTime) ){
    
     ctx.save();
     ctx.scale(this.veikejoZiurejimoPuse, 1);
-
+   
     if (this.givybes <= 0) {
       this.greitis = 0;
       if (this.primasPoMirties) {
@@ -106,7 +109,30 @@ if(isNaN(deltaTime) ){
     const atvaizdoY = (this.y / 100) * eAukstis;
     // const atvaizdoX = this.x * this.veikejoZiurejimoPuse;
     // const atvaizdoY = this.y;
+    //  ctx.shadowColor = "black";
+    //     ctx.shadowBlur = 20;
 
+
+
+
+    
+    //         ctx.globalAlpha = 0.3;
+        
+  
+//       ctx.strokeStyle = "gray";
+//       ctx.fillStyle = "rgba(65, 65, 85, " + blure + ")";
+//       ctx.beginPath();
+//       ctx.roundRect(
+//          atvaizdoX + Dydis[this.dydis][0] / 3,
+//       atvaizdoY + Dydis[this.dydis][1] / 1.5,
+//       Dydis[this.dydis][0] / 3,
+//       Dydis[this.dydis][1]/ 5,
+//         [5, 5, 5, 5]
+//       );
+//       ctx.stroke();
+//       ctx.fill();
+    ctx.globalAlpha = 1.0;
+    ctx.shadowBlur = 0;
     ctx.drawImage(
       this.img,
       this.esamasKadrasX,
