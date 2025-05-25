@@ -311,6 +311,7 @@ function changeTarget(index, i) {
   updateLangeliuVidu(i);
 }
 function updateLangeliuVidu(i) {
+  chaarVidus = "";
   if (
     homeSqueres[i] &&
     homeSqueres[i].ocupied !== null &&
@@ -327,24 +328,38 @@ function updateLangeliuVidu(i) {
           (itm) => itm.nr === homeSqueres[i].ocupied
         )
       ];
-    buttons = `<button class="remove_char" onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
-    buttons += `<button class="change_targ" onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${elementasPagalSavus.extraData.target}</button>`;
-    buttons += `<p>Upgrade</p>`;
-    buttons += `<button class="upgrade"  ${
+    chaarVidus = `<button class="remove_char" onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
+    chaarVidus += `<button class="change_targ" onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${elementasPagalSavus.extraData.target}</button>`;
+    chaarVidus += `<p>Upgrade</p>`;
+    chaarVidus += `<button class="upgrade"  ${
       locked ? "disabled" : ""
     } onclick="upgrade(${i})" >Price: ${Math.round(
       elementas.jega + elementas.jega / 3
     )}</button>`;
-    buttons += `<p>Power: ${elementas.jega} <p style="color: green;">+5</p></p>`;
+    chaarVidus += `<p>Power: ${elementas.jega} <p style="color: green;">+5</p></p>`;
   }
   for (let j = 0; j < savasData.ownedSoligers.length; j++) {
     if (
       homeSqueres[i].ocupied === null &&
       savasData.ownedSoligers[j].homeSquere === null
     ) {
-      buttons += `<button onclick="savasData.ownedSoligers[${j}].homeSquere = ${i}; homeSqueres[${i}].ocupied = ${j}; sudeliokSavus(); selectCharacter.style.display = 'none';">
-                        ${savasData.ownedSoligers[j].nr}
-                        </button>`;
+      chaarVidus += `<div style="width: 100%; display: flex; justify-content: space-around; background: #d4a76a; border: 2px solid black; margin-top: 5px;">
+      
+      <p> Name:${soligers[savasData.ownedSoligers[j].nr].name}</p>
+          <div class="shop-item-icon">
+                 <img
+  src="${soligers[savasData.ownedSoligers[j].nr].img}"
+  
+  width="650"
+  height="850"
+  style="position: absolute; top: 0px; left: -10px;"
+/>
+                 </div>
+      <p>Power:${soligers[savasData.ownedSoligers[j].nr].jega + savasData.ownedSoligers[j].extraData.damigeUp}</}</p>
+      
+      <button onclick="savasData.ownedSoligers[${j}].homeSquere = ${i}; homeSqueres[${i}].ocupied = ${j}; sudeliokSavus(); selectCharacter.style.display = 'none';">
+                        Select soliger
+                        </button></div>`;
     }
   }
 
@@ -356,7 +371,7 @@ function updateLangeliuVidu(i) {
                       <button style="background: #d4a76a; padding: 5px 10px; margin: 0; font-weight: bold;" onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
                     </div>
                     <p>Selected Character</p>
-                   ` + `${buttons}`;
+                   ` + `${chaarVidus}`;
 }
 function upgrade(i) {
   if (typeof i !== "number" || i < 0 || i >= homeSqueres.length) return;
