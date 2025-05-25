@@ -3,8 +3,7 @@ class veikejas {
     this.x = x;
     this.y = y;
     this.data = data;
-    this.jega =
-      this.data.extraData?.damigeUp + this.data.jega ?? this.data.jega;
+    this.jega = this.data.extraData?.damigeUp + this.data.jega ?? this.data.jega;
     this.givybesStart = data.givybes ?? 100;
     this.dydis = data.dydis;
     this.greitis = data.greitis ?? 1;
@@ -39,6 +38,7 @@ class veikejas {
     this.pradejauPulti = true;
     this.greitisSpriteSukimui = 9;
     this.lost = false;
+    this.colorSpin = Math.random() * 1000; 
   }
   kadras() {
     if (isNaN(deltaTime)) {
@@ -129,6 +129,10 @@ class veikejas {
     //       ctx.fill();
     ctx.globalAlpha = 1.0;
     ctx.shadowBlur = 0;
+    if(this.data?.hard == 3){
+      this.colorSpin +=deltaTime / 100;
+      ctx.filter = `hue-rotate(${this.colorSpin * 10}deg)`;
+    }
     ctx.drawImage(
       this.img,
       this.esamasKadrasX,
@@ -140,7 +144,7 @@ class veikejas {
       Dydis[this.dydis][0],
       Dydis[this.dydis][1]
     );
-
+    ctx.filter = "none";
     if (this.givybes) {
       ctx.fillStyle = "red";
       if (this.givybes >= 0 && this.givybes != this.givybesStart) {
