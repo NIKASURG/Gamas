@@ -422,3 +422,28 @@ function spawnDelayByProgress(current, total, base = 2000) {
   let factor = 1 - Math.abs(progress - 0.5) * 2; // 1 → lėčiausias kai per vidurį
   return base * factor;
 }
+function nextRound(){
+   leftVaveHp = 0;
+    pause = false;
+    bangosPradeta = true;
+    waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed);
+    apskaiciokWaveHp();
+    vaveHp = leftVaveHp;
+    setRumuHp();
+    nextRoundButton.style.display = "none";
+    document.getElementById("upgradeCastle").style.display = "none";
+    document.getElementById("shopButton").style.display = "none";
+    document.getElementById("speedUp").style.display = "block";
+    document.getElementById("autoRun").display = "block";
+
+    pralaimeta = false;
+}
+function wavePabaiga() {
+  document.getElementById("nextRoundButton").style.display = "";
+  document.getElementById("shopButton").style.display = "block";
+  document.getElementById("upgradeCastle").style.display = "block";
+  document.getElementById("speedUp").style.display = "none";
+  document.getElementById("autoRun").style.display = "none";
+  bangosPradeta = false;
+  saveDataInFireStore();
+}

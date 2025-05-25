@@ -63,7 +63,7 @@ class veikejas {
         if (this.linkMirties) {
           this.mires = true;
           if (!this.lost) {
-            savasData.coins += this.data.hard;
+            savasData.coins += this.data.revard;
           }
         } else {
           this.esamasKadrasX = 0;
@@ -129,7 +129,7 @@ class veikejas {
     //       ctx.fill();
     ctx.globalAlpha = 1.0;
     ctx.shadowBlur = 0;
-    if(this.data?.hard == 3){
+    if(this.data?.hard == 5){
       this.colorSpin +=deltaTime / 100;
       ctx.filter = `hue-rotate(${this.colorSpin * 10}deg)`;
     }

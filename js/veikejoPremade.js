@@ -25,6 +25,7 @@ let enemes = [
     hard: 1,
     trankymoY: 15,
     trankymoXilgis: 6,
+    revard:2
   },
   {
     greitis: 0.095,
@@ -38,9 +39,10 @@ let enemes = [
     givybes: 200,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
-    hard: 3,
+    hard: 5,
     trankymoY: 15,
     trankymoXilgis: 6,
+    revard:3
   },
   {
     greitis: 0.089,
@@ -54,9 +56,10 @@ let enemes = [
     givybes: 500,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
-    hard: 5,
+    hard: 15,
     trankymoY: 15,
     trankymoXilgis: 6,
+    revard:5
   },
   {
     greitis: 0.079,
@@ -70,9 +73,10 @@ let enemes = [
     givybes: 800,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
-    hard: 10,
+    hard: 22,
     trankymoY: 15,
     trankymoXilgis: 6,
+    revard:15
   },
 ];
 let soligers = [

@@ -148,49 +148,39 @@ function animate(timestamp) {
       }
     }
 
-    if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
-      console.log("Wave baigta");
-      bangosPradeta = false;
-      waweImamas = 0;
-      waweLaikas = 0;
-      if (!pralaimeta) {
-        wave++;
-        document.getElementById("won").style.display = "block";
+if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
+  console.log("Wave baigta");
+  waweImamas = 0;
+  waweLaikas = 0;
+  if (!pralaimeta) {
+    wave++;
+    document.getElementById("won").style.display = "block";
 
-        setTimeout(() => {
-          document.getElementById("won").style.display = "none";
-        }, 1300);
-        console.log("won");
-      }
-      nextRoundButton.style.display = "";
-      document.getElementById("shopButton").style.display = "block";
-      document.getElementById("upgradeCastle").style.display = "block";
-      document.getElementById("speedUp").style.display = "none";
+    setTimeout(() => {
+      document.getElementById("won").style.display = "none";
+    }, 1300);
+    console.log("won");
+    wavePabaiga();
+  }
+}
 
-      saveDataInFireStore();
-    }
-    if (rumuHp <= 0) {
-      priesai.forEach((priesas) => {
-        priesas.givybes = -1;
-        priesas.lost = true;
-      });
-      pralaimeta = true;
-      document.getElementById("lost").style.display = "block";
+if (rumuHp <= 0) {                                  
+  priesai.forEach((priesas) => {
+    priesas.givybes = -1;
+    priesas.lost = true;
+  });
+  pralaimeta = true;
+  document.getElementById("lost").style.display = "block";
 
-      setTimeout(() => {
-        document.getElementById("lost").style.display = "none";
-      }, 1300);
-      waweEnemesCombination = [];
-      waweImamas = 0;
-      rumuHp = 0;
-      nextRoundButton.style.display = "";
-      document.getElementById("shopButton").style.display = "block";
-      document.getElementById("upgradeCastle").style.display = "block";
-      document.getElementById("speedUp").style.display = "none";
-      bangosPradeta = false;
-
-      console.log("lost");
-    }
+  setTimeout(() => {
+    document.getElementById("lost").style.display = "none";
+  }, 1300);
+  waweEnemesCombination = [];
+  waweImamas = 0;
+  rumuHp = 0;
+  wavePabaiga();                                                                                    
+  console.log("lost");
+}
   }
 
   if (!bangosPradeta) {

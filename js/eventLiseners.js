@@ -49,19 +49,8 @@ document.getElementById("playButton").addEventListener("click", function () {
 document
   .getElementById("nextRoundButton")
   .addEventListener("click", function () {
-    leftVaveHp = 0;
-    pause = false;
-    bangosPradeta = true;
-    waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed);
-    apskaiciokWaveHp();
-    vaveHp = leftVaveHp;
-    setRumuHp();
-    nextRoundButton.style.display = "none";
-    document.getElementById("upgradeCastle").style.display = "none";
-    document.getElementById("shopButton").style.display = "none";
-    document.getElementById("speedUp").style.display = "block";
-
-    pralaimeta = false;
+    nextRound()
+   
   });
 canvas.addEventListener("mousemove", function (e) {
   pelesX = e.offsetX;
@@ -159,4 +148,7 @@ document.getElementById("upgradeCastleButton").addEventListener("click", () => {
     savasData.coins -= Math.round((savasData.rumuHp - addHp) / 2);
     updateShopText(addHp);
   }
+});
+document.getElementById("autoRun").addEventListener("click", () => {
+  
 });
