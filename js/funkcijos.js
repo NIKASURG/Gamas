@@ -191,7 +191,7 @@ function apskaiciokWaveHp() {
   for (let i = 0; i < waweEnemesCombination.length; i++) {
     let hardReiksme = waweEnemesCombination[i];
     let priesas = enemes.find((e) => e.hard === hardReiksme);
-
+    waveWorth += priesas.revard;
     leftVaveHp += priesas.givybes;
   }
 }
@@ -435,7 +435,9 @@ function nextRound(){
     document.getElementById("shopButton").style.display = "none";
     document.getElementById("speedUp").style.display = "block";
     document.getElementById("autoRun").display = "block";
-
+    
+    document.getElementById("autoRun").innerHTML="Auto run"+ autoRun?"ON":"OFF"  +"<br> cost: " + waveWorth * 0.4
+    console.log(autoRun)
     pralaimeta = false;
 }
 function wavePabaiga() {
@@ -446,4 +448,14 @@ function wavePabaiga() {
   document.getElementById("autoRun").style.display = "none";
   bangosPradeta = false;
   saveDataInFireStore();
+  if(autoRun && savasData.coins >= Math.round(waveWorth * 0.4)){
+      savasData.coins -= Math.round(waveWorth * 0.4)
+      autoRun = true
+      nextRound()
+  }
+  else{
+      autoRun = false;
+      
+    
+  }
 }
