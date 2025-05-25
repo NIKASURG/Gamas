@@ -47,7 +47,7 @@ document.getElementById("playButton").addEventListener("click", function () {
   }
 });
 document
-  .getElementById("nextRoundButton")  
+  .getElementById("nextRoundButton")
   .addEventListener("click", function () {
     leftVaveHp = 0;
     pause = false;
@@ -58,9 +58,8 @@ document
     setRumuHp();
     nextRoundButton.style.display = "none";
     document.getElementById("upgradeCastle").style.display = "none";
-      document.getElementById("shopButton").style.display = "none";
+    document.getElementById("shopButton").style.display = "none";
     document.getElementById("speedUp").style.display = "block";
-
 
     pralaimeta = false;
   });
@@ -154,12 +153,10 @@ document.getElementById("speedUp").addEventListener("click", () => {
   }
 });
 document.getElementById("upgradeCastleButton").addEventListener("click", () => {
-  if( savasData.coins >= Math.round( (savasData.rumuHp - addHp)/2)){
-    addHp =  Math.round(savasData.rumuHp / 50);
-    savasData.rumuHp += addHp
-    savasData.coins -= Math.round( (savasData.rumuHp - addHp)/2)
-    updateShopText( addHp)
-
+  addHp = Math.round(savasData.rumuHp / 50);
+  if (savasData.coins >= Math.round((savasData.rumuHp - addHp) / 2)) {
+    savasData.rumuHp += addHp;
+    savasData.coins -= Math.round((savasData.rumuHp - addHp) / 2);
+    updateShopText(addHp);
   }
 });
-

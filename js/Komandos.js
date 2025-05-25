@@ -2,7 +2,6 @@ const nextRoundButton = document.getElementById("nextRoundButton");
 
 const input = document.getElementById("komandos");
 
-
 input.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     const komanda = input.value.trim();
@@ -43,7 +42,7 @@ input.addEventListener("keydown", function (event) {
         break;
       case "clear":
         localStorage.removeItem("gameState");
-        location.reload()
+        location.reload();
         break;
       case "sa":
         showAtack = !showAtack;

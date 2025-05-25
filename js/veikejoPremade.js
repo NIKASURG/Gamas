@@ -3,7 +3,7 @@ let ePlotis = window.innerWidth;
 let savasData;
 let wave;
 let setings;
-let deltaTime = 0
+let deltaTime = 0;
 
 let Dydis = [
   [ePlotis / 10, ePlotis / 10],
@@ -73,7 +73,7 @@ let enemes = [
     hard: 10,
     trankymoY: 15,
     trankymoXilgis: 6,
-  }
+  },
 ];
 let soligers = [
   {
@@ -103,7 +103,6 @@ let soligers = [
     jega: 80,
     saudimoGreitis: 40,
     name: "Soske",
-
   },
   {
     saudimoGreitis: 2,
@@ -118,8 +117,7 @@ let soligers = [
     jega: 50,
     saudimoGreitis: 40,
     name: "BigBOss",
-    aura: 'cold'
-
+    aura: "cold",
   },
   {
     saudimoGreitis: 2,
@@ -134,7 +132,6 @@ let soligers = [
     jega: 100,
     saudimoGreitis: 40,
     name: "Silke",
-
   },
   {
     saudimoGreitis: 2,
@@ -149,7 +146,6 @@ let soligers = [
     jega: 200,
     saudimoGreitis: 40,
     name: "Rudis",
-
   },
 ];
 soligers.forEach((soldier, index) => {
@@ -159,9 +155,23 @@ soligers.forEach((soldier, index) => {
 pi = 3;
 ji = 6;
 
-
-
-const langeliuCords =[[4,84],[10,84],[16,84],[22,84],[28 ,84],[7,72],[13,72],[19,72],[25,72],[8,60],[16,62],[24,60],[11,50],[21,50],[16,40]]
+const langeliuCords = [
+  [4, 84],
+  [10, 84],
+  [16, 84],
+  [22, 84],
+  [28, 84],
+  [7, 72],
+  [13, 72],
+  [19, 72],
+  [25, 72],
+  [8, 60],
+  [16, 62],
+  [24, 60],
+  [11, 50],
+  [21, 50],
+  [16, 40],
+];
 class langeliaiNamu {
   constructor() {
     this.x = 0;
@@ -173,30 +183,25 @@ class langeliaiNamu {
     this.ocupied = null;
   }
   update(i, j) {
-    this.x = (i/100) * ePlotis;
-    this.y = (j/100) * eAukstis;
-    this.xProc = i -0.7;
-    this.yProc = j -1.5;
+    this.x = (i / 100) * ePlotis;
+    this.y = (j / 100) * eAukstis;
+    this.xProc = i - 0.7;
+    this.yProc = j - 1.5;
     this.plotis = (5 / 100) * ePlotis;
     this.aukstis = (5 / 100) * ePlotis;
   }
 }
 let homeSqueres = [];
 
-langeliuCords.forEach(e => {
-  
+langeliuCords.forEach((e) => {
   homeSqueres.push(new langeliaiNamu());
 });
-  
-
 
 function setHomeSqueres() {
   // let  laik = 0;
   for (let i = 0; i < homeSqueres.length; i++) {
     const element = homeSqueres[i];
-    element.update(langeliuCords[i][0],langeliuCords[i][1])
+    element.update(langeliuCords[i][0], langeliuCords[i][1]);
   }
-  
- 
 }
 setHomeSqueres();

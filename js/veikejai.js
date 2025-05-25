@@ -3,8 +3,9 @@ class veikejas {
     this.x = x;
     this.y = y;
     this.data = data;
-    this.jega = this.data.extraData?.damigeUp + this.data.jega?? this.data.jega 
-    this.givybesStart = data.givybes?? 100;
+    this.jega =
+      this.data.extraData?.damigeUp + this.data.jega ?? this.data.jega;
+    this.givybesStart = data.givybes ?? 100;
     this.dydis = data.dydis;
     this.greitis = data.greitis ?? 1;
     this.spriteIlgisKadru = data.spriteIlgis;
@@ -21,7 +22,7 @@ class veikejas {
     };
     this.saudimoGreitis = data.saudimoGreitis;
     this.saudimoLaukimas = Math.random() * data.saudimoGreitis;
-    this.taikinys =   data.extraData?.target ?? "first";
+    this.taikinys = data.extraData?.target ?? "first";
     this.mires = false;
     this.linkMirties = false;
     this.esamasKadrasY = 0;
@@ -36,33 +37,33 @@ class veikejas {
     this.pasirinktas = true;
     this.trankyk = false;
     this.pradejauPulti = true;
-    this.greitisSpriteSukimui = 9
+    this.greitisSpriteSukimui = 9;
     this.lost = false;
   }
   kadras() {
-if(isNaN(deltaTime) ){
-  console.log('das')
-  return
-}
-  let daug
-    if(this.greitis == 1|| this.greitis == 0){
-       daug = 1
-    }else{
-       daug = 10* this.greitis  ;
+    if (isNaN(deltaTime)) {
+      console.log("das");
+      return;
+    }
+    let daug;
+    if (this.greitis == 1 || this.greitis == 0) {
+      daug = 1;
+    } else {
+      daug = 10 * this.greitis;
     }
 
-    this.spriteGreitis += deltaTime / 22 *daug;
+    this.spriteGreitis += (deltaTime / 22) * daug;
     if (this.spriteGreitis > this.greitisSpriteSukimui - this.reikemiKadrai) {
       this.spriteGreitis = 0;
-      
+
       // console.log(this.kadroPlotis,this.reikemiKadrai)
       this.esamasKadrasX += this.kadroPlotis;
 
       if (this.esamasKadrasX > this.kadroPlotis * this.reikemiKadrai - 1) {
-        if (this.linkMirties ) {
+        if (this.linkMirties) {
           this.mires = true;
-          if(!this.lost){
-          savasData.coins += this.data.hard;
+          if (!this.lost) {
+            savasData.coins += this.data.hard;
           }
         } else {
           this.esamasKadrasX = 0;
@@ -86,14 +87,14 @@ if(isNaN(deltaTime) ){
     }
     // console.log(this.data)
     this.kadras();
-   
+
     ctx.save();
     ctx.scale(this.veikejoZiurejimoPuse, 1);
-   
+
     if (this.givybes <= 0) {
       this.greitis = 0;
       if (this.primasPoMirties) {
-        this.greitisSpriteSukimui = 13
+        this.greitisSpriteSukimui = 13;
         this.esamasKadrasX = 0;
         this.primasPoMirties = false;
       }
@@ -112,25 +113,20 @@ if(isNaN(deltaTime) ){
     //  ctx.shadowColor = "black";
     //     ctx.shadowBlur = 20;
 
-
-
-
-    
     //         ctx.globalAlpha = 0.3;
-        
-  
-//       ctx.strokeStyle = "gray";
-//       ctx.fillStyle = "rgba(65, 65, 85, " + blure + ")";
-//       ctx.beginPath();
-//       ctx.roundRect(
-//          atvaizdoX + Dydis[this.dydis][0] / 3,
-//       atvaizdoY + Dydis[this.dydis][1] / 1.5,
-//       Dydis[this.dydis][0] / 3,
-//       Dydis[this.dydis][1]/ 5,
-//         [5, 5, 5, 5]
-//       );
-//       ctx.stroke();
-//       ctx.fill();
+
+    //       ctx.strokeStyle = "gray";
+    //       ctx.fillStyle = "rgba(65, 65, 85, " + blure + ")";
+    //       ctx.beginPath();
+    //       ctx.roundRect(
+    //          atvaizdoX + Dydis[this.dydis][0] / 3,
+    //       atvaizdoY + Dydis[this.dydis][1] / 1.5,
+    //       Dydis[this.dydis][0] / 3,
+    //       Dydis[this.dydis][1]/ 5,
+    //         [5, 5, 5, 5]
+    //       );
+    //       ctx.stroke();
+    //       ctx.fill();
     ctx.globalAlpha = 1.0;
     ctx.shadowBlur = 0;
     ctx.drawImage(
@@ -148,7 +144,18 @@ if(isNaN(deltaTime) ){
     if (this.givybes) {
       ctx.fillStyle = "red";
       if (this.givybes >= 0 && this.givybes != this.givybesStart) {
-        showBar(this.x  * this.veikejoZiurejimoPuse+ (ePlotis / Dydis[this.dydis][0] / 2.3) * this.veikejoZiurejimoPuse ,this.y + 3,Dydis[this.dydis][0] / 3,  eAukstis / 300,this.givybes,this.givybesStart,"red",'black',-1)
+        showBar(
+          this.x * this.veikejoZiurejimoPuse +
+            (ePlotis / Dydis[this.dydis][0] / 2.3) * this.veikejoZiurejimoPuse,
+          this.y + 3,
+          Dydis[this.dydis][0] / 3,
+          eAukstis / 300,
+          this.givybes,
+          this.givybesStart,
+          "red",
+          "black",
+          -1
+        );
       }
       if (rodytiGivybes) {
         ctx.fillStyle = "white";
@@ -192,7 +199,7 @@ if(isNaN(deltaTime) ){
     }
     if (this.saudimoGreitis < this.saudimoLaukimas) {
       this.saudimoLaukimas = 0;
-      streles.push(new Sovinys(this.x, this.y, this.jega , this.taikinys));
+      streles.push(new Sovinys(this.x, this.y, this.jega, this.taikinys));
       // console.log(priesas)
       let atvaizdoX = (this.x / 100) * ePlotis;
       if (this.veikejoZiurejimoPuse == -1) {
@@ -227,8 +234,8 @@ class Sovinys {
     this.g = 0.1;
     this.priesas = suzeikPriesa(taikinis);
 
-    const dx = this.priesas?.x - x1?? 50;
-    const dy = this.priesas?.y - y1?? 70;
+    const dx = this.priesas?.x - x1 ?? 50;
+    const dy = this.priesas?.y - y1 ?? 70;
     const dist = Math.sqrt(dx * dx + dy * dy) || 1;
 
     this.kryptisX = dx / dist;
@@ -242,7 +249,7 @@ class Sovinys {
   animuok() {
     if (!this.priesas) return;
 
-    this.givenimoLaikas +=  deltaTime;
+    this.givenimoLaikas += deltaTime;
     if (this.givenimoLaikas > 5000) {
       this.mirus = true;
       return;

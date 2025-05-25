@@ -1,6 +1,18 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  collection,
+  addDoc,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCTSRn86V81fCLsgagpHXvEc0RIfcYMEPE",
@@ -9,7 +21,7 @@ const firebaseConfig = {
   storageBucket: "towerdefencegame-5a530.firebasestorage.app",
   messagingSenderId: "58157639757",
   appId: "1:58157639757:web:ee265037988c33ab2ad404",
-  measurementId: "G-6EDLH1JKEX"
+  measurementId: "G-6EDLH1JKEX",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -45,13 +57,13 @@ document.getElementById("google-login").addEventListener("click", () => {
       await setDoc(doc(db, "users", user.uid), {
         name: user.displayName,
         email: user.email,
-        lastLogin: new Date()
+        lastLogin: new Date(),
       });
 
       document.getElementById("showLogin").style.display = "none";
       document.getElementById("showLogout").style.display = "block";
       document.getElementById("userEmail").textContent = user.email;
-      loadUserData()
+      loadUserData();
     })
     .catch((error) => {
       console.error("Prisijungimo klaida:", error.message);
@@ -59,7 +71,8 @@ document.getElementById("google-login").addEventListener("click", () => {
 });
 
 document.getElementById("google-logout").addEventListener("click", () => {
-  auth.signOut()
+  auth
+    .signOut()
     .then(() => {
       console.log("Atsijungė");
       document.getElementById("showLogin").style.display = "block";
@@ -71,19 +84,18 @@ document.getElementById("google-logout").addEventListener("click", () => {
     });
 });
 
-
 export async function saveDataInFireStore(gameState) {
-  console.log('data isaugotas')
+  console.log("data isaugotas");
   gameState = {
     wave: wave,
     savasData: savasData,
-      };
+  };
 
   if (user) {
     try {
       const docRef = doc(db, "users", user.uid, "results", "gameData"); // Pakeisk "gameData" į norimą dokumento ID
       await setDoc(docRef, {
-        gameState: gameState
+        gameState: gameState,
       });
       console.log("Duomenys sėkmingai perrašyti.");
     } catch (e) {
@@ -94,21 +106,20 @@ export async function saveDataInFireStore(gameState) {
   }
 }
 
-
 export async function loadUserData() {
-  const querySnapshot = await getDocs(collection(db, "users", user.uid, "results"));
+  const querySnapshot = await getDocs(
+    collection(db, "users", user.uid, "results")
+  );
   querySnapshot.forEach((doc) => {
-   
     const data = doc.data().gameState;
 
     wave = data.wave;
     savasData = data.savasData;
-    console.log(wave,data)
+    console.log(wave, data);
   });
-  
 }
 setInterval(() => {
   if (user) saveDataInFireStore();
-}, 5 * 60 * 1000); 
+}, 5 * 60 * 1000);
 
 window.saveDataInFireStore = saveDataInFireStore;

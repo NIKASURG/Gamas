@@ -6,9 +6,9 @@ let streles = [];
 let selectCharacter = document.getElementById("selectCharacter");
 let lock = true;
 let pilisImg = new Image();
-pilisImg.src = 'img/castle_no_background.png'
+pilisImg.src = "img/castle_no_background.png";
 let zolesImg = new Image();
-zolesImg.src = 'img/grass.png'
+zolesImg.src = "img/grass.png";
 // ctx.translate(0, 0);
 let targetOptions = ["first", "strongest", "weakest", "random", "last"];
 //  rarity pasirinkimai "legendary", "rare",,"common"
@@ -49,9 +49,9 @@ if (setings == undefined) {
   };
 }
 if (rumuHp == undefined) {
-  rumuHp = 100
+  rumuHp = 100;
 }
-updateShopText( Math.round(savasData.rumuHp / 50) ); 
+updateShopText(Math.round(savasData.rumuHp / 50));
 sudeliokSavus();
 
 setTimeout(() => {
@@ -109,21 +109,29 @@ function animate(timestamp) {
   // FPS skaičiavimas
   fpsCounter++;
   ctx.drawImage(backGrount, 0, 0, ePlotis, eAukstis);
-  if(isNaN(deltaTime)){
+  if (isNaN(deltaTime)) {
     deltaTime = 0;
   }
-    waweLaikas+= deltaTime;
+  waweLaikas += deltaTime;
   let ran = createSeededRandom(seed + waweImamas);
-  ctx.drawImage(tekelisImg  ,0,0,ePlotis,eAukstis)
-  
+  ctx.drawImage(tekelisImg, 0, 0, ePlotis, eAukstis);
+
   streles = streles.filter((str) => !(str.y > 100 || str.mirus));
-  ctx.drawImage(pilisImg,(2/100)*ePlotis,(10.3/100)*ePlotis,ePlotis/3,ePlotis/2);
-   for (let i = 0; i < streles.length; i++) {
+  ctx.drawImage(
+    pilisImg,
+    (2 / 100) * ePlotis,
+    (10.3 / 100) * ePlotis,
+    ePlotis / 3,
+    ePlotis / 2
+  );
+  for (let i = 0; i < streles.length; i++) {
     streles[i].animuok();
   }
-  if (bangosPradeta && waweLaikas > spawnDelayByProgress(waweImamas, waweEnemesCombination.length)) {
-
-        waweLaikas = 0;
+  if (
+    bangosPradeta &&
+    waweLaikas > spawnDelayByProgress(waweImamas, waweEnemesCombination.length)
+  ) {
+    waweLaikas = 0;
 
     for (let i = 0; i < ran() * 4; i++) {
       if (waweImamas < waweEnemesCombination.length) {
@@ -139,7 +147,7 @@ function animate(timestamp) {
         priesai.sort((a, b) => a.y - b.y);
       }
     }
-    
+
     if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
       console.log("Wave baigta");
       bangosPradeta = false;
@@ -148,18 +156,16 @@ function animate(timestamp) {
       if (!pralaimeta) {
         wave++;
         document.getElementById("won").style.display = "block";
-       
-          setTimeout(() => {
-            document.getElementById("won").style.display = "none";
-          }
-          , 1300);
+
+        setTimeout(() => {
+          document.getElementById("won").style.display = "none";
+        }, 1300);
         console.log("won");
       }
       nextRoundButton.style.display = "";
       document.getElementById("shopButton").style.display = "block";
       document.getElementById("upgradeCastle").style.display = "block";
       document.getElementById("speedUp").style.display = "none";
-
 
       saveDataInFireStore();
     }
@@ -169,12 +175,11 @@ function animate(timestamp) {
         priesas.lost = true;
       });
       pralaimeta = true;
-        document.getElementById("lost").style.display = "block";
-        
-        setTimeout(() => {
-            document.getElementById("lost").style.display = "none";
-        }
-        , 1300);
+      document.getElementById("lost").style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("lost").style.display = "none";
+      }, 1300);
       waweEnemesCombination = [];
       waweImamas = 0;
       rumuHp = 0;
@@ -197,8 +202,7 @@ function animate(timestamp) {
 
       if (arPeleViduje(pelesX, pelesY, homeSqueres[i])) {
         blure = 0.7;
-        if(!arTelefonas()){
-
+        if (!arTelefonas()) {
           canvas.style.cursor = "pointer";
         }
         if (mouseDown && !lock) {
@@ -266,9 +270,8 @@ function animate(timestamp) {
     "orange",
     "brown"
   );
- 
 
-  ctx.drawImage(zolesImg  ,0,0,ePlotis,eAukstis)
+  ctx.drawImage(zolesImg, 0, 0, ePlotis, eAukstis);
   if (debugScrean || rodytiFps) {
     if (timestamp - fpsLastUpdate > 1000) {
       currentFps = fpsCounter;
@@ -278,11 +281,11 @@ function animate(timestamp) {
     ctx.fillText(`FPS: ${currentFps}`, 20, eAukstis - 50);
   }
 
-
   if (optiTikrint != savasData.coins) {
     optiTikrint = savasData.coins;
-    addHp=  Math.round(savasData.rumuHp / 50) 
-    document.getElementById("upgradeCastleButton").disabled = savasData.coins < Math.round( (savasData.rumuHp - addHp)/2)
+    addHp = Math.round(savasData.rumuHp / 50);
+    document.getElementById("upgradeCastleButton").disabled =
+      savasData.coins < Math.round((savasData.rumuHp - addHp) / 2);
   }
   if (debugScrean) {
     ctx.fillText(`Wave priesu: ${waweEnemesCombination.length}`, 20, 70);

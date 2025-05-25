@@ -44,8 +44,9 @@ function generateEnemyWave(
 ) {
   let random = createSeededRandom(seed + waveNumber);
 
-  let difficultyMultiplier = 1.5 + waveNumber * 0.05; 
-  let totalDifficulty = (baseDifficulty + waveNumber * growth) * difficultyMultiplier;
+  let difficultyMultiplier = 1.5 + waveNumber * 0.05;
+  let totalDifficulty =
+    (baseDifficulty + waveNumber * growth) * difficultyMultiplier;
 
   let remaining = totalDifficulty;
   let result = [];
@@ -53,10 +54,10 @@ function generateEnemyWave(
   while (remaining > 0) {
     let progress = 1 - remaining / totalDifficulty;
 
-    let dynamicRatio = 0.05 + progress * 0.3; 
+    let dynamicRatio = 0.05 + progress * 0.3;
     let maxAllowed = remaining * dynamicRatio;
 
-    let allowOverpowered = random() < (0.02 + waveNumber * 0.005); 
+    let allowOverpowered = random() < 0.02 + waveNumber * 0.005;
 
     let validChoices = enemyCosts.filter(
       (cost) => cost <= remaining && (allowOverpowered || cost <= maxAllowed)
@@ -74,7 +75,6 @@ function generateEnemyWave(
 
   return result;
 }
-
 
 function createSeededRandom(seed) {
   return function () {
@@ -265,7 +265,7 @@ function nupirkti(lock, kaina, nmr) {
   savasData.ownedSoligers.push({
     nr: nmr,
     homeSquere: null,
-    extraData: { speedUp: 0, damigeUp: 0  ,target: "first"},
+    extraData: { speedUp: 0, damigeUp: 0, target: "first" },
   });
   apsipirkti();
 }
@@ -300,10 +300,10 @@ function changeTarget(index, i) {
   const kelintas = targetOptions.indexOf(
     savasData.ownedSoligers[index].extraData.target
   );
-  
+
   if (targetOptions.length - 1 > kelintas) {
     savasData.ownedSoligers[index].extraData.target =
-    targetOptions[kelintas + 1];
+      targetOptions[kelintas + 1];
   } else {
     savasData.ownedSoligers[index].extraData.target = targetOptions[0];
   }
@@ -393,16 +393,14 @@ function arTelefonas() {
   return /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 }
 
-function updateShopText(addHp = Math.round(savasData.rumuHp / 50)){
-    document.getElementById("upgradeCastleButton").innerHTML ='+' +addHp 
-    document.getElementById("castleHp").innerHTML = savasData.rumuHp +"Hp"
-    document.getElementById("castleUpPrice").innerHTML = "Price: "+ Math.round( (savasData.rumuHp - addHp)/2)
-    document.getElementById("upgradeCastleButton").disabled = savasData.coins < Math.round( (savasData.rumuHp - addHp)/2)
-
+function updateShopText(addHp = Math.round(savasData.rumuHp / 50)) {
+  document.getElementById("upgradeCastleButton").innerHTML = "+" + addHp;
+  document.getElementById("castleHp").innerHTML = savasData.rumuHp + "Hp";
+  document.getElementById("castleUpPrice").innerHTML =
+    "Price: " + Math.round((savasData.rumuHp - addHp) / 2);
+  document.getElementById("upgradeCastleButton").disabled =
+    savasData.coins < Math.round((savasData.rumuHp - addHp) / 2);
 }
-
-
-
 
 function spawnDelayByProgress(current, total, base = 2000) {
   let progress = current / total; // 0.0..1.0
