@@ -434,9 +434,17 @@ function nextRound(){
     document.getElementById("upgradeCastle").style.display = "none";
     document.getElementById("shopButton").style.display = "none";
     document.getElementById("speedUp").style.display = "block";
-    document.getElementById("autoRun").display = "block";
+    document.getElementById("autoRun").style.display = "block";
     
-    document.getElementById("autoRun").innerHTML="Auto run"+ autoRun?"ON":"OFF"  +"<br> cost: " + waveWorth * 0.4
+
+    if(!autoRun){
+      setTimeout(() => {
+        if(!autoRun){
+    document.getElementById("autoRun").style.display = "none"}
+      },5000
+      )
+    }
+    document.getElementById("autoRun").innerHTML = "Auto run "+ (autoRun?"ON":"OFF")  +";</br> cost for this round: " + Math.round(waveWorth * 0.2)
     console.log(autoRun)
     pralaimeta = false;
 }
@@ -446,10 +454,11 @@ function wavePabaiga() {
   document.getElementById("upgradeCastle").style.display = "block";
   document.getElementById("speedUp").style.display = "none";
   document.getElementById("autoRun").style.display = "none";
+  
   bangosPradeta = false;
   saveDataInFireStore();
-  if(autoRun && savasData.coins >= Math.round(waveWorth * 0.4)){
-      savasData.coins -= Math.round(waveWorth * 0.4)
+  if(autoRun && savasData.coins >= Math.round(waveWorth * 0.2)){
+      savasData.coins -= Math.round(waveWorth * 0.2)
       autoRun = true
       nextRound()
   }
