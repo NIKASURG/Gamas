@@ -73,6 +73,8 @@ let pelesX = 0;
 let pelesY = 0;
 let mouseDown = false;
 let vaveHp = 0;
+let waveWorth = 0
+let autoRun = false
 let leftVaveHp = 0;
 
 enemes.forEach((e) => {
