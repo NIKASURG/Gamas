@@ -153,11 +153,11 @@ document.getElementById("autoRun").addEventListener("click", () => {
   if(autoRun){
     autoRun = false
   }  
-  if(Math.round(waveWorth * 0.4)<= savasData.coins){
-       savasData.coins -= Math.round(waveWorth * 0.2)
+  if(Math.round(waveWorth * 0.1)<= savasData.coins){
+       savasData.coins -= Math.round(waveWorth * 0.1)
       autoRun = true
     }
-    document.getElementById("autoRun").innerHTML = "Auto run "+ (autoRun?"ON":"OFF")  +";</br> cost for this round: " + Math.round(waveWorth * 0.2)
+    document.getElementById("autoRun").innerHTML = "Auto run "+ (autoRun?"ON":"OFF")  +";</br> cost for this round: " + Math.round(waveWorth * 0.1)
 
 
 });

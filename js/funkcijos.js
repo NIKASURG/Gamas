@@ -424,6 +424,7 @@ function spawnDelayByProgress(current, total, base = 2000) {
 }
 function nextRound(){
    leftVaveHp = 0;
+   waveWorth = 0;
     pause = false;
     bangosPradeta = true;
     waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed);
@@ -444,7 +445,7 @@ function nextRound(){
       },5000
       )
     }
-    document.getElementById("autoRun").innerHTML = "Auto run "+ (autoRun?"ON":"OFF")  +";</br> cost for this round: " + Math.round(waveWorth * 0.2)
+    document.getElementById("autoRun").innerHTML = "Auto run "+ (autoRun?"ON":"OFF")  +";</br> cost for this round: " + Math.round(waveWorth * 0.1)
     console.log(autoRun)
     pralaimeta = false;
 }
@@ -454,11 +455,11 @@ function wavePabaiga() {
   document.getElementById("upgradeCastle").style.display = "block";
   document.getElementById("speedUp").style.display = "none";
   document.getElementById("autoRun").style.display = "none";
-  
+  waweImamas = 0;
   bangosPradeta = false;
   saveDataInFireStore();
-  if(autoRun && savasData.coins >= Math.round(waveWorth * 0.2)){
-      savasData.coins -= Math.round(waveWorth * 0.2)
+  if(autoRun && savasData.coins >= Math.round(waveWorth * 0.1)){
+      savasData.coins -= Math.round(waveWorth * 0.1)
       autoRun = true
       nextRound()
   }
