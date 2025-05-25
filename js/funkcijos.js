@@ -445,7 +445,7 @@ function nextRound(){
       },5000
       )
     }
-    document.getElementById("autoRun").innerHTML = "Auto run "+ (autoRun?"ON":"OFF")  +";</br> cost for this round: " + Math.round(waveWorth * 0.1)
+    document.getElementById("autoRun").innerHTML = "Auto run "+ (autoRun?"ON":"OFF")  +";</br> cost for this round: " + Math.round(waveWorth * 0.4)
     console.log(autoRun)
     pralaimeta = false;
 }
@@ -458,8 +458,8 @@ function wavePabaiga() {
   waweImamas = 0;
   bangosPradeta = false;
   saveDataInFireStore();
-  if(autoRun && savasData.coins >= Math.round(waveWorth * 0.1)){
-      savasData.coins -= Math.round(waveWorth * 0.1)
+  if(autoRun && savasData.coins >= Math.round(waveWorth * 0.4)){
+      savasData.coins -= Math.round(waveWorth * 0.4)
       autoRun = true
       nextRound()
   }
