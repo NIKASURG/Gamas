@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Castle Defender (Pertvarkytas)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* style.css */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #2c1b0e;
+            background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a76a' fill-opacity='0.15'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            color: #3a2921;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #nextRoundButton {
+            position: fixed;
+            bottom: 2%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        #main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            background: #2c1b0e; /* Toks pat kaip body, kad nebūtų mirgėjimo */
+            transition: opacity 0.5s ease-in-out;
+            opacity: 1; /* Initially visible */
+        }
+
+        .scroll-container {
+            max-width: 600px;
+            width: 90%;
+            background: #d4a76a;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%238b4513' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/svg%3E");
+            border: 8px solid #8b4513;
+            border-radius: 10px;
+            position: relative;
+            padding: 8% 5%;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
+            /* position: relative; */ /* Jau yra iš #main */
+            overflow: hidden;
+        }
+
+        .scroll-container::before,
+        .scroll-container::after {
+            content: "";
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #8b4513;
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .scroll-container::before {
+            top: -20px;
+            left: -20px;
+        }
+
+        .scroll-container::after {
+            bottom: -20px;
+            right: -20px;
+        }
+
+        .game-title {
+            font-family: "MedievalSharp", cursive;
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            color: #8b0000;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 15px rgba(139, 0, 0, 0.2);
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .game-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #8b0000, transparent);
+        }
+
+        .container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: none; /* Initially hidden */
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 15;
+            background: transparent; /* Fonas bus matomas iš body arba canvas */
+            pointer-events: none;
+        }
+
+        .game-active .container {
+            display: flex;
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        button {
+            background: #d4a76a;
+            background-image: linear-gradient(to bottom, #e5b87a, #d4a76a);
+            border: 2px solid #8b4513;
+            color: #5c2e0b;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-align: center;
+            font-family: "MedievalSharp", cursive;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2),
+                inset 0 1px 3px rgba(255, 255, 255, 0.3);
+            z-index: 20; /* Mygtukai virš kitų elementų konteineryje */
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-image: linear-gradient(to bottom, #e9c28c, #d9b07e);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3),
+                inset 0 1px 3px rgba(255, 255, 255, 0.3);
+        }
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 1px 3px rgba(255, 255, 255, 0.3);
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 2px solid transparent;
+            border-radius: 7px; /* Turi atitikti mygtuko border-radius - 2px */
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button:focus::before {
+            border-color: rgba(139, 69, 19, 0.5);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #d4a76a;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%238b4513' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/svg%3E");
+            border: 8px solid #8b4513;
+            border-radius: 10px;
+            padding: 25px 20px; /* Padidintas padding */
+            width: 90%; /* Padidintas plotis mažesniems ekranams */
+            max-width: 550px; /* Padidintas max plotis */
+            max-height: 85vh; /* Padidintas max aukštis */
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.2);
+            color: #3a2921;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px; /* Arčiau krašto */
+            right: 10px; /* Arčiau krašto */
+            background-color: #8b4513;
+            border: 2px solid #d4a76a;
+            color: #ffd700;
+            font-size: 1.5rem; /* Sumažintas, kad tilptų */
+            cursor: pointer;
+            padding: 0;
+            width: 30px; /* Sumažintas */
+            height: 30px; /* Sumažintas */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            line-height: 1; /* Geresniam X centravimui */
+        }
+
+        .close-button:hover {
+            background-color: #5d2906;
+            transform: scale(1.05);
+        }
+
+        .komanduKonteineris {
+            display: flex;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            justify-content: flex-end;
+            padding: 5px;
+            background-color: rgba(0,0,0,0.1); /* Kad matytųsi ant žaidimo */
+        }
+        .login-with-google-btn {
+            transition: background-color 0.3s, box-shadow 0.3s;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-drag: none;
+            cursor: pointer;
+            padding: 12px 16px 12px 42px;
+            border: none;
+            border-radius: 3px;
+            box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
+            color: #757575;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+                Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
+            background-color: white;
+            background-repeat: no-repeat;
+            background-position: 12px 11px;
+        }
+        .login-with-google-btn:hover {
+            box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
+        .login-with-google-btn:active { background-color: #eeeeee; }
+        .login-with-google-btn:focus {
+            outline: none;
+            box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25),
+            0 0 0 3px #c8dafc;
+        }
+        .login-with-google-btn:disabled {
+            filter: grayscale(100%);
+            background-color: #ebebeb;
+            box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
+            cursor: not-allowed;
+        }
+
+        #selectCharacter {
+            z-index: 1001;
+            display: none; /* Initially hidden */
+            flex-direction: column; /* Ensure children stack vertically */
+            align-items: center; /* Center children horizontally */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 450px; /* Sumažintas plotis, kad geriau atrodytų */
+            max-height: 80vh;
+            background-color: #2a1708;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a76a' fill-opacity='0.3'%3E%3Cpath d='M0 0h15v15H0V0zm15 0h15v15H15V0zm30 0h15v15H45V0zm15 15h15v15H60V15zM0 15h15v15H0V15zm30 0h15v15H30V15zm15 0h15v15H45V15zM0 30h15v15H0V30zm15 0h15v15H15V30zm15 0h15v15H30V30zm30 0h15v15H60V30zM0 45h15v15H0V45zm30 0h15v15H30V45zm15 0h15v15H45V45zm15 0h15v15H60V45zM15 15h15v15H15V15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            border: 10px solid #8b4513;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.4);
+            overflow-y: auto;
+            padding: 20px;
+            padding-top: 40px; /* Daugiau vietos viršuje dėl X mygtuko */
+            color: #f0c088;
+            font-family: "MedievalSharp", cursive;
+            scrollbar-width: thin;
+            scrollbar-color: #8b4513 #2a1708;
+        }
+        button:disabled {
+            background-color: #aaa !important;
+            cursor: not-allowed !important;
+            opacity: 0.6 !important;
+            background-image: none !important;
+        }
+
+        #speedUp {
+            position: absolute;
+            left: 10px; /* Nuo kairio krašto */
+            bottom: 10px; /* Nuo apatinio krašto */
+            transform: none; /* Nereikia transformuoti */
+            z-index: 1001;
+            width: 70px; /* Sumažintas plotis */
+            height: 40px; /* Fiksuotas aukštis */
+            font-size: 1rem; /* Sumažintas šriftas */
+            padding: 5px; /* Sumažintas padding */
+            background: #d4a76a;
+            color: #463828;
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        #speedUp:hover {
+            background: #b9935d;
+            transform: scale(1.07); /* Paliekam hover efektą */
+        }
+        
+        .char_selection {
+            background-color: #3a1f0d;
+            background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23d4a76a' fill-opacity='0.4'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            border: 4px solid #8b4513;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 5px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            width: 100%;
+            display: flex;
+            justify-content: space-between; /* Pakeista iš space-around */
+            align-items: center;
+        }
+        .char_selection p { margin: 0 5px; } /* Pridėtas tarpas tarp teksto elementų */
+        .char_selection button { margin-left: auto; } /* Mygtukas dešinėje */
+
+
+        #upgradeCastle {
+            background-color: rgba(107, 90, 81, 0.8); /* Pusiau permatomas fonas */
+            position: absolute;
+            right: 10px; /* Nuo dešinio krašto */
+            top: 60px; /* Žemiau meniu mygtukų */
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #8b4513;
+            color: #ffd700; /* Ryškesnė spalva tekstui */
+            text-align: center;
+            z-index: 30; /* Kad būtų virš canvas, bet po modalais */
+        }
+        .lost, .won {
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: fixed; /* Pakeista į fixed, kad būtų virš visko */
+            width: 60vw; /* Padidintas */
+            height: 40vh; /* Padidintas */
+            max-width: 400px; /* Apribojimas dideliems ekranams */
+            max-height: 300px;
+            z-index: 3000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        .lost { background-image: url("img/lost.png"); }
+        .won { background-image: url("img/won.png"); }
+
+        #autoRun {
+            position: absolute;
+            right: 10px; /* Nuo dešinio krašto */
+            bottom: 10px; /* Nuo apatinio krašto */
+            transform: none;
+            z-index: 1001;
+            width: auto;
+            padding: 5px 10px;
+            font-size: 0.8rem; /* Sumažintas šriftas */
+            background: #d4a76a;
+            color: #463828;
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            transition: background 0.2s, transform 0.2s;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) { /* Bendri mobiliesiems pritaikymai */
+            .game-title { font-size: 2.5rem; }
+            .scroll-container { padding: 10% 5%; }
+            button { font-size: 1rem; padding: 8px 15px; }
+            #selectCharacter { max-width: 90vw; padding-top: 50px; }
+            .modal-content { width: 95%; padding: 20px 15px; }
+            .close-button { width: 28px; height: 28px; font-size: 1.3rem; top: 8px; right: 8px;}
+            #upgradeCastle { top: 70px; right: 5px; padding: 8px; font-size: 0.9em;}
+            #speedUp, #autoRun { font-size: 0.9rem; padding: 5px 8px; height: auto;}
+            #speedUp { width: 60px;}
+        }
+
+        @media (max-width: 480px) {
+            .game-title { font-size: 2rem; }
+            .scroll-container { padding: 6% 4%; min-height: 40vh; border-width: 6px; }
+            button { padding: 8px 14px; font-size: 0.9rem; margin: 6px 0; }
+            #nextRoundButton, #speedUp { padding: 6px 12px; font-size: 0.85rem; }
+            #menuButton, #shopButton { font-size: 0.8rem; padding: 5px 10px; }
+            #autoRun { font-size: 0.7rem; padding: 4px 6px; right: 5px; bottom: 5px; }
+            #upgradeCastle { font-size: 0.8rem; padding: 5px; top: 55px; right: 5px;}
+            #selectCharacter .char_selection { flex-direction: column; align-items: center; text-align: center;}
+            #selectCharacter .char_selection button { margin-left: 0; margin-top: 5px; width: 100%;}
+        }
+
+
+        /* shop.css */
+        .shop-container {
+            background: #6b5a51 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="50" height="50" fill="%23584a43" /><rect x="50" y="50" width="50" height="50" fill="%23584a43" /></svg>');
+            border: 6px solid #3a2921;
+            width: 90%;
+            max-width: 450px;
+            min-width: 280px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 2001;
+            padding-bottom: 20px;
+            padding-top: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .shop-header {
+            background-color: #584a43;
+            border-bottom: 4px solid #d4a76a;
+            padding: 10px 15px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
+            position: sticky; /* Prilimpa viršuje scrolinant */
+            top: -15px; /* Kompensuoti .shop-container padding-top */
+            z-index: 1; /* Kad būtų virš .shop-items */
+            background-clip: padding-box; /* Svarbu, kad fonas nepersidengtų su border */
+        }
+
+        .shop-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .shop-title {
+            color: #d4a76a;
+            font-family: "MedievalSharp", cursive;
+            font-size: 1.5rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .shop-close {
+            background-color: #8b4513;
+            border: 2px solid #d4a76a;
+            color: #ffd700;
+            font-size: 1.5rem; /* Sumažintas */
+            cursor: pointer;
+            padding: 0;
+            width: 30px; /* Sumažintas */
+            height: 30px; /* Sumažintas */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            position: absolute;
+            top: 10px; /* Pritaikius prie .shop-container padding */
+            right: 10px; /* Pritaikius prie .shop-container padding */
+        }
+
+        .shop-close:hover {
+            background-color: #5d2906;
+            transform: scale(1.05);
+        }
+
+        #shopButton {
+            position: fixed;
+            top: 10px; /* Nuo viršaus */
+            right: 10px; /* Nuo dešinės */
+            z-index: 30;
+            background-color: #8b4513;
+            color: #fff;
+            border: 2px solid #d4a76a;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-family: "MedievalSharp", cursive;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        #shopButton:hover {
+            background-color: #a0522d;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .shop-items {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .shop-item {
+            background-color: #584a43;
+            border: 4px solid #d4a76a;
+            border-radius: 8px;
+            padding: 15px 10px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .shop-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        .shop-item.legendary {
+            border-color: #ffd700;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+        .shop-item.rare {
+            border-color: #c0c0c0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 0 8px rgba(192, 192, 192, 0.6);
+        }
+        .shop-item.common {
+            border-color: #cd7f32;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 0 6px rgba(205, 127, 50, 0.6);
+        }
+        .shop-item-icon {
+            overflow: hidden;
+            position: relative;
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #3a2921;
+            border: 2px solid #d4a76a;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 0 3px rgba(0, 0, 0, 0.5);
+            flex-shrink: 0;
+        }
+         .shop-item-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .shop-item-info {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        .shop-item h3 {
+            margin: 0 0 5px 0;
+            font-family: "MedievalSharp", cursive;
+            color: #d4a76a;
+            font-size: 1.1rem;
+        }
+        .shop-item p {
+            margin: 0;
+            color: #c8a064;
+            font-size: 0.85rem;
+        }
+        .shop-item-price {
+            display: flex;
+            align-items: center;
+            color: #ffd700;
+            font-weight: bold;
+            font-family: "MedievalSharp", cursive;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        .shop-item-price::before {
+            content: "💰";
+            margin-right: 5px;
+            font-size: 1.1em;
+        }
+        .buy-button {
+            background-color: #8b4513;
+            color: #ffd700;
+            border: 2px solid #d4a76a;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: "MedievalSharp", cursive;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .buy-button:hover {
+            background-color: #a0522d;
+            transform: scale(1.05);
+        }
+        .buy-button:disabled {
+            background-color: #666 !important;
+            color: #999 !important;
+            border-color: #777 !important;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .shop-title { font-size: 1.3rem; }
+            .shop-item { padding: 10px; flex-direction: column; align-items: stretch; }
+            .shop-item-icon { width: 45px; height: 45px; margin-right: 0; margin-bottom: 8px; align-self: center; }
+            .shop-item-info { text-align: center; margin-bottom: 8px;}
+            .shop-item h3 { font-size: 1rem; }
+            .shop-item p { font-size: 0.8rem; }
+            .shop-item-price { justify-content: center; margin-bottom: 8px;}
+            .buy-button { padding: 6px 10px; font-size: 0.9rem; width: 100%; }
+        }
+        @media (max-width: 600px) {
+             .shop-container { width: 95%; max-width: 100%; padding: 12px 3vw; border-width: 4px; }
+             .shop-header { top: -12px; } /* Prisitaikyti prie padding */
+        }
+
+
+        /* menu.css */
+        #menuButton {
+            position: fixed;
+            top: 10px; /* Nuo viršaus */
+            left: 10px; /* Nuo kairės */
+            padding: 8px 15px;
+            font-size: 1rem;
+            z-index: 30;
+            background-color: #8b4513;
+            color: #fff;
+            border: 2px solid #d4a76a;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+         #menuButton:hover {
+            background-color: #a0522d;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .menu-button { /* General style for buttons in menus */
+            background: #d4a76a;
+            border: 2px solid #8b4513;
+            color: #5c2e0b;
+            padding: 8px 16px;
+            margin: 8px 0;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            width: auto;
+            min-width: 140px;
+            max-width: 200px;
+            text-align: center;
+            font-family: "MedievalSharp", cursive;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .menu-button:hover {
+            background: #c69c6d;
+            transform: scale(1.05);
+        }
+        .menu-button:active { transform: scale(0.98); }
+
+        #selectCharacter .char-photo {
+            width: 48px;
+            height: 48px;
+            background: #3a2921;
+            border: 3px solid #d4a76a;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 0 3px rgba(0, 0, 0, 0.5);
+            flex-shrink: 0;
+        }
+        #selectCharacter .char-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        #selectCharacter p {
+            margin: 2px 0 0 0;
+            font-size: 0.92rem;
+            color: #d4a76a;
+            font-family: "Poppins", "MedievalSharp", cursive;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        #selectCharacter button,
+        #selectCharacter .remove_char,
+        #selectCharacter .change_targ,
+        #selectCharacter .upgrade {
+            background: #d4a76a;
+            border: 2px solid #3a2921;
+            color: #3a2921;
+            padding: 5px 10px;
+            margin: 4px 2px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: "MedievalSharp", cursive;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+        }
+        #selectCharacter button:hover,
+        #selectCharacter .remove_char:hover,
+        #selectCharacter .change_targ:hover,
+        #selectCharacter .upgrade:hover {
+            background: #c69c6d;
+            transform: scale(1.05);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+            border-color: #2a1a12;
+        }
+        #selectCharacter button:active,
+        #selectCharacter .remove_char:active,
+        #selectCharacter .change_targ:active,
+        #selectCharacter .upgrade:active {
+            transform: scale(0.95);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        #selectCharacter .upgrade {
+            background: #ffd700;
+            color: #3a2921;
+            border: 2px solid #3a2921;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 4px rgba(255, 215, 0, 0.5);
+        }
+        #selectCharacter .upgrade:disabled {
+            background: #a89a68 !important;
+            color: #6a5c3d !important;
+            border-color: #3a2921 !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+        }
+        #selectCharacter .close-select-char-btn {
+            background: #d4a76a;
+            padding: 0; /* Nuimtas padding, nes dydis fiksuotas */
+            margin: 0;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem; /* Sumažintas X simbolis */
+            line-height: 1; /* Geresniam centravimui */
+        }
+
+        @media (max-width: 600px) {
+            #selectCharacter {
+                max-width: 90vw;
+                width: 90vw;
+                max-height: 80vh;
+                padding: 15px 3vw;
+                padding-top: 45px; /* Daugiau vietos X mygtukui */
+                border-width: 6px;
+            }
+            #selectCharacter .char-photo {
+                width: 40px;
+                height: 40px;
+                border-width: 2px;
+            }
+            #selectCharacter button,
+            #selectCharacter .remove_char,
+            #selectCharacter .change_targ,
+            #selectCharacter .upgrade {
+                font-size: 0.8rem;
+                padding: 4px 6px;
+                margin: 3px 1px;
+            }
+            #selectCharacter .close-select-char-btn { top: 8px; right: 8px; width:28px; height:28px;}
+        }
+
+        /* settings.css */
+        .settings-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            background: #6b5a51;
+            border: 4px solid #8b4513;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.2);
+            color: #d4a76a;
+            font-family: "MedievalSharp", cursive;
+        }
+        .settings-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+            border-bottom: 1px solid rgba(212, 167, 106, 0.3);
+        }
+        .settings-option label { margin-right: 10px; }
+        .settings-option input[type="range"], .settings-option input[type="checkbox"] { cursor: pointer; }
+        .settings-option:last-child { border-bottom: none; }
+        .hidden { display: none; }
+
+        @media (max-width: 480px) {
+            .settings-panel { padding: 15px; }
+            .settings-option { padding: 8px; font-size: 0.9rem; flex-direction: column; align-items: flex-start; gap: 5px;}
+            .settings-option label { margin-bottom: 5px;}
+            .settings-option input[type="range"] { width: 100%;}
+        }
+
+        /* Canvas styling */
+        #canvas {
+            display: block;
+            background-color: #1a1a1a; /* Tamsus fonas, jei paveiksliukai neužsikrauna */
+            width: 100%; /* Užims visą .container plotį */
+            height: 100%; /* Užims visą .container aukštį */
+        }
+        #turnDeviceNotification {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9); /* Tamsesnis fonas */
+            color: white;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.8em; /* Didesnis šriftas */
+            padding: 20px;
+            font-family: "MedievalSharp", cursive;
+        }
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Tamsesnis fonas */
+            z-index: 10000;
+            display: flex; /* Initially visible */
+            justify-content: center;
+            align-items: center;
+            color: #ffd700; /* Auksinė spalva */
+            font-size: 2.2em; /* Didesnis šriftas */
+            font-family: "MedievalSharp", cursive;
+            text-shadow: 1px 1px 2px #000;
+        }
+        #pinigai {
+            color: #ffd700;
+            font-family: "MedievalSharp", cursive;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingOverlay">Kraunasi žaidimas...</div>
+    <div id="turnDeviceNotification">Prašome pasukti įrenginį į horizontalią padėtį.</div>
+
+    <div id="main">
+        <div class="scroll-container">
+            <h1 class="game-title">Castle Defender</h1>
+            <h2>"Bug Simulator 2025" (arba Pre-Alfa)</h2>
+            <button id="playButton" class="menu-button">Žaisti</button>
+            <button id="settingsButton" class="menu-button">Nustatymai</button>
+            <button id="creditsButton" class="menu-button">Kūrėjai</button>
+            <div id="showLogin" style="margin-top: 15px;">
+                <p style="margin-bottom: 5px; font-size: 0.9em;">Išsaugokite progresą prisijungę su:</p>
+                <button type="button" id="google-login" class="login-with-google-btn" draggable="false">Google</button>
+            </div>
+            <div id="showLogout" style="display: none; margin-top: 15px;">
+                <p style="margin-bottom: 5px;">Prisijungta kaip: <span id="userEmail" style="font-weight:bold;"></span></p>
+                <button type="button" id="google-logout" class="menu-button" style="background-color: #c06161; color:white; min-width: 120px;">Atsijungti</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="lost" class="lost"></div>
+    <div id="won" class="won"></div>
+
+    <div id="selectCharacter">
+        </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeSettings">&times;</span>
+            <h2 class="game-title" style="font-size: 2rem; margin-bottom: 1rem;">Nustatymai</h2>
+            <div class="settings-panel">
+                <div class="settings-option">
+                    <label for="musicVolume">Muzikos garsumas</label>
+                    <input type="range" id="musicVolume" min="0" max="100" value="70" />
+                </div>
+                <div class="settings-option">
+                    <label for="sfxVolume">Efektų garsumas</label>
+                    <input type="range" id="sfxVolume" min="0" max="100" value="80" />
+                </div>
+                <div class="settings-option">
+                    <label for="fullscreenToggle">Automatinis pilnas ekranas</label>
+                    <input type="checkbox" id="fullscreenToggle" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="creditsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeCredits">&times;</span>
+            <h2 class="game-title" style="font-size: 2rem; margin-bottom: 1rem;">Kūrėjai</h2>
+            <div style="text-align: center; margin-top: 20px; color: #5c2e0b;">
+                <p><strong>Žaidimo dizainas ir programavimas</strong><br />Jūsų Vardas (Originalus Kūrėjas)</p>
+                <p><strong>Grafika</strong><br />Įvairūs šaltiniai (Nurodykite jei žinoma)</p>
+                <p><strong>Muzika ir garso efektai</strong><br />Įvairūs šaltiniai (Nurodykite jei žinoma)</p>
+                <p><strong>Ypatinga padėka</strong><br />Visiems, kas palaikė šį projektą</p>
+                <p style="margin-top: 30px;">© 2025 Castle Defender</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="shopModal" class="modal">
+        <div class="modal-content shop-container">
+            <div class="shop-header">
+                 <div class="shop-header-top">
+                    <h2 class="shop-title">Parduotuvė</h2>
+                    <span class="close-button shop-close" id="closeShop">&times;</span>
+                </div>
+                <p id="pinigai">Tavo monetos: 0</p>
+            </div>
+            <div id="parduotuve" class="shop-items">
+                </div>
+        </div>
+    </div>
+
+    <div id="container" class="container">
+        <button id="menuButton">Meniu</button>
+        <button id="shopButton">Parduotuvė</button>
+        <button id="speedUp" class="menu-button" style="display: none;">1X</button>
+        <button id="autoRun" class="menu-button" style="display: none;">Auto Startas IŠJ<br>Kaina: X</button>
+        <button id="nextRoundButton" class="menu-button" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); display:none; z-index: 100;">Kitas Lygis</button>
+
+
+        <div id="upgradeCastle">
+            <p style="font-weight: bold; margin-bottom: 5px;">Pagerinti Pilį</p>
+            <p id="castleHp" style="margin-bottom: 3px;">HP: 100</p>
+            <p id="castleUpPrice" style="font-size:0.9em; margin-bottom: 5px;">Kaina:</p>
+            <button id="upgradeCastleButton" class="menu-button" style="padding: 5px 10px; font-size: 0.9em; margin:0; min-width: 80px;"></button>
+        </div>
+        <canvas id="canvas"> </canvas>
+    </div>
+
+    <div id="debugScrean" style="display: none;">
+        <div class="komanduKonteineris">
+            <input type="text" id="komandos" placeholder="Komandos" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;" />
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+
+    <script type="module">
+        console.log("Pagrindinis skriptas pradeda veikti.");
+        // Firebase Configuration
+        const firebaseConfigGlobal = {
+            apiKey: "AIzaSyCTSRn86V81fCLsgagpHXvEc0RIfcYMEPE",
+            authDomain: "towerdefencegame-5a530.firebaseapp.com",
+            projectId: "towerdefencegame-5a530",
+            storageBucket: "towerdefencegame-5a530.appspot.com",
+            messagingSenderId: "58157639757",
+            appId: "1:58157639757:web:ee265037988c33ab2ad404",
+            measurementId: "G-6EDLH1JKEX"
+        };
+
+        // --- Constants and Game Data ---
+        const ENEMES_DATA = [
+            { greitis: 0.1, img: "img/Veikeju_sprite/Enemy/Character6.png", dydis: 1, spriteIlgis: 12, spriteAukstis: 22, spriteReikemasKadrasY: 3, reikemiKadrai: 6, veikejoZiurejimoPuse: -1, givybes: 100, mirtiesSpriteY: 9, mirtiesReikalingiX: 11, hard: 1, trankymoY: 15, trankymoXilgis: 6, revard: 2 },
+            { greitis: 0.095, img: "img/Veikeju_sprite/Enemy/Character7.png", dydis: 1, spriteIlgis: 12, spriteAukstis: 22, spriteReikemasKadrasY: 3, reikemiKadrai: 6, veikejoZiurejimoPuse: -1, givybes: 200, mirtiesSpriteY: 9, mirtiesReikalingiX: 11, hard: 5, trankymoY: 15, trankymoXilgis: 6, revard: 3 },
+            { greitis: 0.089, img: "img/Veikeju_sprite/Enemy/Character8.png", dydis: 1, spriteIlgis: 12, spriteAukstis: 22, spriteReikemasKadrasY: 3, reikemiKadrai: 6, veikejoZiurejimoPuse: -1, givybes: 500, mirtiesSpriteY: 9, mirtiesReikalingiX: 11, hard: 15, trankymoY: 15, trankymoXilgis: 6, revard: 5 },
+            { greitis: 0.079, img: "img/Veikeju_sprite/Enemy/Character9.png", dydis: 1, spriteIlgis: 12, spriteAukstis: 22, spriteReikemasKadrasY: 3, reikemiKadrai: 6, veikejoZiurejimoPuse: -1, givybes: 800, mirtiesSpriteY: 9, mirtiesReikalingiX: 11, hard: 22, trankymoY: 15, trankymoXilgis: 6, revard: 15 },
+        ];
+
+        const SOLIGERS_DATA = [
+            { nr:0, img: "img/Veikeju_sprite/Good_guys/Character1.png", dydis: 1, spriteIlgis: 12, spriteAukstis: 22, spriteReikemasKadrasY: 1, reikemiKadrai: 4, veikejoZiurejimoPuse: 1, price: 100, jega: 80, saudimoGreitis: 40, name: "Nemo", rarity: "common" },
+            { nr:1, img: "img/Veikeju_sprite/Good_guys/Character2.png", dydis: 1, spriteIlgis: 12, spriteAukstis: 22, spriteReikemasKadrasY: 1, reikemiKadrai: 4, veikejoZiurejimoPuse: 1, price: 250, jega: 80, saudimoGreitis: 40, name: "Soske", rarity: "common" },
+            { nr:2, img: "img/Veikeju_sprite/Good_guys/Character3.png", dydis: 1, spriteIlgis: 12, spriteAukstis: 22, spriteReikemasKadrasY: 1, reikemiKadrai: 4, veikejoZiurejimoPuse: 1, price: 700, jega: 50, saudimoGreitis: 40, name: "BigBOss", aura: "cold", rarity: "rare" },
+            { nr:3, img: "img/Veikeju_sprite/Good_guys/Character4.png", dydis: 1, spriteIlgis: 12, spriteAukstis: 22, spriteReikemasKadrasY: 1, reikemiKadrai: 4, veikejoZiurejimoPuse: 1, price: 1500, jega: 100, saudimoGreitis: 40, name: "Silke", rarity: "rare" },
+            { nr:4, img: "img/Veikeju_sprite/Good_guys/Character5.png", dydis: 1, spriteIlgis: 12, spriteAukstis: 22, spriteReikemasKadrasY: 1, reikemiKadrai: 4, veikejoZiurejimoPuse: 1, price: 3000, jega: 200, saudimoGreitis: 40, name: "Rudis", rarity: "legendary" },
+        ];
+        SOLIGERS_DATA.forEach((s, i) => s.nr = i);
+
+        const LANGELIU_CORDS_DATA = [
+            [4, 84], [10, 84], [16, 84], [22, 84], [28, 84],
+            [7, 72], [13, 72], [19, 72], [25, 72],
+            [8, 60], [16, 62], [24, 60],
+            [11, 50], [21, 50],
+            [16, 40],
+        ];
+
+        class LangeliuNamu {
+            constructor(game) {
+                this.game = game;
+                this.x = 0; this.y = 0; this.xProc = 0; this.yProc = 0;
+                this.plotis = 0; this.aukstis = 0; this.ocupied = null;
+            }
+            update(iProcentais, jProcentais) {
+                this.x = (iProcentais / 100) * this.game.ePlotis;
+                this.y = (jProcentais / 100) * this.game.eAukstis;
+                this.xProc = iProcentais - 0.7; this.yProc = jProcentais - 1.5;
+                this.plotis = (5 / 100) * this.game.ePlotis;
+                this.aukstis = (5 / 100) * this.game.ePlotis;
+            }
+        }
+
+        class Veikejas {
+            constructor(game, data, x, y) {
+                this.game = game; this.x = x; this.y = y; this.data = data;
+                this.jega = (this.data.extraData?.damigeUp || 0) + this.data.jega;
+                this.givybesStart = data.givybes ?? 100;
+                this.dydis = data.dydis; this.greitis = data.greitis ?? 1;
+                this.spriteIlgisKadru = data.spriteIlgis; this.spriteAukstisKadru = data.spriteAukstis;
+                this.img = new Image(); this.img.src = data.img;
+                this.givybes = data.givybes ?? (this.data.extraData ? this.jega * 2 : 100);
+                this.kadroPlotis = 0; this.kadroAukstis = 0;
+                this.img.onload = () => {
+                    if (this.img.width > 0 && this.spriteIlgisKadru > 0) this.kadroPlotis = this.img.width / this.spriteIlgisKadru;
+                    if (this.img.height > 0 && this.spriteAukstisKadru > 0) this.kadroAukstis = this.img.height / this.spriteAukstisKadru;
+                    this.spriteOffsetY = (this.reikemasKadrasY - 1) * this.kadroAukstis;
+                    this.esamasKadrasX = Math.floor(Math.random() * this.reikemiKadrai) * this.kadroPlotis;
+                };
+                this.img.onerror = () => console.error(`Klaida kraunant veikėjo paveikslėlį: ${data.img}`);
+                this.saudimoGreitis = data.saudimoGreitis;
+                this.saudimoLaukimas = Math.random() * (data.saudimoGreitis || 100);
+                this.taikinys = data.extraData?.target ?? "first";
+                this.mires = false; this.linkMirties = false; this.esamasKadrasY = 0;
+                this.reikemasKadrasY = data.spriteReikemasKadrasY; this.reikemiKadrai = data.reikemiKadrai;
+                this.spriteGreitis = 0; this.mirtiesSpriteY = data.mirtiesSpriteY;
+                this.mirtiesReikalingiX = data.mirtiesReikalingiX;
+                this.veikejoZiurejimoPuse = data.veikejoZiurejimoPuse;
+                this.primasPoMirties = true; this.trankyk = false; this.pradejauPulti = true;
+                this.greitisSpriteSukimui = 9; this.lost = false; this.colorSpin = Math.random() * 1000;
+            }
+            kadras() {
+                if (isNaN(this.game.deltaTime) || this.game.deltaTime <= 0 || !this.kadroPlotis) return;
+                let daugiklis = (this.greitis === 1 || this.greitis === 0) ? 1 : 10 * this.greitis;
+                if (this.linkMirties) daugiklis = 1;
+                this.spriteGreitis += (this.game.deltaTime / 22) * daugiklis;
+                let kadrusKeistiPo = this.greitisSpriteSukimui - this.reikemiKadrai;
+                if (kadrusKeistiPo <= 0) kadrusKeistiPo = 1;
+                if (this.spriteGreitis > kadrusKeistiPo) {
+                    this.spriteGreitis = 0; this.esamasKadrasX += this.kadroPlotis;
+                    if (this.esamasKadrasX >= this.kadroPlotis * this.reikemiKadrai) {
+                        if (this.linkMirties) {
+                            this.mires = true;
+                            if (!this.lost && this.data.revard && this.game.savasData) {
+                                this.game.savasData.coins += this.data.revard;
+                                this.game.leftVaveHp -= this.givybesStart;
+                                if (this.game.leftVaveHp < 0) this.game.leftVaveHp = 0;
+                            }
+                        } else {
+                            this.esamasKadrasX = 0;
+                            if (this.trankyk && this.data.hard && this.game.rumuHp !== undefined) {
+                                this.game.rumuHp -= this.data.hard;
+                                if (this.pradejauPulti) {
+                                    this.spriteOffsetY = (this.data.trankymoY - 1) * this.kadroAukstis;
+                                    this.reikemiKadrai = this.data.trankymoXilgis;
+                                    this.pradejauPulti = false; this.esamasKadrasX = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            animuok() {
+                if (!this.kadroPlotis || !this.kadroAukstis || !this.img.complete || this.img.naturalWidth === 0) return;
+                this.kadras();
+                const ctx = this.game.ctx; ctx.save(); ctx.scale(this.veikejoZiurejimoPuse, 1);
+                if (this.givybes <= 0 && !this.linkMirties) {
+                    this.greitis = 0;
+                    if (this.primasPoMirties) {
+                        this.greitisSpriteSukimui = 13; this.esamasKadrasX = 0; this.primasPoMirties = false;
+                    }
+                    this.spriteOffsetY = (this.mirtiesSpriteY - 1) * this.kadroAukstis;
+                    this.reikemiKadrai = this.mirtiesReikalingiX; this.linkMirties = true;
+                }
+                let atvaizdoX_px = (this.x / 100) * this.game.ePlotis;
+                if (this.veikejoZiurejimoPuse === -1) atvaizdoX_px = -atvaizdoX_px - this.game.DydisPagalIndeksa[this.dydis][0];
+                const atvaizdoY_px = (this.y / 100) * this.game.eAukstis;
+                ctx.globalAlpha = 1.0; ctx.shadowBlur = 0;
+                if (this.data?.hard === 5 && !this.linkMirties) {
+                    this.colorSpin += this.game.deltaTime / 100;
+                    ctx.filter = `hue-rotate(${this.colorSpin * 10}deg)`;
+                }
+                try {
+                    ctx.drawImage(this.img, this.esamasKadrasX, this.spriteOffsetY, this.kadroPlotis, this.kadroAukstis,
+                        atvaizdoX_px, atvaizdoY_px, this.game.DydisPagalIndeksa[this.dydis][0], this.game.DydisPagalIndeksa[this.dydis][1]);
+                } catch (e) { /* console.warn("Klaida piešiant veikėją:", e, this.img.src); */ }
+                ctx.filter = "none";
+                if (this.givybes > 0 && this.givybes !== this.givybesStart && !this.linkMirties) {
+                    const hpBarX = this.x; const hpBarY = this.y - 2;
+                    const hpBarPlotis = this.game.DydisPagalIndeksa[this.dydis][0] / ((100 / this.game.ePlotis));
+                    const hpBarAukstis = 2;
+                    this.game.showBar(hpBarX, hpBarY, hpBarPlotis, hpBarAukstis / 2, this.givybes, this.givybesStart, "red", "black", this.veikejoZiurejimoPuse);
+                }
+                if (this.game.rodytiGivybes && this.givybes > 0 && !this.linkMirties) {
+                    ctx.fillStyle = "white"; ctx.font = "12px Arial"; ctx.save();
+                    ctx.scale(this.veikejoZiurejimoPuse, 1);
+                    let textX = atvaizdoX_px + this.game.DydisPagalIndeksa[this.dydis][0] / 2;
+                    ctx.textAlign = "center"; ctx.fillText(Math.round(this.givybes), textX, atvaizdoY_px - 5);
+                    ctx.restore();
+                }
+                ctx.restore();
+            }
+            judeti() {
+                if (this.x > 31.2) this.x += (this.greitis * this.veikejoZiurejimoPuse * this.game.deltaTime) / 20;
+                else this.trankyk = true;
+            }
+            suzeisti(dmg) {
+                if (this.linkMirties || this.mires) return;
+                const actualDmg = dmg === -1 ? this.givybes : dmg;
+                this.givybes -= actualDmg;
+                if (!this.data.greitis) return;
+                if (this.givybes <= 0 && this.game.leftVaveHp > 0) this.game.leftVaveHp -= (this.givybesStart - (this.givybes < 0 ? 0 : this.givybes));
+                else if (this.game.leftVaveHp > 0) this.game.leftVaveHp -= actualDmg;
+                if (this.game.leftVaveHp < 0) this.game.leftVaveHp = 0;
+                if (this.givybes <= 0) this.givybes = 0;
+            }
+            atack() {
+                if (this.mires || this.linkMirties) return;
+                this.saudimoLaukimas += (1 * this.game.deltaTime) / 15;
+                if (this.saudimoGreitis < this.saudimoLaukimas) {
+                    this.saudimoLaukimas = 0;
+                    const taikinysPriesas = this.game.raskTaikini(this.taikinys);
+                    if (taikinysPriesas) this.game.streles.push(new Sovinys(this.game, this.x, this.y, this.jega, taikinysPriesas));
+                }
+            }
+        }
+
+        class Sovinys {
+            constructor(game, x1Procentais, y1Procentais, jega, priesasTaikinys) {
+                this.game = game; this.x1 = x1Procentais; this.y1 = y1Procentais + 3;
+                this.x = this.x1; this.y = this.y1; this.jega = jega;
+                this.givenimoLaikas = 0; this.mirus = false; this.priesas = priesasTaikinys;
+                this.img = this.game.strelesImgGlobal;
+                const dx = this.priesas.x - this.x1; const dy = this.priesas.y - this.y1;
+                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                this.kryptisX = dx / dist; this.kryptisY = dy / dist;
+                this.bendrasKelias = dist; this.nueita = 0; this.greitis = 1.1;
+                this.maxArcHeight = 10; this.arcHeight = Math.min(this.maxArcHeight, this.bendrasKelias / 3);
+            }
+            animuok() {
+                if (this.mirus || !this.img.complete || this.img.naturalWidth === 0) return;
+                const ctx = this.game.ctx; this.givenimoLaikas += this.game.deltaTime;
+                if (this.givenimoLaikas > 3000) { this.mirus = true; return; }
+                this.nueita += (this.greitis * this.game.deltaTime) / 20;
+                const progress = this.nueita / this.bendrasKelias;
+                if (progress >= 1 || this.priesas.mires || this.priesas.linkMirties) {
+                    if (progress >= 1 && !this.priesas.mires && !this.priesas.linkMirties) this.priesas.suzeisti(this.jega);
+                    this.mirus = true; return;
+                }
+                const currentX = this.x1 + this.kryptisX * this.nueita;
+                const currentYBase = this.y1 + this.kryptisY * this.nueita;
+                const parabola = -4 * this.arcHeight * progress * (progress - 1);
+                const yWithParabola = currentYBase - parabola;
+                this.x = currentX; this.y = yWithParabola;
+                const x_px = (this.x / 100) * this.game.ePlotis; const y_px = (this.y / 100) * this.game.eAukstis;
+                const dydis_px = this.game.eAukstis / 40;
+                ctx.save();
+                const kampas = Math.atan2(this.kryptisY, this.kryptisX);
+                ctx.translate(x_px + dydis_px / 2, y_px + dydis_px / 2);
+                ctx.rotate(kampas);
+                ctx.drawImage(this.img, -dydis_px / 2, -dydis_px / 2, dydis_px, dydis_px);
+                ctx.restore();
+            }
+        }
+
+        class Game {
+            constructor() {
+                console.log("Game konstruktorius kviečiamas.");
+                this.canvas = document.getElementById("canvas");
+                this.ctx = this.canvas ? this.canvas.getContext("2d", { alpha: false }) : null;
+                if (!this.ctx) console.error("Nepavyko gauti 2D konteksto!");
+
+                this.priesai = []; this.savi = []; this.streles = [];
+                this.wave = 1; this.savasData = null; this.rumuHp = 100; this.maxRumuHp = 100;
+                this.pralaimeta = false; this.speedUp = 1; this.pause = true; this.bangosPradeta = false; this.autoRun = false;
+
+                this.pilisImg = new Image(); this.pilisImg.src = "img/castle_no_background.png";
+                this.zolesImg = new Image(); this.zolesImg.src = "img/grass.png";
+                this.backGrount = new Image(); this.backGrount.src = "img/thePlot.png";
+                this.tekelisImg = new Image(); this.tekelisImg.src = "img/takelis.png";
+                this.strelesImgGlobal = new Image(); this.strelesImgGlobal.src = "img/arow.png";
+                [this.pilisImg, this.zolesImg, this.backGrount, this.tekelisImg, this.strelesImgGlobal].forEach(img => {
+                    img.onerror = () => console.error(`Klaida kraunant bendrą paveikslėlį: ${img.src}`);
+                });
+
+
+                this.selectCharacterDiv = document.getElementById("selectCharacter");
+                this.piniguDezute = document.getElementById("pinigai");
+                this.nextRoundButtonEl = document.getElementById("nextRoundButton");
+                this.komandosInput = document.getElementById("komandos");
+                this.speedUpButton = document.getElementById("speedUp");
+                this.autoRunButton = document.getElementById("autoRun");
+                this.upgradeCastleDiv = document.getElementById("upgradeCastle");
+                this.shopButtonEl = document.getElementById("shopButton");
+                this.loadingOverlay = document.getElementById("loadingOverlay");
+
+                this.lastTime = 0; this.deltaTime = 0; this.fpsCounter = 0; this.fpsLastUpdate = 0; this.currentFps = 0;
+                this.seed = Date.now(); this.enemyCosts = []; this.waweEnemesCombination = [];
+                this.waweLaikas = 0; this.waweImamas = 0; this.vaveHp = 0; this.waveWorth = 0; this.leftVaveHp = 0;
+                this.pelesX = 0; this.pelesY = 0; this.mouseDown = false; this.lockCanvasInteraction = true;
+                this.debugScrean = false; this.rodytiFps = false; this.rodytiGivybes = false; this.optiTikrint = 0;
+                this.eAukstis = window.innerHeight; this.ePlotis = window.innerWidth;
+                this.DydisPagalIndeksa = []; this.enemesData = ENEMES_DATA; this.soligersData = SOLIGERS_DATA;
+                this.langeliuCordsData = LANGELIU_CORDS_DATA; this.homeSqueres = [];
+                this.targetOptions = ["first", "strongest", "weakest", "random", "last"];
+                this.db = null; this.auth = null; this.user = null; this.firebaseApp = null;
+                this.parduotuvesVidus = []; this.setings = { autoFullScrean: true, musicVolume: 70, sfxVolume: 80 };
+                this.isMobile = this.arTelefonas(); this.orientationCorrect = true;
+                this.imagesLoaded = false; // Flag for image loading status
+            }
+
+            init() {
+                console.log("Game.init() pradžia.");
+                this.showLoadingOverlay(true, "Inicializuojama...");
+                try {
+                    if (!this.canvas || !this.ctx) {
+                        console.error("Klaida: Nepavyko gauti canvas arba 2D konteksto!");
+                        this.showLoadingOverlay(false);
+                        alert("Kritinė klaida: Nepavyko paruošti žaidimo lauko. Patikrinkite konsolę.");
+                        return;
+                    }
+                    this.checkOrientation();
+                    this.loadSettingsFromLocalStorage(); this.loadGameStateFromLocalStorage();
+                    this.initFirebase();
+                    this.preskaiciokDydzius(); this.setHomeSqueres(); this.populateEnemyCosts();
+                    if (!this.savasData) {
+                        this.savasData = { coins: 500, rumuHp: 100, ownedSoligers: [] };
+                        console.log("Nustatyti pradiniai žaidėjo duomenys.");
+                    }
+                    this.rumuHp = this.savasData.rumuHp; this.maxRumuHp = this.savasData.rumuHp;
+                    this.optiTikrint = this.savasData.coins;
+                    this.updateShopText(); this.sudeliokSavus();
+                    document.getElementById("fullscreenToggle").checked = this.setings.autoFullScrean;
+                    document.getElementById("musicVolume").value = this.setings.musicVolume;
+                    document.getElementById("sfxVolume").value = this.setings.sfxVolume;
+                    this.setupEventListeners(); this.updateCanvas();
+                    console.log("Game.init() sinchroninė dalis baigta.");
+                } catch (error) {
+                    console.error("Klaida Game.init() sinchroninėje dalyje:", error);
+                    this.showLoadingOverlay(false);
+                    alert("Įvyko klaida inicializuojant žaidimą. Patikrinkite konsolę.");
+                    return;
+                }
+                this.loadAllImages(); // Pradedam krauti visus paveikslėlius
+                // Krovimo indikatorius bus paslėptas loadAllImages viduje
+                setInterval(() => this.saveGameStateToLocalStorage(), 7000); // Dažniau
+                setInterval(() => { if (this.user) this.saveDataToFireStore(); }, 2 * 60 * 1000);
+            }
+
+            loadAllImages() {
+                const imagesToLoadPaths = [
+                    this.pilisImg.src, this.backGrount.src, this.tekelisImg.src, this.zolesImg.src, this.strelesImgGlobal.src,
+                    ...this.soligersData.map(s => s.img), ...this.enemesData.map(e => e.img)
+                ].filter(Boolean); // Pašalinti undefined/null kelius
+
+                const uniqueImagePaths = [...new Set(imagesToLoadPaths)]; // Tik unikalūs keliai
+                let loadedImagesCount = 0;
+                const totalImagesToLoad = uniqueImagePaths.length;
+                console.log(`Pradedama krauti ${totalImagesToLoad} unikalių paveikslėlių.`);
+                this.showLoadingOverlay(true, `Kraunama ${loadedImagesCount}/${totalImagesToLoad} paveikslėlių...`);
+
+                if (totalImagesToLoad === 0) {
+                    console.log("Nėra paveikslėlių krovimui, pradedamas žaidimo ciklas.");
+                    this.imagesLoaded = true;
+                    this.startGameLoop();
+                    return;
+                }
+
+                uniqueImagePaths.forEach(path => {
+                    const img = new Image();
+                    img.src = path;
+                    img.onload = () => {
+                        loadedImagesCount++;
+                        // console.log(`Paveikslėlis ${path} užkrautas (${loadedImagesCount}/${totalImagesToLoad})`);
+                        this.showLoadingOverlay(true, `Kraunama ${loadedImagesCount}/${totalImagesToLoad} paveikslėlių...`);
+                        if (loadedImagesCount === totalImagesToLoad) {
+                            console.log("Visi paveikslėliai sėkmingai užkrauti.");
+                            this.imagesLoaded = true;
+                            this.startGameLoop();
+                        }
+                    };
+                    img.onerror = () => {
+                        console.error(`Klaida kraunant paveikslėlį: ${path}`);
+                        loadedImagesCount++; // Vis tiek skaičiuojam, kad neužstrigtų
+                        this.showLoadingOverlay(true, `Kraunama ${loadedImagesCount}/${totalImagesToLoad} paveikslėlių...`);
+                        if (loadedImagesCount === totalImagesToLoad) {
+                            console.warn("Kai kurie paveikslėliai neužsikrovė. Bandoma pradėti žaidimą.");
+                            this.imagesLoaded = true; // Pažymim, kad bandėm krauti
+                            this.startGameLoop();
+                        }
+                    };
+                });
+            }
+
+
+            showLoadingOverlay(show, text = "Kraunasi...") {
+                if (this.loadingOverlay) {
+                    this.loadingOverlay.textContent = text;
+                    this.loadingOverlay.style.display = show ? 'flex' : 'none';
+                }
+                 if (!show) { // Papildomai paslepiam main meniu jei rodėm žaidimą
+                    if (document.body.classList.contains('game-active')) {
+                         document.getElementById("main").style.display = "none";
+                    } else {
+                         document.getElementById("main").style.display = "flex";
+                         document.getElementById("main").style.opacity = "1";
+                    }
+                }
+            }
+
+            startGameLoop() {
+                console.log("Game.startGameLoop() kviečiamas.");
+                this.showLoadingOverlay(false);
+                if (!this.imagesLoaded) {
+                    console.warn("Bandoma pradėti žaidimo ciklą, bet paveikslėliai dar neužkrauti. Palaukite.");
+                    return; // Palaukiam, kol paveikslėliai bus užkrauti
+                }
+                if (!this.orientationCorrect) {
+                    console.log("Orientacija neteisinga, žaidimo ciklas nepradėtas. Bus tikrinama periodiškai.");
+                    this.pause = true;
+                } else {
+                    this.pause = false;
+                }
+                this.lockCanvasInteraction = true; // Pradžioje užrakinta, atrakinsime kai bus galima žaidėjui veikti
+                // Atrakinti, jei meniu rodomas ir banga nepradėta
+                if (document.getElementById("main").style.display === 'flex' && !this.bangosPradeta) {
+                    this.lockCanvasInteraction = false;
+                }
+
+
+                console.log("Prašoma pirmo animacijos kadro.");
+                requestAnimationFrame((timestamp) => this.animate(timestamp));
+            }
+            // ... likusi Game klasės logika (animate, updateCanvas, ir t.t.) ...
+            // Svarbu: visos funkcijos, kurios buvo globalios, dabar yra Game klasės metodai
+            // ir kviečiamos per `this.metodoPavadinimas()` arba `game.metodoPavadinimas()` iš HTML.
+
+            // --- Likę Game klasės metodai (sutrumpinta versija, nekeisti) ---
+            checkOrientation() {
+                if (this.isMobile) {
+                    const isPortrait = window.innerHeight > window.innerWidth;
+                    if (isPortrait) {
+                        this.orientationCorrect = false;
+                        document.getElementById('turnDeviceNotification').style.display = 'flex';
+                        this.pause = true;
+                    } else {
+                        this.orientationCorrect = true;
+                        document.getElementById('turnDeviceNotification').style.display = 'none';
+                        if (this.imagesLoaded && this.bangosPradeta) { // Jei žaidimas jau vyko
+                           // this.pause = false; // Atpauzinti jei buvo pauzė dėl orientacijos
+                        } else if (this.imagesLoaded && !this.bangosPradeta && document.getElementById("main").style.display === 'none') {
+                            // Jei buvo meniu, bet dabar orientacija gera ir žaidimas turėtų būti matomas
+                           // this.pause = false;
+                        }
+                    }
+                } else {
+                    this.orientationCorrect = true;
+                    document.getElementById('turnDeviceNotification').style.display = 'none';
+                }
+                this.updateCanvas();
+            }
+            loadSettingsFromLocalStorage(){ try { const s = localStorage.getItem("castleDefenderSettings"); if(s) this.setings = {...this.setings, ...JSON.parse(s)}; } catch(e){console.error("LS settings load error",e);}}
+            loadGameStateFromLocalStorage(){ try { const s = localStorage.getItem("castleDefenderGameState"); if(s){ const gs = JSON.parse(s); this.wave=gs.wave||1; this.savasData=gs.savasData||{coins:500,rumuHp:100,ownedSoligers:[]}; if(this.savasData.ownedSoligers && Array.isArray(this.savasData.ownedSoligers)) this.savasData.ownedSoligers.forEach(sol => {if(!sol.extraData) sol.extraData={speedUp:0,damigeUp:0,target:"first"};}); else this.savasData.ownedSoligers=[];}} catch(e){console.error("LS game state load error",e); localStorage.removeItem("castleDefenderGameState");}}
+            initFirebase(){ try { if(!firebase.apps.length) this.firebaseApp=firebase.initializeApp(firebaseConfigGlobal); else this.firebaseApp=firebase.app(); this.auth=firebase.auth(this.firebaseApp); this.db=firebase.firestore(this.firebaseApp); const provider=new firebase.auth.GoogleAuthProvider(); this.auth.onAuthStateChanged(userCredential => { this.showLoadingOverlay(true,"Tikrinamas prisijungimas..."); if(userCredential){this.user=userCredential; console.log("Firebase: Prisijungė:",this.user.displayName); document.getElementById("showLogin").style.display="none"; document.getElementById("showLogout").style.display="block"; document.getElementById("userEmail").textContent=this.user.email; this.loadUserDataFromFireStore().finally(()=>this.showLoadingOverlay(false));} else {console.log("Firebase: Naudotojas neprisijungęs."); this.user=null; document.getElementById("showLogin").style.display="block"; document.getElementById("showLogout").style.display="none"; document.getElementById("userEmail").textContent=""; this.showLoadingOverlay(false);}}); document.getElementById("google-login").addEventListener("click",()=>{this.showLoadingOverlay(true,"Jungiamasi..."); this.auth.signInWithPopup(provider).then(async result => {this.user=result.user; const userDocRef=firebase.firestore.doc(this.db,"users",this.user.uid); await firebase.firestore.setDoc(userDocRef,{name:this.user.displayName,email:this.user.email,lastLogin:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});}).catch(error=>{console.error("Firebase: Prisijungimo klaida:",error.code,error.message); alert("Prisijungimo klaida: "+error.message);}).finally(()=>this.showLoadingOverlay(false));}); document.getElementById("google-logout").addEventListener("click",()=>{this.showLoadingOverlay(true,"Atsijungiama..."); this.auth.signOut().then(()=>{this.savasData=null; this.wave=1; this.loadGameStateFromLocalStorage(); if(!this.savasData)this.savasData={coins:500,rumuHp:100,ownedSoligers:[]}; this.rumuHp=this.savasData.rumuHp; this.maxRumuHp=this.savasData.rumuHp; this.sudeliokSavus(); this.updateShopText(); this.updateParduotuvesVidu();}).catch(error=>{console.error("Firebase: Atsijungimo klaida:",error.message); alert("Atsijungimo klaida: "+error.message);}).finally(()=>this.showLoadingOverlay(false));});} catch(error){console.error("Firebase: Inicializacijos klaida:",error);}}
+            async saveDataToFireStore(){ if(!this.user||!this.db||!this.savasData)return; console.log("Saugoma į Firebase..."); const gameStateToSave={wave:this.wave,savasData:this.savasData}; try {const docRef=firebase.firestore.doc(this.db,"users",this.user.uid,"gamedata","mainSave"); await firebase.firestore.setDoc(docRef,gameStateToSave,{merge:true}); console.log("Duomenys sėkmingai išsaugoti į Firebase.");}catch(e){console.error("Klaida saugant į Firebase: ",e);}}
+            async loadUserDataFromFireStore(){ if(!this.user||!this.db)return; console.log("Kraunama iš Firebase..."); this.showLoadingOverlay(true,"Kraunami duomenys..."); try {const docRef=firebase.firestore.doc(this.db,"users",this.user.uid,"gamedata","mainSave"); const docSnap=await firebase.firestore.getDoc(docRef); if(docSnap.exists()){const data=docSnap.data(); if(data){this.wave=data.wave??this.wave; this.savasData={...this.savasData,...data.savasData}; this.rumuHp=this.savasData.rumuHp; this.maxRumuHp=this.savasData.rumuHp; this.sudeliokSavus(); this.updateShopText(); this.updateParduotuvesVidu(); console.log("Vartotojo duomenys užkrauti iš Firebase.");}} else {console.log("Firebase: Vartotojo duomenų nėra.");}} catch(error){console.error("Klaida kraunant iš Firebase:",error);} finally {this.showLoadingOverlay(false);}}
+            saveGameStateToLocalStorage(){ if(!this.savasData)return; const gameState={wave:this.wave,savasData:this.savasData}; try {localStorage.setItem("castleDefenderGameState",JSON.stringify(gameState));}catch(e){console.error("LS save error",e);}}
+            saveSettingsToLocalStorage(){ try {localStorage.setItem("castleDefenderSettings",JSON.stringify(this.setings));}catch(e){console.error("LS settings save error",e);}}
+            preskaiciokDydzius(){const b=1920,m=this.ePlotis/b; this.DydisPagalIndeksa=[[m*120,m*120],[m*150,m*150],[m*450,m*450]];}
+            setHomeSqueres(){this.homeSqueres=[]; this.langeliuCordsData.forEach(c=>{const l=new LangeliuNamu(this); l.update(c[0],c[1]); this.homeSqueres.push(l);}); if(this.savasData&&this.savasData.ownedSoligers)this.savasData.ownedSoligers.forEach(sol=>{if(sol.homeSquere!==null&&this.homeSqueres[sol.homeSquere])this.homeSqueres[sol.homeSquere].ocupied=sol.nr;});}
+            populateEnemyCosts(){this.enemyCosts=this.enemesData.map(e=>e.hard);}
+            animate(timestamp){
+                if(!this.imagesLoaded) { requestAnimationFrame(ts=>this.animate(ts)); return; } // Laukti paveikslėlių
+                if(!this.orientationCorrect){ this.checkOrientation(); requestAnimationFrame(ts=>this.animate(ts)); return; }
+                if(this.pause && !this.bangosPradeta && document.getElementById("main").style.display === 'flex'){ this.lastTime=timestamp; requestAnimationFrame(ts=>this.animate(ts)); return;}
+                if(this.pause && this.bangosPradeta) { /* Allow pause during wave for menu */ }
+                else if (this.pause) {this.lastTime=timestamp; requestAnimationFrame(ts=>this.animate(ts)); return;}
+
+
+                if(!this.lastTime)this.lastTime=timestamp; this.deltaTime=(timestamp-this.lastTime); if(this.deltaTime>100)this.deltaTime=16.67; this.deltaTime*=this.speedUp; this.lastTime=timestamp;
+                this.ctx.clearRect(0,0,this.ePlotis,this.eAukstis); this.ctx.drawImage(this.backGrount,0,0,this.ePlotis,this.eAukstis);
+                if(isNaN(this.deltaTime))this.deltaTime=0; this.waweLaikas+=this.deltaTime;
+                this.ctx.drawImage(this.tekelisImg,0,0,this.ePlotis,this.eAukstis);
+                this.streles=this.streles.filter(s=>!s.mirus); this.streles.forEach(s=>s.animuok());
+                this.ctx.drawImage(this.pilisImg,(2/100)*this.ePlotis,(10.3/100)*this.ePlotis,this.ePlotis/3,this.ePlotis/2);
+                if(this.bangosPradeta&&this.waweImamas<this.waweEnemesCombination.length&&this.waweLaikas>this.spawnDelayByProgress(this.waweImamas,this.waweEnemesCombination.length)){this.waweLaikas=0; const r=this.createSeededRandom(this.seed+this.waweImamas); const numToSpawn=Math.min(Math.floor(r()*2)+1,this.waweEnemesCombination.length-this.waweImamas); for(let i=0;i<numToSpawn;i++){if(this.waweImamas<this.waweEnemesCombination.length){const yP=r()*15+70; const eHard=this.waweEnemesCombination[this.waweImamas]; const eData=this.enemesData.find(e=>e.hard===eHard); if(eData)this.priesai.push(new Veikejas(this,{...eData},100+r()*5,yP)); this.waweImamas++;}} this.priesai.sort((a,b)=>a.y-b.y);}
+                if(this.bangosPradeta&&this.priesai.length===0&&this.waweImamas===this.waweEnemesCombination.length&&!this.pralaimeta){console.log("Banga baigta"); this.wave++; document.getElementById("won").style.display="block"; setTimeout(()=>document.getElementById("won").style.display="none",1300); this.wavePabaiga();}
+                if(this.rumuHp<=0&&!this.pralaimeta){this.priesai.forEach(p=>{p.givybes=-1;p.lost=true;}); this.pralaimeta=true; document.getElementById("lost").style.display="block"; setTimeout(()=>document.getElementById("lost").style.display="none",1300); this.rumuHp=0; this.wavePabaiga(); console.log("Pralaimėta");}
+                if(!this.bangosPradeta && !this.lockCanvasInteraction){this.canvas.style.cursor="default"; this.homeSqueres.forEach((sq,i)=>{this.ctx.save(); let b=0.4; if(this.arPeleViduje(this.pelesX,this.pelesY,sq)){b=0.7; if(!this.isMobile)this.canvas.style.cursor="pointer"; if(this.mouseDown){this.updateLangeliuVidu(i); this.mouseDown=false;}} this.ctx.strokeStyle="gray"; this.ctx.fillStyle=`rgba(65,65,85,${b})`; this.ctx.beginPath(); this.ctx.roundRect(sq.x,sq.y,sq.plotis,sq.aukstis,[5,5,5,5]); this.ctx.stroke(); this.ctx.fill(); this.ctx.restore();});}
+                this.priesai.forEach(p=>{p.animuok(); if(!p.linkMirties&&!p.mires)p.judeti();}); this.priesai=this.priesai.filter(p=>!p.mires);
+                this.savi.forEach(s=>{s.animuok(); if(this.priesai.length>0&&this.bangosPradeta&&!this.pralaimeta)s.atack();});
+                this.ctx.fillStyle="gold"; this.ctx.font="bold 20px MedievalSharp"; this.ctx.textAlign="right"; this.ctx.fillText(`Banga: ${this.wave}`,this.ePlotis-20,30); if(this.savasData)this.ctx.fillText(`Monetos: ${this.savasData.coins}`,this.ePlotis-20,60); this.ctx.textAlign="left";
+                if(this.savasData&&this.piniguDezute.style.display!=='none')this.piniguDezute.innerHTML="Tavo monetos: "+this.savasData.coins;
+                if(this.maxRumuHp>0)this.showBar(15,5,this.ePlotis/3,this.eAukstis/100,this.rumuHp,this.maxRumuHp,"darkred","#5C2E0B",1);
+                if(this.bangosPradeta&&this.vaveHp>0)this.showBar(15,7.5,this.ePlotis/3,this.eAukstis/100,this.leftVaveHp,this.vaveHp,"orange","#5C2E0B",1);
+                this.ctx.drawImage(this.zolesImg,0,0,this.ePlotis,this.eAukstis);
+                this.fpsCounter++; if(timestamp-this.fpsLastUpdate>1000){this.currentFps=this.fpsCounter;this.fpsCounter=0;this.fpsLastUpdate=timestamp;} if(this.debugScrean||this.rodytiFps){this.ctx.fillStyle="white";this.ctx.font="16px Arial";this.ctx.fillText(`FPS: ${this.currentFps}`,20,this.eAukstis-20);}
+                if(this.savasData&&this.optiTikrint!==this.savasData.coins){this.optiTikrint=this.savasData.coins;this.updateShopText();}
+                if(this.debugScrean){this.ctx.fillStyle="white";this.ctx.font="14px Arial"; this.ctx.fillText(`Priešų bangoje: ${this.waweEnemesCombination.length}`,20,70); this.ctx.fillText(`Sukurta priešų: ${this.priesai.length} (Aktyvūs)`,20,90); this.ctx.fillText(`Liko sukurti: ${this.waweEnemesCombination.length-this.waweImamas}`,20,110); this.ctx.fillText(`DeltaTime: ${this.deltaTime.toFixed(2)}ms`,20,130); this.ctx.fillText(`Langelių: ${this.homeSqueres.length}`,20,150); this.ctx.fillText(`Savų karių: ${this.savi.length}`,20,170);}
+                requestAnimationFrame(ts=>this.animate(ts));
+            }
+            updateCanvas(){const a=16/9;let nW=window.innerWidth,nH=window.innerHeight;if(nW/nH>a)nW=nH*a;else nH=nW/a;this.ePlotis=nW;this.eAukstis=nH;const r=window.devicePixelRatio||1;this.canvas.width=this.ePlotis*r;this.canvas.height=this.eAukstis*r;this.canvas.style.width=this.ePlotis+"px";this.canvas.style.height=this.eAukstis+"px";this.ctx.setTransform(r,0,0,r,0,0);document.body.style.overflow="hidden";this.preskaiciokDydzius();this.setHomeSqueres();this.savi.forEach(s=>{if(s.data.homeSquere!==null&&this.homeSqueres[s.data.homeSquere]){const q=this.homeSqueres[s.data.homeSquere];s.x=q.xProc-q.plotis/(100*(this.ePlotis/100))/10;s.y=q.yProc-q.aukstis/(100*(this.eAukstis/100))/10;}}); console.log("Canvas atnaujintas:", this.ePlotis, "x", this.eAukstis);}
+            generateEnemyWave(waveNum,baseDiff=10,growth=3){const rand=this.createSeededRandom(this.seed+waveNum);const diffMult=1.2+waveNum*0.08;let totalDiff=(baseDiff+waveNum*growth)*diffMult;if(waveNum>20)totalDiff*=1.1;if(waveNum>40)totalDiff*=1.1;let rem=totalDiff,res=[],att=0;while(rem>0&&att<500){att++;const prog=1-rem/totalDiff;const dynRatio=0.1+prog*0.5;let maxCost=rem*dynRatio;if(maxCost<Math.min(...this.enemyCosts))maxCost=Math.min(...this.enemyCosts);const allowOver=rand()<(0.01+waveNum*0.002);let valid=this.enemyCosts.filter(c=>c<=rem&&(allowOver||c<=maxCost||c<=Math.min(...this.enemyCosts)));if(valid.length===0){valid=this.enemyCosts.filter(c=>c<=rem);if(valid.length===0)break;}let choice;if(rand()<0.7&&valid.length>1){const nonMin=valid.filter(c=>c>Math.min(...valid));if(nonMin.length>0)choice=nonMin[Math.floor(rand()*nonMin.length)];else choice=valid[Math.floor(rand()*valid.length)];}else choice=valid[Math.floor(rand()*valid.length)];res.push(choice);rem-=choice;}if(att>=500)console.warn("generateEnemyWave pasiekė bandymų limitą bangai:",waveNum);return res.sort((a,b)=>a-b);}
+            createSeededRandom(seed){let cS=BigInt(seed);const m=BigInt(0x80000000),a=BigInt(1103515245),c=BigInt(12345);return function(){cS=(a*cS+c)%m;return Number(cS)/Number(m);};}
+            arPeleViduje(pX,pY,box){return(pX>=box.x&&pX<=box.x+box.plotis&&pY>=box.y&&pY<=box.y+box.aukstis);}
+            raskTaikini(strat){const gyvi=this.priesai.filter(p=>!p.linkMirties&&!p.mires&&p.givybes>0);if(!gyvi.length)return null;let taik=null;switch(strat){case"first":taik=gyvi.reduce((a,b)=>(a.x<b.x?a:b));break;case"last":taik=gyvi.reduce((a,b)=>(a.x>b.x?a:b));break;case"random":taik=gyvi[Math.floor(Math.random()*gyvi.length)];break;case"strongest":taik=gyvi.reduce((max,p)=>(p.givybesStart>max.givybesStart?p:max),gyvi[0]);break;case"weakest":taik=gyvi.reduce((min,p)=>(p.givybes<min.givybes?p:min),gyvi[0]);break;default:taik=gyvi[0];}return taik;}
+            removeCharacter(langIdx){if(!this.homeSqueres[langIdx]||this.homeSqueres[langIdx].ocupied===null)return;const solNrToRemove=this.homeSqueres[langIdx].ocupied;const solInOwned=this.savasData.ownedSoligers.find(s=>s.nr===solNrToRemove);if(solInOwned)solInOwned.homeSquere=null;this.homeSqueres[langIdx].ocupied=null;this.sudeliokSavus();this.updateLangeliuVidu(langIdx);this.selectCharacterDiv.style.display='none';}
+            sudeliokSavus(){this.savi=[];if(!this.savasData||!this.savasData.ownedSoligers)return;this.savasData.ownedSoligers.forEach(solData=>{if(solData.homeSquere!==null&&this.homeSqueres[solData.homeSquere]){const lang=this.homeSqueres[solData.homeSquere];const origSolData=this.soligersData.find(s=>s.nr===solData.nr);if(origSolData){const merged={...origSolData,extraData:solData.extraData,nr:solData.nr,homeSquere:solData.homeSquere};const xP=lang.xProc+((lang.plotis/((100/this.ePlotis)))/200)-(origSolData.dydis===1?2.5:1.5);const yP=lang.yProc+((lang.aukstis/((100/this.eAukstis)))/200)-(origSolData.dydis===1?5:2.5);this.savi.push(new Veikejas(this,merged,xP,yP));lang.ocupied=solData.nr;}}});}
+            openFullscreen(){const e=document.documentElement;if(e.requestFullscreen)e.requestFullscreen().catch(err=>console.log(`Fullscreen error: ${err.message}(${err.name})`));else if(e.webkitRequestFullscreen)e.webkitRequestFullscreen();else if(e.msRequestFullscreen)e.msRequestFullscreen();}
+            closeFullscreen(){if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen();}
+            apskaiciokWaveHpIrverte(){this.leftVaveHp=0;this.waveWorth=0;this.waweEnemesCombination.forEach(hV=>{const pD=this.enemesData.find(e=>e.hard===hV);if(pD){this.leftVaveHp+=pD.givybes;this.waveWorth+=pD.revard;}});this.vaveHp=this.leftVaveHp;}
+            setRumuHpPradziai(){if(this.savasData){this.rumuHp=this.savasData.rumuHp;this.maxRumuHp=this.savasData.rumuHp;}}
+            apsipirkti(){this.updateParduotuvesVidu();const pDiv=document.getElementById("parduotuve");pDiv.innerHTML="";if(this.parduotuvesVidus.length===0){pDiv.innerHTML="<p style='color:#c8a064;text-align:center;'>Visi kariai nupirkti!</p>";return;}this.parduotuvesVidus.forEach(itemData=>{const iDiv=document.createElement("div");iDiv.className=`shop-item ${itemData.rarity||'common'}`;const canBuy=this.savasData.coins>=itemData.price;iDiv.innerHTML=`<div class="shop-item-icon"><img src="${itemData.img}" alt="${itemData.name}" style="position:absolute;top:0px;left:-10px;width:calc(100% + 20px);height:calc(100% + 0px);object-fit:contain;"/></div><div class="shop-item-info"><h3>${itemData.name}</h3><p>Jėga: ${itemData.jega}</p><p>Šaud. greitis: ${itemData.saudimoGreitis}</p></div><div class="shop-item-price">${itemData.price}</div><button class="buy-button" ${canBuy?'':'disabled'} onclick="game.nupirkti(${itemData.nr})">Pirkti</button>`;pDiv.appendChild(iDiv);});}
+            updateParduotuvesVidu(){this.parduotuvesVidus=[];if(!this.savasData||!this.savasData.ownedSoligers)return;const ownedSNrs=this.savasData.ownedSoligers.map(s=>s.nr);this.soligersData.forEach(sD=>{if(!ownedSNrs.includes(sD.nr))this.parduotuvesVidus.push(sD);});this.parduotuvesVidus.sort((a,b)=>a.price-b.price);}
+            nupirkti(kNr){const solToBuy=this.soligersData.find(s=>s.nr===kNr);if(!solToBuy||this.savasData.coins<solToBuy.price){console.log("Nepakanka monetų arba karys nerastas.");return;}this.savasData.coins-=solToBuy.price;this.savasData.ownedSoligers.push({nr:solToBuy.nr,homeSquere:null,extraData:{speedUp:0,damigeUp:0,target:"first"}});this.apsipirkti();this.updateShopText();}
+            showBar(xP,yP,plP,aukP,hp,maxHp,sp,bgSp,puse=1){const ctx=this.ctx;const xpx=(xP/100)*this.ePlotis,ypx=(yP/100)*this.eAukstis,plpx=(plP/100)*this.ePlotis,aukpx=(aukP/100)*this.eAukstis;ctx.save();ctx.fillStyle=bgSp;ctx.fillRect(xpx,ypx,plpx+2,aukpx+2);ctx.fillStyle=sp;let hpPlpx=(hp/maxHp)*plpx;if(hpPlpx<0)hpPlpx=0;if(puse===-1)ctx.fillRect(xpx+plpx-hpPlpx+1,ypx+1,hpPlpx,aukpx);else ctx.fillRect(xpx+1,ypx+1,hpPlpx,aukpx);ctx.restore();}
+            changeTarget(solOwnIdx,langIdx){if(!this.savasData.ownedSoligers[solOwnIdx])return;const curr=this.savasData.ownedSoligers[solOwnIdx].extraData.target;let newIdx=this.targetOptions.indexOf(curr)+1;if(newIdx>=this.targetOptions.length)newIdx=0;this.savasData.ownedSoligers[solOwnIdx].extraData.target=this.targetOptions[newIdx];this.sudeliokSavus();this.updateLangeliuVidu(langIdx);}
+            updateLangeliuVidu(langIdx){let html="";const lang=this.homeSqueres[langIdx];if(lang&&lang.ocupied!==null){const solNr=lang.ocupied;const solInOwn=this.savasData.ownedSoligers.find(s=>s.nr===solNr&&s.homeSquere===langIdx);const origSolData=this.soligersData.find(s=>s.nr===solNr);if(solInOwn&&origSolData){const currPow=origSolData.jega+solInOwn.extraData.damigeUp;const upPrice=Math.round(currPow+currPow/3)+50;const canUp=this.savasData.coins>=upPrice;const solOwnIdx=this.savasData.ownedSoligers.indexOf(solInOwn);html+=`<div class="char_selection" style="flex-direction:column;align-items:center;margin-bottom:10px;"><div class="char-photo" style="margin-bottom:5px;"><img src="${origSolData.img}" alt="${origSolData.name}"></div><p style="font-weight:bold;">${origSolData.name}</p><p>Jėga: ${currPow}</p></div><button class="remove_char" onclick="game.removeCharacter(${langIdx})">Pašalinti</button><button class="change_targ" onclick="game.changeTarget(${solOwnIdx},${langIdx})">Taikinys: ${solInOwn.extraData.target}</button><p style="margin-top:10px;font-weight:bold;">Pagerinimas:</p><button class="upgrade" ${canUp?'':'disabled'} onclick="game.upgradeCharacter(${solOwnIdx},${langIdx})">Kaina: ${upPrice} (Jėga +10)</button>`;}}else{html+=`<p style="text-align:center;margin-bottom:10px;font-weight:bold;">Pasirinkite karį:</p>`;let found=false;this.savasData.ownedSoligers.forEach((sol,solOwnIdx)=>{if(sol.homeSquere===null){found=true;const origSData=this.soligersData.find(s=>s.nr===sol.nr);if(origSData)html+=`<div class="char_selection"><div class="char-photo"><img src="${origSData.img}" alt="${origSData.name}"></div><div style="flex-grow:1;margin-left:10px;"><p style="font-weight:bold;">${origSData.name}</p><p>Jėga: ${origSData.jega+sol.extraData.damigeUp}</p></div><button onclick="game.placeCharacter(${solOwnIdx},${langIdx})">Padėti</button></div>`;}});if(!found)html+=`<p style='color:#c8a064;text-align:center;'>Neturite laisvų karių.</p><p style='color:#c8a064;text-align:center;font-size:0.9em;'>Nusipirkite parduotuvėje!</p>`;}this.selectCharacterDiv.innerHTML=`<button class="close-select-char-btn" onclick="document.getElementById('selectCharacter').style.display='none'">&times;</button>${html}`;this.selectCharacterDiv.style.display="flex";}
+            placeCharacter(solOwnIdx,langIdx){if(this.savasData.ownedSoligers[solOwnIdx]&&this.homeSqueres[langIdx]){this.savasData.ownedSoligers[solOwnIdx].homeSquere=langIdx;this.homeSqueres[langIdx].ocupied=this.savasData.ownedSoligers[solOwnIdx].nr;this.sudeliokSavus();this.selectCharacterDiv.style.display='none';}}
+            upgradeCharacter(solOwnIdx,langIdx){const solToUp=this.savasData.ownedSoligers[solOwnIdx];const origSolData=this.soligersData.find(s=>s.nr===solToUp.nr);if(!solToUp||!origSolData)return;const currPow=origSolData.jega+solToUp.extraData.damigeUp;const price=Math.round(currPow+currPow/3)+50;if(this.savasData.coins>=price){this.savasData.coins-=price;solToUp.extraData.damigeUp+=10;this.sudeliokSavus();this.updateLangeliuVidu(langIdx);this.updateShopText();}else console.log("Nepakanka monetų pagerinimui.");}
+            arTelefonas(){return/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);}
+            updateShopText(){if(!this.savasData)return;const addHp=Math.round(this.savasData.rumuHp/10)+10;const upPrice=Math.round(this.savasData.rumuHp/4)+50;document.getElementById("upgradeCastleButton").innerHTML=`+${addHp} HP`;document.getElementById("castleHp").innerHTML=`HP: ${this.savasData.rumuHp}/${this.maxRumuHp}`;document.getElementById("castleUpPrice").innerHTML=`Kaina: ${upPrice}`;document.getElementById("upgradeCastleButton").disabled=this.savasData.coins<upPrice;}
+            spawnDelayByProgress(curr,total,base=1500){if(total===0)return base;let prog=curr/total;let fact=1-Math.pow(Math.abs(prog-0.5)*1.8,2);fact=Math.max(0.2,Math.min(1,fact));let delay=base*fact;if(this.wave>10)delay*=0.9;if(this.wave>20)delay*=0.9;return Math.max(100,delay);}
+            nextRound(){if(this.bangosPradeta)return;this.leftVaveHp=0;this.waveWorth=0;this.waweImamas=0;this.priesai=[];this.streles=[];this.pause=false;this.bangosPradeta=true;this.pralaimeta=false;this.waweEnemesCombination=this.generateEnemyWave(this.wave);this.apskaiciokWaveHpIrverte();this.setRumuHpPradziai();this.nextRoundButtonEl.style.display="none";this.upgradeCastleDiv.style.display="none";this.shopButtonEl.style.display="none";this.speedUpButton.style.display="block";this.autoRunButton.style.display="block";this.autoRunButton.innerHTML=`Auto Startas ${this.autoRun?"ĮJ":"IŠJ"}<br>Kaina: ${Math.round(this.waveWorth*0.4)}`;if(!this.autoRun)setTimeout(()=>{if(!this.autoRun)this.autoRunButton.style.display="none";},5000);this.lockCanvasInteraction=true;}
+            wavePabaiga(){this.bangosPradeta=false;this.waweImamas=0;this.waweEnemesCombination=[];this.nextRoundButtonEl.style.display="block";this.upgradeCastleDiv.style.display="block";this.shopButtonEl.style.display="block";this.speedUpButton.style.display="none";this.autoRunButton.style.display="none";this.saveGameStateToLocalStorage();if(this.user)this.saveDataToFireStore();if(this.autoRun&&!this.pralaimeta&&this.savasData.coins>=Math.round(this.waveWorth*0.4)){this.savasData.coins-=Math.round(this.waveWorth*0.4);this.nextRound();}else this.autoRun=false;this.lockCanvasInteraction=false;}
+            setupEventListeners(){window.addEventListener("resize",()=>{this.checkOrientation();this.updateCanvas();});window.addEventListener("orientationchange",()=>{this.checkOrientation();this.updateCanvas();});const fsEv=["fullscreenchange","webkitfullscreenchange","mozfullscreenchange","msfullscreenchange"];fsEv.forEach(e=>document.addEventListener(e,()=>this.updateCanvas()));document.getElementById("fullscreenToggle").addEventListener("change",e=>{this.setings.autoFullScrean=e.target.checked;this.saveSettingsToLocalStorage();if(e.target.checked&&!document.fullscreenElement)this.openFullscreen();else if(!e.target.checked&&document.fullscreenElement)this.closeFullscreen();});document.getElementById("musicVolume").addEventListener("input",e=>{this.setings.musicVolume=parseInt(e.target.value);this.saveSettingsToLocalStorage();});document.getElementById("sfxVolume").addEventListener("input",e=>{this.setings.sfxVolume=parseInt(e.target.value);this.saveSettingsToLocalStorage();});document.getElementById("playButton").addEventListener("click",()=>{if(!this.orientationCorrect){alert("Prašome pasukti įrenginį į horizontalią padėtį.");return;}this.pause=false;this.lockCanvasInteraction=false;if(this.setings.autoFullScrean&&!document.fullscreenElement)this.openFullscreen();document.getElementById("main").style.opacity="0";setTimeout(()=>{document.getElementById("main").style.display="none";document.body.classList.add("game-active");document.getElementById("container").style.display="flex";this.nextRoundButtonEl.style.display="block";this.lockCanvasInteraction=false;},500);});this.nextRoundButtonEl.addEventListener("click",()=>this.nextRound());this.canvas.addEventListener("mousemove",e=>{const r=this.canvas.getBoundingClientRect();const sX=this.canvas.width/(r.width*window.devicePixelRatio);const sY=this.canvas.height/(r.height*window.devicePixelRatio);this.pelesX=(e.clientX-r.left)*sX;this.pelesY=(e.clientY-r.top)*sY;});this.canvas.addEventListener("mousedown",e=>{if(this.lockCanvasInteraction||this.bangosPradeta)return;this.mouseDown=true;});document.getElementById("shopButton").addEventListener("click",()=>{document.getElementById("shopModal").style.display="flex";this.apsipirkti();});document.getElementById("settingsButton").addEventListener("click",()=>document.getElementById("settingsModal").style.display="flex");document.getElementById("creditsButton").addEventListener("click",()=>document.getElementById("creditsModal").style.display="flex");document.getElementById("closeSettings").addEventListener("click",()=>document.getElementById("settingsModal").style.display="none");document.getElementById("closeCredits").addEventListener("click",()=>document.getElementById("creditsModal").style.display="none");document.getElementById("closeShop").addEventListener("click",()=>document.getElementById("shopModal").style.display="none");document.getElementById("menuButton").addEventListener("click",()=>{this.pause=true;this.lockCanvasInteraction=true;document.getElementById("main").style.display="flex";document.getElementById("main").style.opacity="1";document.getElementById("container").style.opacity="0";this.nextRoundButtonEl.style.display="none";setTimeout(()=>{document.getElementById("container").style.display="none";this.lockCanvasInteraction=false;},500);});this.speedUpButton.addEventListener("click",()=>{this.speedUp=this.speedUp===1?2:1;this.speedUpButton.innerHTML=`${this.speedUp}X`;});document.getElementById("upgradeCastleButton").addEventListener("click",()=>{if(!this.savasData)return;const addHp=Math.round(this.savasData.rumuHp/10)+10;const upPrice=Math.round(this.savasData.rumuHp/4)+50;if(this.savasData.coins>=upPrice){this.savasData.rumuHp+=addHp;this.maxRumuHp+=addHp;this.savasData.coins-=upPrice;this.updateShopText();}});this.autoRunButton.addEventListener("click",()=>{if(this.autoRun)this.autoRun=false;else if(this.savasData&&this.savasData.coins>=Math.round(this.waveWorth*0.4))this.autoRun=true;else if(this.savasData&&this.savasData.coins<Math.round(this.waveWorth*0.4)){alert("Nepakanka monetų automatiniam startui!");this.autoRun=false;}this.autoRunButton.innerHTML=`Auto Startas ${this.autoRun?"ĮJ":"IŠJ"}<br>Kaina: ${Math.round(this.waveWorth*0.4)}`;});window.addEventListener("keydown",e=>{if(e.key==="F2"){e.preventDefault();this.debugScrean=!this.debugScrean;document.getElementById("debugScrean").style.display=this.debugScrean?"block":"none";if(this.debugScrean)this.komandosInput.focus();}});this.komandosInput.addEventListener("keydown",e=>{if(e.key==="Enter"){this.handleCommand(this.komandosInput.value.trim());this.komandosInput.value="";}});}
+            handleCommand(cmdTxt){const p=cmdTxt.split(" "),c=p[0].toLowerCase(),a=p[1];switch(c){case"s":this.pause=!this.pause;console.log("Pause:",this.pause);break;case"next":this.wave++;this.wavePabaiga();console.log("Kita banga:",this.wave);break;case"fps":this.rodytiFps=!this.rodytiFps;break;case"hp":this.rodytiGivybes=!this.rodytiGivybes;break;case"setwave":if(a)this.wave=parseInt(a);console.log("Banga:",this.wave);break;case"killall":this.priesai.forEach(pr=>pr.suzeisti(-1));if(a==="full")this.waweImamas=this.waweEnemesCombination.length;break;case"clear":localStorage.removeItem("castleDefenderGameState");localStorage.removeItem("castleDefenderSettings");if(this.user&&this.db){const dR=firebase.firestore.doc(this.db,"users",this.user.uid,"gamedata","mainSave");firebase.firestore.deleteDoc(dR).then(()=>console.log("Firebase data deleted.")).catch(e=>console.error("Firebase delete error",e));}location.reload();break;case"setcoins":if(a&&this.savasData)this.savasData.coins=parseInt(a);console.log("Monetos:",this.savasData?.coins);break;case"win":document.getElementById("won").style.display="block";setTimeout(()=>document.getElementById("won").style.display="none",1300);break;case"lose":document.getElementById("lost").style.display="block";setTimeout(()=>document.getElementById("lost").style.display="none",1300);break;default:console.log("Nežinoma komanda:",cmdTxt);}}
+
+        } // End of Game Class
+
+        let game;
+        console.log("Laukiama window.onload įvykio...");
+        window.onload = () => {
+            console.log("window.onload įvyko. Kuriamas žaidimo objektas.");
+            game = new Game();
+            window.game = game; // Priskiriam globaliam window objektui
+            try {
+                game.init();
+                 console.log("game.init() sėkmingai iškviestas.");
+            } catch (e) {
+                console.error("Klaida iškviečiant game.init():", e);
+                alert("Kritinė klaida pradedant žaidimą. Patikrinkite konsolę.");
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                if(loadingOverlay) {
+                    loadingOverlay.textContent = "Klaida kraunant žaidimą!";
+                    // Nedingsta, kad vartotojas matytų klaidą.
+                }
+            }
+        };
+        console.log("Pagrindinis skriptas baigė veikti (sinchroninė dalis).");
+    </script>
+</body>
+</html>
