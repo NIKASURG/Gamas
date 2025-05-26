@@ -4,14 +4,14 @@ class veikejas {
     this.y = y;
     this.data = data;
     this.jega = this.data.extraData?.damigeUp + this.data.jega ?? this.data.jega ;
-    this.givybesStart = data.givybes +waveHp ?? 100 +wave;
+    this.givybesStart = data.givybes  +wave?? 100  +wave;
     this.dydis = data.dydis;
     this.greitis = data.greitis ?? 1;
     this.spriteIlgisKadru = data.spriteIlgis;
     this.spriteAukstisKadru = data.spriteAukstis;
     this.img = new Image();
     this.img.src = data.img;
-    this.givybes = data.givybes;
+    this.givybes = data.givybes +wave;
     this.img.onload = () => {
       this.kadroPlotis = this.img.width / this.spriteIlgisKadru;
       this.kadroAukstis = this.img.height / this.spriteAukstisKadru;
