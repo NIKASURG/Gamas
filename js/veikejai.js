@@ -283,7 +283,7 @@ class Sovinys {
       this.img.src = "img/ismigusiStrele.png";
       this.greitis = 0;
     }
-
+    
     const x = this.pradziosX + this.kryptisX * this.nueita;
     const yBase = this.pradziosY + this.kryptisY * this.nueita;
 
