@@ -152,7 +152,6 @@ function animate(timestamp) {
 
 if (priesai.length == 0 && waweImamas == waweEnemesCombination.length) {
   console.log("Wave baigta");
-  waweImamas = 0;
   waweLaikas = 0;
   if (!pralaimeta) {
     wave++;
@@ -178,7 +177,6 @@ if (rumuHp <= 0) {
     document.getElementById("lost").style.display = "none";
   }, 1300);
   waweEnemesCombination = [];
-  waweImamas = 0;
   rumuHp = 0;
   wavePabaiga();                                                                                    
   console.log("lost");

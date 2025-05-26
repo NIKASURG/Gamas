@@ -11,6 +11,24 @@ let Dydis = [
 ];
 let enemes = [
   {
+    greitis: 0.13,
+    img: "./img/Veikeju_sprite/Enemy/Slime.png",
+    dydis: 2,
+    spriteIlgis: 11,
+    spriteAukstis: 1,
+    spriteReikemasKadrasY: 1,
+    reikemiKadrai: 11,
+    veikejoZiurejimoPuse: -1,
+    givybes: 60,
+    mirtiesSpriteY: 9,
+    mirtiesReikalingiX: 11,
+    hard: 1,
+    trankymoY: 1,
+    trankymoXilgis: 11,
+    revard:1
+    ,spriteGreitis:14
+  },
+  {
     greitis: 0.1,
     img: "./img/Veikeju_sprite/Enemy/Character6.png",
     dydis: 1,
@@ -19,10 +37,10 @@ let enemes = [
     spriteReikemasKadrasY: 3,
     reikemiKadrai: 6,
     veikejoZiurejimoPuse: -1,
-    givybes: 100,
+    givybes: 120,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
-    hard: 1,
+    hard: 4,
     trankymoY: 15,
     trankymoXilgis: 6,
     revard: 2,
@@ -53,10 +71,10 @@ let enemes = [
     spriteReikemasKadrasY: 3,
     reikemiKadrai: 6,
     veikejoZiurejimoPuse: -1,
-    givybes: 500,
+    givybes: 700,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
-    hard: 15,
+    hard: 22,
     trankymoY: 15,
     trankymoXilgis: 6,
     revard: 5,
@@ -70,13 +88,36 @@ let enemes = [
     spriteReikemasKadrasY: 3,
     reikemiKadrai: 6,
     veikejoZiurejimoPuse: -1,
-    givybes: 800,
+    givybes: 1300,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
-    hard: 22,
+    hard: 27,
     trankymoY: 15,
     trankymoXilgis: 6,
+<<<<<<< HEAD
     revard: 15,
+=======
+    revard:15
+  }, 
+  {
+    greitis: 0.079,
+    img: "./img/Veikeju_sprite/Enemy/ghosty.png",
+    dydis: 2,
+    spriteIlgis: 8,
+    spriteAukstis: 9,
+    spriteReikemasKadrasY: 4,
+    reikemiKadrai: 8,
+    veikejoZiurejimoPuse: -1,
+    givybes: 1300,
+    mirtiesSpriteY: 8,
+    mirtiesReikalingiX: 8,
+    hard: 35,
+    trankymoY: 9,
+    trankymoXilgis: 8,
+    revard:15,
+    spriteGreitis:12
+
+>>>>>>> 2dc0f39ab24fb315eb84baa423fe45457aae81f5
   },
 ];
 let soligers = [

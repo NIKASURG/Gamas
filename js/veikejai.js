@@ -3,15 +3,15 @@ class veikejas {
     this.x = x;
     this.y = y;
     this.data = data;
-    this.jega = this.data.extraData?.damigeUp + this.data.jega ?? this.data.jega;
-    this.givybesStart = data.givybes ?? 100;
+    this.jega = this.data.extraData?.damigeUp + this.data.jega ?? this.data.jega ;
+    this.givybesStart = data.givybes  +wave?? 100  +wave;
     this.dydis = data.dydis;
     this.greitis = data.greitis ?? 1;
     this.spriteIlgisKadru = data.spriteIlgis;
     this.spriteAukstisKadru = data.spriteAukstis;
     this.img = new Image();
     this.img.src = data.img;
-    this.givybes = data.givybes;
+    this.givybes = data.givybes +wave;
     this.img.onload = () => {
       this.kadroPlotis = this.img.width / this.spriteIlgisKadru;
       this.kadroAukstis = this.img.height / this.spriteAukstisKadru;
@@ -27,7 +27,7 @@ class veikejas {
     this.esamasKadrasY = 0;
     this.reikemasKadrasY = data.spriteReikemasKadrasY;
     this.reikemiKadrai = data.reikemiKadrai;
-    this.spriteGreitis = 1;
+    this.spriteGreitis =   1;
 
     this.mirtiesSpriteY = data.mirtiesSpriteY;
     this.mirtiesReikalingiX = data.mirtiesReikalingiX;
@@ -36,7 +36,7 @@ class veikejas {
     this.pasirinktas = true;
     this.trankyk = false;
     this.pradejauPulti = true;
-    this.greitisSpriteSukimui = 9;
+    this.greitisSpriteSukimui =data.spriteGreitis ?? 9;
     this.lost = false;
     this.colorSpin = Math.random() * 1000; 
   }
@@ -283,7 +283,7 @@ class Sovinys {
       this.img.src = "img/ismigusiStrele.png";
       this.greitis = 0;
     }
-
+    
     const x = this.pradziosX + this.kryptisX * this.nueita;
     const yBase = this.pradziosY + this.kryptisY * this.nueita;
 

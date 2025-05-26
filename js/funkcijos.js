@@ -32,7 +32,7 @@ function preskaiciokDydi() {
   Dydis = [
     [mastelis * 150, mastelis * 150],
     [mastelis * 150, mastelis * 150],
-    [mastelis * 450, mastelis * 450],
+    [mastelis * 90, mastelis * 90],
   ];
 }
 function generateEnemyWave(
@@ -424,6 +424,7 @@ function spawnDelayByProgress(current, total, base = 2000) {
 }
 function nextRound(){
    leftVaveHp = 0;
+   waveWorth = 0;
     pause = false;
     bangosPradeta = true;
     waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed);
@@ -434,9 +435,17 @@ function nextRound(){
     document.getElementById("upgradeCastle").style.display = "none";
     document.getElementById("shopButton").style.display = "none";
     document.getElementById("speedUp").style.display = "block";
-    document.getElementById("autoRun").display = "block";
+    document.getElementById("autoRun").style.display = "block";
     
-    document.getElementById("autoRun").innerHTML="Auto run"+ autoRun?"ON":"OFF"  +"<br> cost: " + waveWorth * 0.4
+
+    if(!autoRun){
+      setTimeout(() => {
+        if(!autoRun){
+    document.getElementById("autoRun").style.display = "none"}
+      },5000
+      )
+    }
+    document.getElementById("autoRun").innerHTML = "Auto run "+ (autoRun?"ON":"OFF")  +";</br> cost for this round: " + Math.round(waveWorth * 0.4)
     console.log(autoRun)
     pralaimeta = false;
 }
@@ -446,6 +455,7 @@ function wavePabaiga() {
   document.getElementById("upgradeCastle").style.display = "block";
   document.getElementById("speedUp").style.display = "none";
   document.getElementById("autoRun").style.display = "none";
+  waweImamas = 0;
   bangosPradeta = false;
   saveDataInFireStore();
   if(autoRun && savasData.coins >= Math.round(waveWorth * 0.4)){
