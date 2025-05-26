@@ -25,7 +25,7 @@ let enemes = [
     hard: 1,
     trankymoY: 15,
     trankymoXilgis: 6,
-    revard:2
+    revard: 2,
   },
   {
     greitis: 0.095,
@@ -42,7 +42,7 @@ let enemes = [
     hard: 5,
     trankymoY: 15,
     trankymoXilgis: 6,
-    revard:3
+    revard: 3,
   },
   {
     greitis: 0.089,
@@ -59,7 +59,7 @@ let enemes = [
     hard: 15,
     trankymoY: 15,
     trankymoXilgis: 6,
-    revard:5
+    revard: 5,
   },
   {
     greitis: 0.079,
@@ -76,7 +76,7 @@ let enemes = [
     hard: 22,
     trankymoY: 15,
     trankymoXilgis: 6,
-    revard:15
+    revard: 15,
   },
 ];
 let soligers = [
