@@ -3,8 +3,8 @@ class veikejas {
     this.x = x;
     this.y = y;
     this.data = data;
-    this.jega = this.data.extraData?.damigeUp + this.data.jega + wave?? this.data.jega + wave;
-    this.givybesStart = data.givybes ?? 100;
+    this.jega = this.data.extraData?.damigeUp + this.data.jega ?? this.data.jega ;
+    this.givybesStart = data.givybes +waveHp ?? 100 +wave;
     this.dydis = data.dydis;
     this.greitis = data.greitis ?? 1;
     this.spriteIlgisKadru = data.spriteIlgis;
