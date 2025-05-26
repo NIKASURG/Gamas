@@ -47,22 +47,10 @@ document.getElementById("playButton").addEventListener("click", function () {
   }
 });
 document
-  .getElementById("nextRoundButton")  
+  .getElementById("nextRoundButton")
   .addEventListener("click", function () {
-    leftVaveHp = 0;
-    pause = false;
-    bangosPradeta = true;
-    waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed);
-    apskaiciokWaveHp();
-    vaveHp = leftVaveHp;
-    setRumuHp();
-    nextRoundButton.style.display = "none";
-    document.getElementById("upgradeCastle").style.display = "none";
-      document.getElementById("shopButton").style.display = "none";
-    document.getElementById("speedUp").style.display = "block";
-
-
-    pralaimeta = false;
+    nextRound()
+   
   });
 canvas.addEventListener("mousemove", function (e) {
   pelesX = e.offsetX;
@@ -154,12 +142,22 @@ document.getElementById("speedUp").addEventListener("click", () => {
   }
 });
 document.getElementById("upgradeCastleButton").addEventListener("click", () => {
-  if( savasData.coins >= Math.round( (savasData.rumuHp - addHp)/2)){
-    addHp =  Math.round(savasData.rumuHp / 50);
-    savasData.rumuHp += addHp
-    savasData.coins -= Math.round( (savasData.rumuHp - addHp)/2)
-    updateShopText( addHp)
-
+  addHp = Math.round(savasData.rumuHp / 50);
+  if (savasData.coins >= Math.round((savasData.rumuHp - addHp) / 2)) {
+    savasData.rumuHp += addHp;
+    savasData.coins -= Math.round((savasData.rumuHp - addHp) / 2);
+    updateShopText(addHp);
   }
 });
+document.getElementById("autoRun").addEventListener("click", () => {
+  if(autoRun){
+    autoRun = false
+  }  
+   else if(Math.round(waveWorth * 0.4)<= savasData.coins){
+       savasData.coins -= Math.round(waveWorth * 0.4)
+      autoRun = true
+    }
+    document.getElementById("autoRun").innerHTML = "Auto run "+ (autoRun?"ON":"OFF")  +";</br> cost for this round: " + Math.round(waveWorth * 0.4)
 
+
+});

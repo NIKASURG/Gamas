@@ -32,7 +32,7 @@ function preskaiciokDydi() {
   Dydis = [
     [mastelis * 150, mastelis * 150],
     [mastelis * 150, mastelis * 150],
-    [mastelis * 450, mastelis * 450],
+    [mastelis * 90, mastelis * 90],
   ];
 }
 function generateEnemyWave(
@@ -44,8 +44,9 @@ function generateEnemyWave(
 ) {
   let random = createSeededRandom(seed + waveNumber);
 
-  let difficultyMultiplier = 1.5 + waveNumber * 0.05; 
-  let totalDifficulty = (baseDifficulty + waveNumber * growth) * difficultyMultiplier;
+  let difficultyMultiplier = 1.5 + waveNumber * 0.05;
+  let totalDifficulty =
+    (baseDifficulty + waveNumber * growth) * difficultyMultiplier;
 
   let remaining = totalDifficulty;
   let result = [];
@@ -53,10 +54,10 @@ function generateEnemyWave(
   while (remaining > 0) {
     let progress = 1 - remaining / totalDifficulty;
 
-    let dynamicRatio = 0.05 + progress * 0.3; 
+    let dynamicRatio = 0.05 + progress * 0.3;
     let maxAllowed = remaining * dynamicRatio;
 
-    let allowOverpowered = random() < (0.02 + waveNumber * 0.005); 
+    let allowOverpowered = random() < 0.02 + waveNumber * 0.005;
 
     let validChoices = enemyCosts.filter(
       (cost) => cost <= remaining && (allowOverpowered || cost <= maxAllowed)
@@ -74,7 +75,6 @@ function generateEnemyWave(
 
   return result;
 }
-
 
 function createSeededRandom(seed) {
   return function () {
@@ -191,7 +191,7 @@ function apskaiciokWaveHp() {
   for (let i = 0; i < waweEnemesCombination.length; i++) {
     let hardReiksme = waweEnemesCombination[i];
     let priesas = enemes.find((e) => e.hard === hardReiksme);
-
+    waveWorth += priesas.revard;
     leftVaveHp += priesas.givybes;
   }
 }
@@ -265,7 +265,7 @@ function nupirkti(lock, kaina, nmr) {
   savasData.ownedSoligers.push({
     nr: nmr,
     homeSquere: null,
-    extraData: { speedUp: 0, damigeUp: 0  ,target: "first"},
+    extraData: { speedUp: 0, damigeUp: 0, target: "first" },
   });
   apsipirkti();
 }
@@ -300,10 +300,10 @@ function changeTarget(index, i) {
   const kelintas = targetOptions.indexOf(
     savasData.ownedSoligers[index].extraData.target
   );
-  
+
   if (targetOptions.length - 1 > kelintas) {
     savasData.ownedSoligers[index].extraData.target =
-    targetOptions[kelintas + 1];
+      targetOptions[kelintas + 1];
   } else {
     savasData.ownedSoligers[index].extraData.target = targetOptions[0];
   }
@@ -311,6 +311,7 @@ function changeTarget(index, i) {
   updateLangeliuVidu(i);
 }
 function updateLangeliuVidu(i) {
+  chaarVidus = "";
   if (
     homeSqueres[i] &&
     homeSqueres[i].ocupied !== null &&
@@ -327,24 +328,38 @@ function updateLangeliuVidu(i) {
           (itm) => itm.nr === homeSqueres[i].ocupied
         )
       ];
-    buttons = `<button class="remove_char" onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
-    buttons += `<button class="change_targ" onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${elementasPagalSavus.extraData.target}</button>`;
-    buttons += `<p>Upgrade</p>`;
-    buttons += `<button class="upgrade"  ${
+    chaarVidus = `<button class="remove_char" onclick="removeCharacter(${i}); selectCharacter.style.display = 'none';">Remove</button>`;
+    chaarVidus += `<button class="change_targ" onclick="changeTarget(${homeSqueres[i].ocupied},${i})">Target: ${elementasPagalSavus.extraData.target}</button>`;
+    chaarVidus += `<p>Upgrade</p>`;
+    chaarVidus += `<button class="upgrade"  ${
       locked ? "disabled" : ""
     } onclick="upgrade(${i})" >Price: ${Math.round(
       elementas.jega + elementas.jega / 3
     )}</button>`;
-    buttons += `<p>Power: ${elementas.jega} <p style="color: green;">+5</p></p>`;
+    chaarVidus += `<p>Power: ${elementas.jega} <p style="color: green;">+5</p></p>`;
   }
   for (let j = 0; j < savasData.ownedSoligers.length; j++) {
     if (
       homeSqueres[i].ocupied === null &&
       savasData.ownedSoligers[j].homeSquere === null
     ) {
-      buttons += `<button onclick="savasData.ownedSoligers[${j}].homeSquere = ${i}; homeSqueres[${i}].ocupied = ${j}; sudeliokSavus(); selectCharacter.style.display = 'none';">
-                        ${savasData.ownedSoligers[j].nr}
-                        </button>`;
+      chaarVidus += `<div style="width: 100%; display: flex; justify-content: space-around; background: #d4a76a; border: 2px solid black; margin-top: 5px;">
+      
+      <p> Name:${soligers[savasData.ownedSoligers[j].nr].name}</p>
+          <div class="shop-item-icon">
+                 <img
+  src="${soligers[savasData.ownedSoligers[j].nr].img}"
+  
+  width="650"
+  height="850"
+  style="position: absolute; top: 0px; left: -10px;"
+/>
+                 </div>
+      <p>Power:${soligers[savasData.ownedSoligers[j].nr].jega + savasData.ownedSoligers[j].extraData.damigeUp}</}</p>
+      
+      <button onclick="savasData.ownedSoligers[${j}].homeSquere = ${i}; homeSqueres[${i}].ocupied = ${j}; sudeliokSavus(); selectCharacter.style.display = 'none';">
+                        Select soliger
+                        </button></div>`;
     }
   }
 
@@ -356,7 +371,7 @@ function updateLangeliuVidu(i) {
                       <button style="background: #d4a76a; padding: 5px 10px; margin: 0; font-weight: bold;" onclick="document.getElementById('selectCharacter').style.display = 'none'">X</button>
                     </div>
                     <p>Selected Character</p>
-                   ` + `${buttons}`;
+                   ` + `${chaarVidus}`;
 }
 function upgrade(i) {
   if (typeof i !== "number" || i < 0 || i >= homeSqueres.length) return;
@@ -393,19 +408,64 @@ function arTelefonas() {
   return /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 }
 
-function updateShopText(addHp = Math.round(savasData.rumuHp / 50)){
-    document.getElementById("upgradeCastleButton").innerHTML ='+' +addHp 
-    document.getElementById("castleHp").innerHTML = savasData.rumuHp +"Hp"
-    document.getElementById("castleUpPrice").innerHTML = "Price: "+ Math.round( (savasData.rumuHp - addHp)/2)
-    document.getElementById("upgradeCastleButton").disabled = savasData.coins < Math.round( (savasData.rumuHp - addHp)/2)
-
+function updateShopText(addHp = Math.round(savasData.rumuHp / 50)) {
+  document.getElementById("upgradeCastleButton").innerHTML = "+" + addHp;
+  document.getElementById("castleHp").innerHTML = savasData.rumuHp + "Hp";
+  document.getElementById("castleUpPrice").innerHTML =
+    "Price: " + Math.round((savasData.rumuHp - addHp) / 2);
+  document.getElementById("upgradeCastleButton").disabled =
+    savasData.coins < Math.round((savasData.rumuHp - addHp) / 2);
 }
-
-
-
 
 function spawnDelayByProgress(current, total, base = 2000) {
   let progress = current / total; // 0.0..1.0
   let factor = 1 - Math.abs(progress - 0.5) * 2; // 1 → lėčiausias kai per vidurį
   return base * factor;
+}
+function nextRound(){
+   leftVaveHp = 0;
+   waveWorth = 0;
+    pause = false;
+    bangosPradeta = true;
+    waweEnemesCombination = generateEnemyWave(wave, enemyCosts, seed);
+    apskaiciokWaveHp();
+    vaveHp = leftVaveHp;
+    setRumuHp();
+    nextRoundButton.style.display = "none";
+    document.getElementById("upgradeCastle").style.display = "none";
+    document.getElementById("shopButton").style.display = "none";
+    document.getElementById("speedUp").style.display = "block";
+    document.getElementById("autoRun").style.display = "block";
+    
+
+    if(!autoRun){
+      setTimeout(() => {
+        if(!autoRun){
+    document.getElementById("autoRun").style.display = "none"}
+      },5000
+      )
+    }
+    document.getElementById("autoRun").innerHTML = "Auto run "+ (autoRun?"ON":"OFF")  +";</br> cost for this round: " + Math.round(waveWorth * 0.4)
+    console.log(autoRun)
+    pralaimeta = false;
+}
+function wavePabaiga() {
+  document.getElementById("nextRoundButton").style.display = "";
+  document.getElementById("shopButton").style.display = "block";
+  document.getElementById("upgradeCastle").style.display = "block";
+  document.getElementById("speedUp").style.display = "none";
+  document.getElementById("autoRun").style.display = "none";
+  waweImamas = 0;
+  bangosPradeta = false;
+  saveDataInFireStore();
+  if(autoRun && savasData.coins >= Math.round(waveWorth * 0.4)){
+      savasData.coins -= Math.round(waveWorth * 0.4)
+      autoRun = true
+      nextRound()
+  }
+  else{
+      autoRun = false;
+      
+    
+  }
 }

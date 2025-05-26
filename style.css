@@ -460,4 +460,18 @@ left: 50%;
 top: 50%;
 transform: translate(-50%, -50%);
   display: none;
+}#autoRun {
+  position: absolute;
+  left: 90%;
+  bottom: 0%;
+  transform: translateX(-50%);
+  z-index: 1001;
+  width: 11%;
+  max-width: 20%;
+  font-size: 1.1rem;
+  background: #d4a76a;
+  color: #463828;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  transition: background 0.2s, transform 0.2s;
 }
