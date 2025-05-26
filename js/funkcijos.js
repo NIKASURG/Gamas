@@ -32,7 +32,7 @@ function preskaiciokDydi() {
   Dydis = [
     [mastelis * 150, mastelis * 150],
     [mastelis * 150, mastelis * 150],
-    [mastelis * 450, mastelis * 450],
+    [mastelis * 90, mastelis * 90],
   ];
 }
 function generateEnemyWave(

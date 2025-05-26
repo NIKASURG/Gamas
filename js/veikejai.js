@@ -27,7 +27,7 @@ class veikejas {
     this.esamasKadrasY = 0;
     this.reikemasKadrasY = data.spriteReikemasKadrasY;
     this.reikemiKadrai = data.reikemiKadrai;
-    this.spriteGreitis = 1;
+    this.spriteGreitis =   1;
 
     this.mirtiesSpriteY = data.mirtiesSpriteY;
     this.mirtiesReikalingiX = data.mirtiesReikalingiX;
@@ -36,7 +36,7 @@ class veikejas {
     this.pasirinktas = true;
     this.trankyk = false;
     this.pradejauPulti = true;
-    this.greitisSpriteSukimui = 9;
+    this.greitisSpriteSukimui =data.spriteGreitis ?? 9;
     this.lost = false;
     this.colorSpin = Math.random() * 1000; 
   }

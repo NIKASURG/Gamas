@@ -11,6 +11,24 @@ let Dydis = [
 ];
 let enemes = [
   {
+    greitis: 0.13,
+    img: "./img/Veikeju_sprite/Enemy/Slime.png",
+    dydis: 2,
+    spriteIlgis: 11,
+    spriteAukstis: 1,
+    spriteReikemasKadrasY: 1,
+    reikemiKadrai: 11,
+    veikejoZiurejimoPuse: -1,
+    givybes: 50,
+    mirtiesSpriteY: 9,
+    mirtiesReikalingiX: 11,
+    hard: 1,
+    trankymoY: 1,
+    trankymoXilgis: 11,
+    revard:1
+    ,spriteGreitis:14
+  },
+  {
     greitis: 0.1,
     img: "./img/Veikeju_sprite/Enemy/Character6.png",
     dydis: 1,
@@ -22,7 +40,7 @@ let enemes = [
     givybes: 100,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
-    hard: 1,
+    hard: 3,
     trankymoY: 15,
     trankymoXilgis: 6,
     revard:2
