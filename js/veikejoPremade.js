@@ -25,8 +25,14 @@ let enemes = [
     hard: 1,
     trankymoY: 1,
     trankymoXilgis: 11,
+<<<<<<< HEAD
     revard: 1,
     spriteGreitis: 14,
+=======
+    revard:1
+    ,spriteGreitis:14,
+    animationStop: true
+>>>>>>> 9c2bbb09da653af80e12d7f4ec645cafb1b0ac27
   },
   {
     greitis: 0.1,
