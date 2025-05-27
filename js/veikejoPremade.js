@@ -25,8 +25,8 @@ let enemes = [
     hard: 1,
     trankymoY: 1,
     trankymoXilgis: 11,
-    revard:1
-    ,spriteGreitis:14
+    revard: 1,
+    spriteGreitis: 14,
   },
   {
     greitis: 0.1,
@@ -94,11 +94,8 @@ let enemes = [
     hard: 27,
     trankymoY: 15,
     trankymoXilgis: 6,
-<<<<<<< HEAD
     revard: 15,
-=======
-    revard:15
-  }, 
+  },
   {
     greitis: 0.079,
     img: "./img/Veikeju_sprite/Enemy/ghosty.png",
@@ -114,10 +111,8 @@ let enemes = [
     hard: 35,
     trankymoY: 9,
     trankymoXilgis: 8,
-    revard:15,
-    spriteGreitis:12
-
->>>>>>> 2dc0f39ab24fb315eb84baa423fe45457aae81f5
+    revard: 15,
+    spriteGreitis: 12,
   },
 ];
 let soligers = [
