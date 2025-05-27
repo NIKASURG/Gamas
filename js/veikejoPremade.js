@@ -26,7 +26,8 @@ let enemes = [
     trankymoY: 1,
     trankymoXilgis: 11,
     revard:1
-    ,spriteGreitis:14
+    ,spriteGreitis:14,
+    animationStop: true
   },
   {
     greitis: 0.1,
