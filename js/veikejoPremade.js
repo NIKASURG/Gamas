@@ -19,14 +19,15 @@ let enemes = [
     spriteReikemasKadrasY: 1,
     reikemiKadrai: 11,
     veikejoZiurejimoPuse: -1,
-    givybes: 50,
+    givybes: 60,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
     hard: 1,
     trankymoY: 1,
     trankymoXilgis: 11,
     revard:1
-    ,spriteGreitis:14
+    ,spriteGreitis:14,
+    animationStop: true
   },
   {
     greitis: 0.1,
@@ -37,13 +38,13 @@ let enemes = [
     spriteReikemasKadrasY: 3,
     reikemiKadrai: 6,
     veikejoZiurejimoPuse: -1,
-    givybes: 100,
+    givybes: 120,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
-    hard: 3,
+    hard: 4,
     trankymoY: 15,
     trankymoXilgis: 6,
-    revard:2
+    revard: 2,
   },
   {
     greitis: 0.095,
@@ -60,7 +61,7 @@ let enemes = [
     hard: 5,
     trankymoY: 15,
     trankymoXilgis: 6,
-    revard:3
+    revard: 3,
   },
   {
     greitis: 0.089,
@@ -71,13 +72,13 @@ let enemes = [
     spriteReikemasKadrasY: 3,
     reikemiKadrai: 6,
     veikejoZiurejimoPuse: -1,
-    givybes: 500,
+    givybes: 700,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
-    hard: 15,
+    hard: 22,
     trankymoY: 15,
     trankymoXilgis: 6,
-    revard:5
+    revard: 5,
   },
   {
     greitis: 0.079,
@@ -88,13 +89,13 @@ let enemes = [
     spriteReikemasKadrasY: 3,
     reikemiKadrai: 6,
     veikejoZiurejimoPuse: -1,
-    givybes: 800,
+    givybes: 1300,
     mirtiesSpriteY: 9,
     mirtiesReikalingiX: 11,
-    hard: 22,
+    hard: 27,
     trankymoY: 15,
     trankymoXilgis: 6,
-    revard:15
+    revard: 15,
   },
 ];
 let soligers = [
