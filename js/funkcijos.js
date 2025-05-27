@@ -192,7 +192,7 @@ function apskaiciokWaveHp() {
     let hardReiksme = waweEnemesCombination[i];
     let priesas = enemes.find((e) => e.hard === hardReiksme);
     waveWorth += priesas.revard;
-    leftVaveHp += priesas.givybes;
+    leftVaveHp += priesas.givybes   + wave;
   }
 }
 function setRumuHp() {

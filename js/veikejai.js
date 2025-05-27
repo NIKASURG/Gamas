@@ -7,6 +7,8 @@ class veikejas {
     this.givybesStart = data.givybes  +wave?? 100  +wave;
     this.dydis = data.dydis;
     this.greitis = data.greitis ?? 1;
+    this.tarp = data.greitis ?? 1;
+
     this.spriteIlgisKadru = data.spriteIlgis;
     this.spriteAukstisKadru = data.spriteAukstis;
     this.img = new Image();
@@ -39,6 +41,7 @@ class veikejas {
     this.greitisSpriteSukimui =data.spriteGreitis ?? 9;
     this.lost = false;
     this.colorSpin = Math.random() * 1000; 
+    this.animationStop = data.animationStop ?? false
   }
   kadras() {
     if (isNaN(deltaTime)) {
@@ -53,9 +56,20 @@ class veikejas {
     }
 
     this.spriteGreitis += (deltaTime / 22) * daug;
+    if(this.animationStop && (this.esamasKadrasX == 0 || this.esamasKadrasX > this.reikemiKadrai * this.kadroPlotis ) ){
+      this.greitis = 0
+      console.log('true ')
+    }else if(
+      this.animationStop && (this.esamasKadrasX < this.kadroPlotis*2 || !(this.esamasKadrasX < this.kadroPlotis*4 ) )
+    ){
+      this.greitis = this.tarp/1.5
+    }else{
+      this.greitis = this.tarp
+
+    }
     if (this.spriteGreitis > this.greitisSpriteSukimui - this.reikemiKadrai) {
       this.spriteGreitis = 0;
-
+      
       // console.log(this.kadroPlotis,this.reikemiKadrai)
       this.esamasKadrasX += this.kadroPlotis;
 
@@ -149,8 +163,7 @@ class veikejas {
       ctx.fillStyle = "red";
       if (this.givybes >= 0 && this.givybes != this.givybesStart) {
         showBar(
-          this.x * this.veikejoZiurejimoPuse +
-            (ePlotis / Dydis[this.dydis][0] / 2.3) * this.veikejoZiurejimoPuse,
+          ((atvaizdoX + (2 / 3) * Dydis[this.dydis][0]) / ePlotis * 100) - 3 ,
           this.y + 3,
           Dydis[this.dydis][0] / 3,
           eAukstis / 300,
