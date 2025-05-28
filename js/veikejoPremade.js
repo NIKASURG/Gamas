@@ -25,9 +25,14 @@ let enemes = [
     hard: 1,
     trankymoY: 1,
     trankymoXilgis: 11,
+<<<<<<< HEAD
+    revard: 1,
+    spriteGreitis: 14,
+=======
     revard:1
     ,spriteGreitis:14,
     animationStop: true
+>>>>>>> 9c2bbb09da653af80e12d7f4ec645cafb1b0ac27
   },
   {
     greitis: 0.1,
@@ -96,6 +101,24 @@ let enemes = [
     trankymoY: 15,
     trankymoXilgis: 6,
     revard: 15,
+  },
+  {
+    greitis: 0.079,
+    img: "./img/Veikeju_sprite/Enemy/ghosty.png",
+    dydis: 2,
+    spriteIlgis: 8,
+    spriteAukstis: 9,
+    spriteReikemasKadrasY: 4,
+    reikemiKadrai: 8,
+    veikejoZiurejimoPuse: -1,
+    givybes: 1300,
+    mirtiesSpriteY: 8,
+    mirtiesReikalingiX: 8,
+    hard: 35,
+    trankymoY: 9,
+    trankymoXilgis: 8,
+    revard: 15,
+    spriteGreitis: 12,
   },
 ];
 let soligers = [
