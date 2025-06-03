@@ -15,13 +15,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCTSRn86V81fCLsgagpHXvEc0RIfcYMEPE",
-  authDomain: "towerdefencegame-5a530.firebaseapp.com",
-  projectId: "towerdefencegame-5a530",
-  storageBucket: "towerdefencegame-5a530.firebasestorage.app",
-  messagingSenderId: "58157639757",
-  appId: "1:58157639757:web:ee265037988c33ab2ad404",
-  measurementId: "G-6EDLH1JKEX",
+  apiKey: "************",
+  authDomain: "************",
+  projectId: "************",
+  storageBucket: "************",
+  messagingSenderId: "************",
+  appId: "************",
+  measurementId: "************",
 };
 
 const app = initializeApp(firebaseConfig);
